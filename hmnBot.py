@@ -98,7 +98,7 @@ async def on_message(message):
 
         #!help,!yardim
         if message.content.upper().startswith("!HELP") or message.content.upper().startswith("!YARDIM") or message.content.startswith("!yardim"):
-            await client.send_message(message.channel, yazi.komut["help"])
+            await client.send_message(message.channel, yazi.komut["yardim"])
             
 
         #!statu,!stats

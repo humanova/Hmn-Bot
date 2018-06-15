@@ -67,9 +67,9 @@ async def on_server_join(server):
 async def on_message(message):
 
     if not message.author.bot == 1:
-
+        
         #bana seslenilme
-        if "human" in message.content or "emir" in message.content:
+        if "humandesu" in message.content:
             if not message.author.id in uyari_disi:
                 userID = message.author.id
                 await client.send_message(message.channel, "**<@%s>,  <@%s> sana seslendi!**" % (myID,userID))
@@ -339,6 +339,7 @@ async def on_message(message):
             await client.add_reaction(message,"🇲")
             await client.add_reaction(message,"🇳")
         '''
+
 
 token = os.environ['PP_BOT_TOKEN']
 client.run(token)

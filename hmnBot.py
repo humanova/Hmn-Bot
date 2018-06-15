@@ -111,25 +111,27 @@ async def on_message(message):
 
         #!durt,!ping
         if message.content.upper().startswith('!PING') or message.content.upper().startswith("!DÜRT") or message.content.upper().startswith("!DURT"):
-            userID = message.author.id
             contents = message.content.split(" ")
-            member = message.server.get_member_named(contents[1])
-            if not userID == member.id:
-                await client.send_message(message.channel, yazi.komut["durt"] % (member.id,userID))
-            else:
-                await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
+            if contents[1]:
+                userID = message.author.id
+                member = message.server.get_member_named(contents[1])
+                if not userID == member.id:
+                    await client.send_message(message.channel, yazi.komut["durt"] % (member.id,userID))
+                else:
+                    await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
         
 
         #!soyle,!say (sadece benim id'm)
         if message.content.upper().startswith("!SAY"):
             if message.author.id == myID:
                 args = message.content.split(" ")
-                try:
-                    await client.delete_message(message)
-                except discord.errors.NotFound:
-                    return
+                if args[1]:
+                    try:
+                        await client.delete_message(message)
+                    except discord.errors.NotFound:
+                        return
 
-                await client.send_message(message.channel, "%s" % (" ".join(args[1:])))
+                    await client.send_message(message.channel, "%s" % (" ".join(args[1:])))
             else:
                 await client.send_message(message.channel,"**Buna yetkin yok!**")
 
@@ -138,37 +140,38 @@ async def on_message(message):
         if message.content.upper().startswith("!VOTE") or message.content.upper().startswith("!OYLA"):
             userID = message.author.id
             msg = message.content.split(" ")
-            msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
-            await client.add_reaction(msg,'👍')
-            await client.add_reaction(msg,'👎')
-        
+            if msg[1]:
+                msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
+                await client.add_reaction(msg,'👍')
+                await client.add_reaction(msg,'👎')
+            
 
         # !google,!ara (NOT! ozel karakterler desteklenmiyor!)
         if message.content.upper().startswith("!GOOGLE") or message.content.upper().startswith("!ARA"):
             searchQ = "https://google.com/search?q="
             msg = message.content.split(" ")
-            
-            for word in range(1,len(msg)):
-                if not word == len(msg) - 1:
-                    searchQ += msg[word] + "+"
-                else:
-                    searchQ += msg[word]
+            if msg[1]:
+                for word in range(1,len(msg)):
+                    if not word == len(msg) - 1:
+                        searchQ += msg[word] + "+"
+                    else:
+                        searchQ += msg[word]
 
-            await client.send_message(message.channel, "%s" % (searchQ))
+                await client.send_message(message.channel, "%s" % (searchQ))
 
 
         #!lmgtfy (NOT! ozel karakterler desteklenmiyor!)
         if message.content.upper().startswith("!LMGTFY"):
             searchQ = "http://lmgtfy.com/?q="
             msg = message.content.split(" ")
-            
-            for word in range(1,len(msg)):
-                if not word == len(msg) - 1:
-                    searchQ += msg[word] + "+"
-                else:
-                    searchQ += msg[word]
+            if msg[1]:
+                for word in range(1,len(msg)):
+                    if not word == len(msg) - 1:
+                        searchQ += msg[word] + "+"
+                    else:
+                        searchQ += msg[word]
 
-            await client.send_message(message.channel, "%s" % (searchQ))
+                await client.send_message(message.channel, "%s" % (searchQ))
 
 
         #!bitcoin,!btc
@@ -183,10 +186,11 @@ async def on_message(message):
         #!doviz kur
         if message.content.upper().startswith("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
             msg = message.content.split(" ")
-            kur = msg[1]
-            kur,kur_degeri = doviz.DovizParse(kur)
-
-            await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
+            if msg[1]:
+                kur = msg[1]
+                kur,kur_degeri = doviz.DovizParse(kur)
+                
+                await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
         
 
         #!roller,!roles
@@ -199,7 +203,7 @@ async def on_message(message):
             
             await client.send_message(message.channel, yazi.komut["roller"] % (currServer,roller))
             
-
+        '''
         #!rolver (sadece sahipler)
         if message.content.upper().startswith("!ROLVER"):
             if message.server.owner.id == message.author.id:
@@ -212,29 +216,30 @@ async def on_message(message):
                     return
             else:
                 await client.send_message(message.channel, yazi.komut["rolverHataYetkiYok"])
-
+        '''
 
         #!sikayet (server sahibine)
         if message.content.upper().startswith("!ŞIKAYET") or message.content.upper().startswith("!SIKAYET"):
-            owner = message.server.owner
-            sikayetci = message.author.name + "#" + message.author.discriminator
-            sikayetci_nick = message.author.display_name
             sikayet = message.content.split(" ")
-            serverAdi = message.server.name
-            kanalAdi = message.channel.name
-            tarih = message.timestamp
-            
-            try:
-                client.start_private_message(owner)
-                await client.send_message(owner, yazi.komut['sikayet_admin'] % (tarih,serverAdi,kanalAdi,sikayetci,sikayetci_nick," ".join(sikayet[1:])))
-                await client.send_message(message.channel, yazi.komut['sikayet_kullanici'])
+            if sikayet[1]:
+                owner = message.server.owner
+                sikayetci = message.author.name + "#" + message.author.discriminator
+                sikayetci_nick = message.author.display_name
+                serverAdi = message.server.name
+                kanalAdi = message.channel.name
+                tarih = message.timestamp
+                
                 try:
-                    await client.delete_message(message)
-                except discord.errors.NotFound:
-                    return
+                    client.start_private_message(owner)
+                    await client.send_message(owner, yazi.komut['sikayet_admin'] % (tarih,serverAdi,kanalAdi,sikayetci,sikayetci_nick," ".join(sikayet[1:])))
+                    await client.send_message(message.channel, yazi.komut['sikayet_kullanici'])
+                    try:
+                        await client.delete_message(message)
+                    except discord.errors.NotFound:
+                        return
 
-            except discord.errors.NotFound:
-                await client.send_message(message.channel, yazi.komut['sikayet_hata'])
+                except discord.errors.NotFound:
+                    await client.send_message(message.channel, yazi.komut['sikayet_hata'])
 
 
         #!server,!serverstats
@@ -261,7 +266,8 @@ async def on_message(message):
         #!ben,!self
         if message.content.upper().startswith("!SELF") or message.content.upper().startswith("!BEN"):
             msg = message.content.split(" ")
-            await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
+            if msg[1]:
+                await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
 
 
         #!sence
@@ -333,7 +339,6 @@ async def on_message(message):
             await client.add_reaction(message,"🇲")
             await client.add_reaction(message,"🇳")
         '''
-
 
 token = os.environ['PP_BOT_TOKEN']
 client.run(token)

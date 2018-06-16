@@ -37,7 +37,8 @@ def DovizParse(kur):
         return kur.upper(),kur_degeri
         
     else:
-        return
+        kur_degeri = "hata"
+        return kur,kur_degeri
 
 def DovizAlgila(kur):
 
@@ -105,3 +106,68 @@ def DovizAlgila(kur):
         kur = "hata"
 
     return kur
+
+def KriptoParse(kur,don):
+    kur,kisa_ad = KriptoAlgila(kur)
+
+    if not kur == "hata":
+
+        kurURL = "https://tr.investing.com/crypto/" + kur + "/" + kisa_ad + "-" + don
+    
+        data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
+        parse = BeautifulSoup(data,'html.parser')
+
+        for doviz in parse.find_all('span', id="last_last"):
+            liste = list(doviz)
+        
+        liste = str(liste)
+        for char in "[']":
+            liste = liste.replace(char,'')
+
+        kur_degeri = liste
+
+        return kur.upper(),kur_degeri
+
+    else :
+        return kur,kisa_ad
+
+
+def KriptoAlgila(kur):
+
+    if kur.upper() == "BTC" or kur.upper() == "BITCOIN":
+        kur = "bitcoin"
+        kisa_ad = "btc"
+    
+    elif kur.upper() == "BTCCASH" or kur.upper() == "BITCOINCASH" or kur.upper() == "BCH":
+        kur = "bitcoin-cash"
+        kisa_ad = "bch"
+    elif kur.upper() == "ETH" or kur.upper() == "ETHEREUM":
+
+        kur = "ethereum"
+        kisa_ad = "eth"
+
+    elif kur.upper() == "XRP" or kur.upper() == "RIPPLE":
+        kur = "ripple"
+        kisa_ad = "xrp"
+
+    elif kur.upper() == "EOS":
+        kur = "eos"
+        kisa_ad = "eos"
+
+    elif kur.upper() == "XMR" or kur.upper() == "MONERO":
+        kur = "monero"
+        kisa_ad = "xmr"
+
+    elif kur.upper() == "LITE" or kur.upper() == "LTC" or kur.upper() == "LITECOIN":
+        kur = "litecoin"
+        kisa_ad = "ltc"
+
+    elif kur.upper() == "XLM" or kur.upper() == "STELLAR":
+        kur = "stellar"
+        kisa_ad = "xlm"
+
+    else:
+        kur = "hata"
+        kisa_ad = "hata"
+
+    return kur,kisa_ad

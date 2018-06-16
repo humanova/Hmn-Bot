@@ -3,7 +3,11 @@
 # MIT License, see LICENSE for more details
 
 #	NOTLAR
-#   google,lmgtfy ozel karakterler ekle!
+#  unutmadan buraya yazayim, site acabilirsem eklenecekler
+
+#  Fikir sunanlar ve gelistirirken emegi gecenler :
+#  112'nin Yaz Turnuvasi Sunucusu, 112servis, barisuraz, selindesu ve digerleri!
+
 
 import os
 import random
@@ -22,13 +26,13 @@ import dovizIslem as doviz
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.1.5a\n14/06/18"
+version = "hmnBot v0.1.7a\n16/06/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 
 #uyarilar = ["EMIR","HUMAN","HUMANOVAN","HUMANOVA","HUMANOV","HUMANDESU"]
 uyari_disi = [botID,myID]
-
+print(len(yazi.komut["yardim"]))
 
 def serverSayisi():
     i = 0
@@ -67,15 +71,15 @@ async def on_server_join(server):
 async def on_message(message):
 
     if not message.author.bot == 1:
-        
+        '''
         #bana seslenilme
-        if "humandesu" in message.content:
+        if "human" in message.content or "emir" in message.content:
             if not message.author.id in uyari_disi:
                 userID = message.author.id
                 await client.send_message(message.channel, "**<@%s>,  <@%s> sana seslendi!**" % (myID,userID))
         
         #bu yontem gereksiz yavas (ve diger isleri de yavaslatiyor)
-        '''
+        
         contents = message.content.split(" ")
         for word in contents:
             if word.upper() in uyarilar:
@@ -87,17 +91,31 @@ async def on_message(message):
 
         #!surum,!version,!versiyon
         if message.content.upper().startswith("!VERSION") or message.content.upper().startswith("!VERSIYON") or message.content.upper().startswith("!SÜRÜM") or message.content.upper().startswith("!SURUM"):
-            await client.send_message(message.channel, "**%s**" % (version))
+            embed=discord.Embed(title=" ", color=0x75df00)
+            embed.set_author(name=client.user.name + " Versiyonu", icon_url=client.user.avatar_url)
+            embed.add_field(name="Version : ", value=version, inline=False)
+            await client.send_message(message.channel,embed=embed)
+            #await client.send_message(message.channel, "**%s**" % (version))
 
 
         #!gelistirici,!developer
         if message.content.upper().startswith("!DEV") or message.content.upper().startswith("!GELISTIRICI") or message.content.startswith("!geliştirici"):
             userID = message.author.id
-            await client.send_message(message.channel, yazi.komut["gelistirici"] % (userID,myID))
+            embed=discord.Embed(title=" ", color=0x75df00)
+            embed.set_author(name=client.user.name + " Geliştirici", icon_url=client.user.avatar_url)
+            embed.add_field(name='------------------------------------------------------------------------------', value="Merhaba <@%s>, <@%s> tarafından geliştiriliyorum!" % (userID,myID), inline=False)
+            embed.add_field(name="GitHub", value = "https://github.com/humanova", inline=False)
+            embed.add_field(name="Steam", value = "http://steamcommunity.com/id/humanovan", inline=False)
+            await client.send_message(message.channel,embed=embed)
+            #await client.send_message(message.channel, yazi.komut["gelistirici"] % (userID,myID))
 
 
         #!help,!yardim
         if message.content.upper().startswith("!HELP") or message.content.upper().startswith("!YARDIM") or message.content.startswith("!yardim"):
+            #embed=discord.Embed(title=" ", color=0xce6c6f)
+            #embed.set_author(name=client.user.name + " Yardım", icon_url=client.user.avatar_url)
+            #embed.add_field(name="", value=yazi.komut["yardim"], inline=False)
+            #await client.send_message(message.channel,embed=embed)
             await client.send_message(message.channel, yazi.komut["yardim"])
             
 
@@ -106,7 +124,13 @@ async def on_message(message):
             servers = serverSayisi()
             users = kullaniciSayisi()
             channels = channelSayisi()
-            await client.send_message(message.channel, yazi.komut["statu"] % (servers,users,channels))
+            embed=discord.Embed(title=" ", color=0x75df00)
+            embed.set_author(name=client.user.name + " Istatistikleri", icon_url=client.user.avatar_url)
+            embed.add_field(name="Server Sayısı : ", value=servers, inline=False)
+            embed.add_field(name="Kullanıcı Sayısı :" , value=users, inline=False)
+            embed.add_field(name="Kanal Sayısı :" , value=channels, inline=False)
+            await client.send_message(message.channel,embed=embed)
+            #await client.send_message(message.channel, yazi.komut["statu"] % (servers,users,channels))
 
 
         #!durt,!ping
@@ -120,6 +144,21 @@ async def on_message(message):
                 else:
                     await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
         
+
+        #!davet,invite
+        if message.content.upper().startswith("!DAVET") or message.content.upper().startswith("!INVITE"):
+            msg = message.content.split(" ")
+            kul_sayisi = 1
+            if len(msg)>1:
+                if msg[1].isdigit():
+                    kul_sayisi = int(msg[1])
+
+            davet = await client.create_invite(message.channel,max_uses=kul_sayisi)
+            embed=discord.Embed(title=" ", color=0x75df00)
+            embed.set_author(name=message.channel.name + " Kanal Daveti", icon_url=client.user.avatar_url)
+            embed.add_field(name="%d kullanımlık davet linki : " % (kul_sayisi), value=davet.url, inline=False)
+            await client.send_message(message.channel,embed=embed)
+
 
         #!soyle,!say (sadece benim id'm)
         if message.content.upper().startswith("!SAY"):
@@ -179,18 +218,41 @@ async def on_message(message):
             a,btc_tl = doviz.DovizParse("BTC-TRY")
             a,btc_usd = doviz.DovizParse("BTC-USD")
             
+            embed=discord.Embed(title=" ", color=0x2079ff)
+            embed.set_author(name="Bitcoin Kuru", icon_url=client.user.avatar_url)
+            embed.add_field(name="BTC" + "/USD", value=btc_usd, inline=True)
+            embed.add_field(name="BTC" + "/TL" , value=btc_tl, inline=True)
+            await client.send_message(message.channel,embed=embed)
+            #await client.send_message(message.channel, yazi.komut["bitcoin"] % (btc_usd,btc_tl))
         
-            await client.send_message(message.channel, yazi.komut["bitcoin"] % (btc_usd,btc_tl))
-        
-
+        #!kripto
+        if message.content.upper().startswith("!KRIPTO") or message.content.upper().startswith("!CRYPTO"):
+            kur = message.content.split(" ")
+            if kur[1]:
+                if kur[1].upper().startswith("FETOCU") or kur[1].upper().startswith("FETÖCÜ"):
+                    await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
+                kurTL,deger_TL = doviz.KriptoParse(kur[1],"try")
+                kurUSD,deger_USD = doviz.KriptoParse(kur[1],"usd")
+                if not kurTL == "hata":
+                    embed=discord.Embed(title=" ", color=0x2079ff)
+                    embed.set_author(name="Kripto Kurları [" + kur[1] +"]", icon_url=client.user.avatar_url)
+                    embed.add_field(name=kurUSD + "/USD", value=deger_USD, inline=True)
+                    embed.add_field(name=kurTL + "/TL" , value=deger_TL, inline=True)
+                    await client.send_message(message.channel,embed=embed)
+                    #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))
+           
         #!doviz kur
         if message.content.upper().startswith("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
             msg = message.content.split(" ")
             if msg[1]:
                 kur = msg[1]
                 kur,kur_degeri = doviz.DovizParse(kur)
-                
-                await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
+                if not kur == "hata":
+                    embed=discord.Embed(title=" ", color=0x2b80ff)
+                    embed.set_author(name="Döviz Bilgileri", icon_url=client.user.avatar_url)
+                    embed.add_field(name=kur + "/TL", value=kur_degeri, inline=True)
+                    await client.send_message(message.channel,embed=embed)
+                    # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
         
 
         #!roller,!roles
@@ -201,7 +263,11 @@ async def on_message(message):
             for role in roles:
                 roller += role.name + "\n"
             
-            await client.send_message(message.channel, yazi.komut["roller"] % (currServer,roller))
+            embed=discord.Embed(title=" ", color=0x001a40)
+            embed.set_author(name=currServer + " Rolleri", icon_url=client.user.avatar_url)
+            embed.add_field(name="Roller", value="```"+roller+"```", inline=True)
+            await client.send_message(message.channel,embed=embed)
+            #await client.send_message(message.channel, yazi.komut["roller"] % (currServer,roller))
             
         '''
         #!rolver (sadece sahipler)
@@ -248,17 +314,21 @@ async def on_message(message):
             serverID = message.server.id
             serverOwner = message.server.owner.name
             serverOwnerN = message.server.owner.nick
-            serverMemCount = message.server.member_count
-            serverRegion = message.server.region
-            roles = message.server.role_hierarchy
-            serverDate = message.server.created_at
+            serverMemCount = str(message.server.member_count)
+            serverRegion = str(message.server.region)
+            serverDate = str(message.server.created_at)
             
-            roller = ""
-            for role in roles:
-                roller += role.name + "\n"
 
-            await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))
-            await client.send_message(message.channel, yazi.komut["server2"] % (roller))
+            embed=discord.Embed(title=" ", color=0x2b80ff)
+            embed.set_author(name="Server Bilgileri", icon_url=client.user.avatar_url)
+            embed.add_field(name="Server Adı :", value=serverName + "  (ID : " + serverID +")\n", inline=False)
+            embed.add_field(name="Server Sahibi :", value=serverOwner+"(" + str(serverOwnerN) + ")\n", inline=False)
+            embed.add_field(name="Kullanıcı Sayısı :", value=serverMemCount + "\n", inline=False)
+            embed.add_field(name="Server Bölgesi :", value=serverRegion +"\n", inline=False)
+            embed.add_field(name="Server Yaratılma Tarihi(UTC) : ", value=serverDate, inline=False)
+            await client.send_message(message.channel,embed=embed)
+
+            #await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))
             
 
         #++========================== EGLENCE ============================++#
@@ -273,13 +343,13 @@ async def on_message(message):
         #!sence
         if message.content.upper().startswith("!SENCE"):
             option = random.randint(1,4)
-            if option == 1 :
+            if option == 0 :
                 await client.send_message(message.channel, yazi.komut["senceEvet1"])
-            if option == 2 :
+            if option == 1 :
                 await client.send_message(message.channel, yazi.komut["senceEvet2"])
-            if option == 3:
+            if option == 2:
                 await client.send_message(message.channel, yazi.komut["senceHayir1"])
-            if option == 4:
+            if option == 3:
                 await client.send_message(message.channel, yazi.komut["senceHayir2"])
 
 
@@ -288,7 +358,7 @@ async def on_message(message):
             gelen = random.randint(1,100)
             if gelen % 2 == 1:
                 await client.send_message(message.channel, yazi.komut["firlatYazi"])
-            if gelen % 2 == 2:
+            if gelen % 2 == 0:
                 await client.send_message(message.channel, yazi.komut["firlatTura"])
 
 

@@ -4,6 +4,9 @@
 
 #hmnBot Doviz islemleri
 
+#buna gec : https://www.xe.com/currencyconverter/convert/?Amount=3.5&From=USD&To=TRY
+#daha iyi span uccResultAmount
+
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
 
@@ -60,7 +63,7 @@ def DovizAlgila(kur):
     elif kur.upper() == "RUB" or kur.upper() == "RUBLE" or kur.upper() == "RUS" or kur.upper() == "RUSYA":
         kur = "rub"
 
-    elif kur.upper() == "JPY" or kur.upper() == "JAPON" or kur.upper() == "YEN":
+    elif kur.upper() == "JPY" or kur.upper() == "JAPONYA" or kur.upper() == "YEN":
         kur = "jpy"
 
     elif kur.upper() == "CAD" or kur.upper() == "KANADA": 

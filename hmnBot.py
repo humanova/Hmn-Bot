@@ -7,9 +7,13 @@
 
 #  Fikir sunanlar ve gelistirirken emegi gecenler :
 #  112'nin Yaz Turnuvasi Sunucusu, 112servis, barisuraz, selindesu ve digerleri!
+# hava durumu https://www.mgm.gov.tr/FTPDATA/analiz/sonSOA.xml
+# http://www.saatkac.com/xml_saat_kod.php?u=TR&lisans=3590dk4fd5123 12 - 13
+# http://212.175.180.28/api/merkezler?il=Ankara
+# ceviri ffff99
+# server #990033 , #ff6600 #660066
 
-
-import os
+import os,sys
 import random
 import discord
 import aiohttp
@@ -19,20 +23,22 @@ import asyncio
 import time
 
 #kendi importlarim
+import havaDurumu as hava
 import botStrings as yazi
 import dovizIslem as doviz
+import zaman
+import ceviri
 ################################
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.1.7a\n16/06/18"
+version = "hmnBot v0.2.1a\n17/06/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 
 #uyarilar = ["EMIR","HUMAN","HUMANOVAN","HUMANOVA","HUMANOV","HUMANDESU"]
 uyari_disi = [botID,myID]
-print(len(yazi.komut["yardim"]))
 
 def serverSayisi():
     i = 0
@@ -174,6 +180,40 @@ async def on_message(message):
             else:
                 await client.send_message(message.channel,"**Buna yetkin yok!**")
 
+        #!cevir , ffff99
+        if message.content.upper().startswith("!CEVIR"):
+            raw_msg = message.content.split(" ")
+            if raw_msg[1]:
+                raw_msg = raw_msg[1:len(raw_msg)]
+                son_msg = ""
+
+                
+                if raw_msg[0].startswith("-") and raw_msg[1].startswith("-"):
+                    currDil = raw_msg[0].replace("-","")
+                    hedefDil = raw_msg[1].replace("-","")
+                    
+                    
+                    msg = raw_msg[2:len(raw_msg)]
+
+                elif raw_msg[0].startswith("-") and raw_msg[1].startswith("-") == 0:
+                    currDil = "auto"
+                    hedefDil = raw_msg[0].replace("-","")
+                    
+                    msg = raw_msg[1:len(raw_msg)]
+                    
+                else :
+                    msg = raw_msg
+                    currDil = "auto"
+                    hedefDil = "tr"
+                    
+                son_msg = " ".join(msg)
+                metin,currDil,hedefDil,oran = ceviri.Cevir(currDil,hedefDil,son_msg)
+                
+                embed=discord.Embed(title=" ", color=0x75df00)
+                embed.set_author(name="Google Çeviri", icon_url=client.user.avatar_url)
+                embed.add_field(name="["+currDil+" -> "+hedefDil+"]", value=metin, inline=False)
+                embed.set_footer(text=oran)
+                await client.send_message(message.channel,embed=embed)
 
         #!oyla,!vote
         if message.content.upper().startswith("!VOTE") or message.content.upper().startswith("!OYLA"):
@@ -212,6 +252,29 @@ async def on_message(message):
 
                 await client.send_message(message.channel, "%s" % (searchQ))
 
+        
+        #!hava
+        if message.content.upper().startswith("!HAVA"):
+            msg = message.content.split(" ")
+            if msg[1]:
+                sehir,durum = hava.havaParse(msg[1])
+                yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(msg[1])
+
+                if not sehir == "hata":
+                    embed=discord.Embed(title=" ", color=0x00ffff)
+                    #embed.set_author(name="Hava Durumu", icon_url=client.user.avatar_url)
+                    embed.set_thumbnail(url=durum_ikon_url)
+                    embed.add_field(name=":earth_africa: Yer", value=yer, inline=True)
+                    embed.add_field(name=":thermometer: Sıcaklık" , value=str(sicaklik) + "°C", inline=True)
+                    embed.add_field(name=":droplet: Nem" , value=str(nem_orani)+"%", inline=True)
+                    embed.add_field(name=":dash: Rüzgar" , value=str(ruzgar_hizi)+" m/s", inline=True)
+                    embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu, inline=True)
+                    embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi, inline=True)
+                    embed.add_field(name="Durum :" , value=durum, inline=False)
+                    embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
+                    #print(sehir + tarih + durum + maks + minn + peryot)
+                    await client.send_message(message.channel,embed=embed)
+        
 
         #!bitcoin,!btc
         if message.content.upper().startswith("!BITCOIN") or message.content.upper().startswith("!BTC"):
@@ -293,7 +356,7 @@ async def on_message(message):
                 sikayetci_nick = message.author.display_name
                 serverAdi = message.server.name
                 kanalAdi = message.channel.name
-                tarih = message.timestamp
+                tarih = zaman.tamTarih() + " (UTC+3)"
                 
                 try:
                     client.start_private_message(owner)
@@ -317,19 +380,40 @@ async def on_message(message):
             serverMemCount = str(message.server.member_count)
             serverRegion = str(message.server.region)
             serverDate = str(message.server.created_at)
+            serverKanal = 0
+            serverRol = 0
             
+            for i in message.server.channels:
+                serverKanal += 1
 
-            embed=discord.Embed(title=" ", color=0x2b80ff)
+            for i in message.server.roles:
+                serverRol +=1
+
+            embed=discord.Embed(title=" ", color=0xff6600)
             embed.set_author(name="Server Bilgileri", icon_url=client.user.avatar_url)
-            embed.add_field(name="Server Adı :", value=serverName + "  (ID : " + serverID +")\n", inline=False)
-            embed.add_field(name="Server Sahibi :", value=serverOwner+"(" + str(serverOwnerN) + ")\n", inline=False)
-            embed.add_field(name="Kullanıcı Sayısı :", value=serverMemCount + "\n", inline=False)
-            embed.add_field(name="Server Bölgesi :", value=serverRegion +"\n", inline=False)
+            embed.add_field(name="Server Adı :", value=serverName + "  (ID : " + serverID +")", inline=False)
+            embed.add_field(name="Server Sahibi :", value=serverOwner+"(" + str(serverOwnerN) + ")", inline=False)
+            embed.add_field(name="Kullanıcı Sayısı :", value=serverMemCount, inline=False)
+            embed.add_field(name="Kanal Sayısı : ",value=serverKanal, inline=False)
+            embed.add_field(name="Rol Sayısı : ",value=serverRol, inline=False)
+            embed.add_field(name="Server Bölgesi :", value=serverRegion, inline=False)
             embed.add_field(name="Server Yaratılma Tarihi(UTC) : ", value=serverDate, inline=False)
             await client.send_message(message.channel,embed=embed)
 
             #await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))
             
+        if message.content.upper().startswith("!SRVRS"):
+            if message.author.id == myID:
+                server_listesi = ""
+
+                for server in client.servers:
+                    server_listesi += server.name + "\n"
+
+                embed=discord.Embed(title=" ", color=0x75df00)
+                embed.set_author(name="Aktif Serverlar", icon_url=client.user.avatar_url)
+                embed.add_field(name="Liste", value=server_listesi, inline=False)
+            else:
+                await client.send_message(message.channel,"Buna yetkin yok.")
 
         #++========================== EGLENCE ============================++#
 
@@ -343,13 +427,13 @@ async def on_message(message):
         #!sence
         if message.content.upper().startswith("!SENCE"):
             option = random.randint(1,4)
-            if option == 0 :
-                await client.send_message(message.channel, yazi.komut["senceEvet1"])
             if option == 1 :
+                await client.send_message(message.channel, yazi.komut["senceEvet1"])
+            if option == 2 :
                 await client.send_message(message.channel, yazi.komut["senceEvet2"])
-            if option == 2:
-                await client.send_message(message.channel, yazi.komut["senceHayir1"])
             if option == 3:
+                await client.send_message(message.channel, yazi.komut["senceHayir1"])
+            if option == 4:
                 await client.send_message(message.channel, yazi.komut["senceHayir2"])
 
 
@@ -369,6 +453,18 @@ async def on_message(message):
 
         #++========================== OZEL ============================++#
         
+        #buglubot
+        if "buglubot" in message.content:
+            op = random.randint(1,100)
+
+            if op == 1:
+                await client.send_message(message.channel, yazi.komut["bot1"])
+            if op == 2:
+                await client.send_message(message.channel, yazi.komut["bot2"])
+            if op == 3:
+                await client.send_message(message.channel, yazi.komut["bot3"])
+            if op == 4:
+                await client.send_message(message.channel, yazi.komut["bot4"])
 
         #omurcek ozel
         if message.content.upper().startswith("OMURCEK") or message.content.upper().startswith("ÖMÜRCEK"):
@@ -392,7 +488,7 @@ async def on_message(message):
                 await client.send_message(message.channel, yazi.komut["kedi2"])
             if op == 3:
                 await client.send_message(message.channel, yazi.komut["kedi3"])
-            if op ==4:
+            if op == 4:
                 await client.send_message(message.channel, yazi.komut["kedi4"])
 
         '''

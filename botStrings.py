@@ -19,6 +19,7 @@ yardim = {
     "surum" :       "!sürüm,!version        (versiyonum!)\n",
     "statu" :       "!statü,!stats          (istatisiklerim!)\n",
     "server" :      "!server                (server bilgileri!)\n",
+    "hava" :        "!hava                  (şehrindeki hava durumunu gör!)\n",
     "roller" :      "!roller,roles          (serverdaki roller!)\n",
     "rolver" :      "!rolver                (etiketlenen kullanicilara rol ver!)\n",
     "gelistirici" : "!dev,!geliştirici      (beni yazan kişi!)\n",
@@ -30,6 +31,7 @@ yardim = {
     "kripto" :      "!kripto,!crypto        (kripto para kurlari!)\n",
     "doviz" :       "!döviz                 (anlık doviz kurlari!)\n",
     "self" :        "!ben,!self             (kendi kendini öv!)\n",
+    "ceviri":       "!cevir                 (ceviri yap!)\n",
     "oyla" :        "!oyla,!vote            (oylama baslat!)\n",
     "durt" :        "!dürt,!ping            (birisini dürt!)\n",
     "firlat" :      "!fırlat,!flip          (yazı mı, tura mı!)\n",
@@ -39,7 +41,7 @@ yardim = {
 
 
 komut = {
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["genel"] + yardim["durt"] + yardim["oyla"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["eglence"] + yardim["sence"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["genel"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["eglence"] + yardim["sence"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",
@@ -67,5 +69,9 @@ komut = {
     "kedi1" : "https://cdn.discordapp.com/attachments/455819920140271626/456190563360702484/3.jpg",
     "kedi2" : "https://cdn.discordapp.com/attachments/455821524285259778/456190685301833738/4.jpg",
     "kedi3" : "https://cdn.discordapp.com/attachments/455821524285259778/456190723620864011/1.jpg",
-    "kedi4" : "https://cdn.discordapp.com/attachments/455821524285259778/456190866554617857/2.jpg"
+    "kedi4" : "https://cdn.discordapp.com/attachments/455821524285259778/456190866554617857/2.jpg",
+    "bot1" : "https://p.fod4.com/p/media/1cd2f27638/aPtE2U3sSnEkyjeDodvg_r3.gif",
+    "bot2" : "https://media.giphy.com/media/10XpbAw59H1mog/giphy.gif",
+    "bot3" : "https://media1.tenor.com/images/c771433f71582c244de8b3e7d6c8e241/tenor.gif",
+    "bot4" : "https://media2.giphy.com/media/EizPK3InQbrNK/giphy.gif"
 }

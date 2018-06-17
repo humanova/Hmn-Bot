@@ -267,7 +267,7 @@ async def on_message(message):
                     embed.add_field(name=":earth_africa: Yer", value=yer, inline=True)
                     embed.add_field(name=":thermometer: Sıcaklık" , value=str(sicaklik) + "°C", inline=True)
                     embed.add_field(name=":droplet: Nem" , value=str(nem_orani)+"%", inline=True)
-                    embed.add_field(name=":dash: Rüzgar" , value=str(ruzgar_hizi)+" m/s", inline=True)
+                    embed.add_field(name=":dash: Rüzgar Hızı" , value=str(ruzgar_hizi)+" m/s", inline=True)
                     embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu, inline=True)
                     embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi, inline=True)
                     embed.add_field(name="Durum :" , value=durum, inline=False)
@@ -455,7 +455,7 @@ async def on_message(message):
         
         #buglubot
         if "buglubot" in message.content:
-            op = random.randint(1,100)
+            op = random.randint(1,4)
 
             if op == 1:
                 await client.send_message(message.channel, yazi.komut["bot1"])

@@ -421,13 +421,13 @@ async def on_message(message):
         #!leet,!l33t
         if message.content.upper().startswith("!LEET") or message.content.upper().startswith("!L33T"):
             msg = message.content
-            if message[6]:
-                message = message[6:]
-                message.replace('e','3')
-                message.replace('a','4')
-                message.replace('i','1')
-                message.replace('s','5')
-                message.replace('o','0')
+            if msg[6]:
+                msg = msg[6:]
+                msg.replace('e','3')
+                msg.replace('a','4')
+                msg.replace('i','1')
+                msg.replace('s','5')
+                msg.replace('o','0')
                     
                 await client.send_message(message.channel,msg)
 

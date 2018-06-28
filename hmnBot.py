@@ -426,6 +426,7 @@ async def on_message(message):
                 msg = msg.replace('e','3')
                 msg = msg.replace('a','4')
                 msg = msg.replace('i','1')
+                msg = msg.replace('ı','1')
                 msg = msg.replace('s','5')
                 msg = msg.replace('o','0')
                     

@@ -423,11 +423,11 @@ async def on_message(message):
             msg = message.content
             if msg[6]:
                 msg = msg[6:]
-                msg.replace('e','3')
-                msg.replace('a','4')
-                msg.replace('i','1')
-                msg.replace('s','5')
-                msg.replace('o','0')
+                msg = msg.replace('e','3')
+                msg = msg.replace('a','4')
+                msg = msg.replace('i','1')
+                msg = msg.replace('s','5')
+                msg = msg.replace('o','0')
                     
                 await client.send_message(message.channel,msg)
 

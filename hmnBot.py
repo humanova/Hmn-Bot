@@ -33,7 +33,7 @@ import ceviri
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.4\n17/07/18"
+version = "hmnBot v0.2.4a\n17/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 

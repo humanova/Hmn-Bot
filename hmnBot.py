@@ -550,8 +550,7 @@ async def on_message(message):
         '''
 
 
-#token = os.environ['PP_BOT_TOKEN']
-token = 'NDU3MjI1Nzg3MzA1NzU0NjI0.Di-OYQ.V29phgNN-1dVaWiJ-re8F9GxLVY'
+token = os.environ['PP_BOT_TOKEN']
 client.run(token)
 
 

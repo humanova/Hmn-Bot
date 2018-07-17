@@ -312,8 +312,8 @@ async def on_message(message):
                 if not kurUSD == "hata":
                     embed=discord.Embed(title=" ", color=0x2079ff)
                     embed.set_author(name="Kripto Kurları [" + kur[1] +"]", icon_url=client.user.avatar_url)
-                    embed.add_field(name=adet + " " + kurUSD + "/USD", value=deger_USD, inline=True)
-                    embed.add_field(name=adet + " " + kurTL + "/TL" , value="~" + deger_TL, inline=True)
+                    embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value=deger_USD, inline=True)
+                    embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value="~" + deger_TL, inline=True)
                     embed.add_field(name="Son 7 günlük grafik", value="", inline=False)
                     embed.set_image(url=grafik_link)
                     embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
@@ -340,7 +340,7 @@ async def on_message(message):
                 if not kur == "hata":
                     embed=discord.Embed(title=" ", color=0x2b80ff)
                     embed.set_author(name="Döviz Bilgileri", icon_url=client.user.avatar_url)
-                    embed.add_field(name=adet + " " + kur + "/TL", value=kur_degeri, inline=True)
+                    embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
                     embed.set_footer(text="💰 Kaynak : xe.com")
                     await client.send_message(message.channel,embed=embed)
                     # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))

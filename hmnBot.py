@@ -278,8 +278,8 @@ async def on_message(message):
 
         #!bitcoin,!btc
         if message.content.upper().startswith("!BITCOIN") or message.content.upper().startswith("!BTC"):
-            a,btc_tl = doviz.DovizParse("BTC-TRY")
-            a,btc_usd = doviz.DovizParse("BTC-USD")
+            a,btc_tl = doviz.DovizParse("BTC-TRY",1)
+            a,btc_usd = doviz.DovizParse("BTC-USD",1)
             
             embed=discord.Embed(title=" ", color=0x2079ff)
             embed.set_author(name="Bitcoin Kuru", icon_url=client.user.avatar_url)
@@ -295,18 +295,28 @@ async def on_message(message):
                 if msg[1].upper().startswith("FETOCU") or kur[1].upper().startswith("FETÖCÜ"):
                     await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
 
-                if msg[2].isnumeric():
-                    adet = msg[2]
+                if msg[2]:
+                    if msg[2].isnumeric():
+                        adet = msg[2]
+
+                    else:
+                        adet = 1
                 else:
                     adet = 1
+                
+                #set_image
+                kurUSD,deger_USD,grafik_link = doviz.KriptoParse(kur[1],"usd",adet)
+                a,dolar_degeri = doviz.DovizParse("USD",1)
+                kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
 
-                kurTL,deger_TL = doviz.KriptoParse(kur[1],"try")
-                kurUSD,deger_USD = doviz.KriptoParse(kur[1],"usd")
-                if not kurTL == "hata":
+                if not kurUSD == "hata":
                     embed=discord.Embed(title=" ", color=0x2079ff)
                     embed.set_author(name="Kripto Kurları [" + kur[1] +"]", icon_url=client.user.avatar_url)
                     embed.add_field(name=adet + " " + kurUSD + "/USD", value=deger_USD, inline=True)
-                    embed.add_field(name=adet + " " + kurTL + "/TL" , value=deger_TL, inline=True)
+                    embed.add_field(name=adet + " " + kurTL + "/TL" , value="~" + deger_TL, inline=True)
+                    embed.add_field(name="Son 7 günlük grafik", value="", inline=False)
+                    embed.set_image(url=grafik_link)
+                    embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
                     await client.send_message(message.channel,embed=embed)
                     #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))
            
@@ -315,8 +325,13 @@ async def on_message(message):
             msg = message.content.split(" ")
             if msg[1]:
                 kur = msg[1]
-                if msg[2].isnumeric():
-                    adet = msg[2]
+
+                if msg[2]:
+                    if msg[2].isnumeric():
+                        adet = msg[2]
+
+                    else:
+                        adet = 1
                 else:
                     adet = 1
 
@@ -325,6 +340,7 @@ async def on_message(message):
                     embed=discord.Embed(title=" ", color=0x2b80ff)
                     embed.set_author(name="Döviz Bilgileri", icon_url=client.user.avatar_url)
                     embed.add_field(name=adet + " " + kur + "/TL", value=kur_degeri, inline=True)
+                    embed.set_footer(text="💰 Kaynak : xe.com")
                     await client.send_message(message.channel,embed=embed)
                     # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
         

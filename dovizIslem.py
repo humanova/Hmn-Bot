@@ -9,6 +9,7 @@
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
+from coinmarketcap import Market
 
 
 
@@ -19,13 +20,13 @@ def DovizParse(kur,adet):
         if kur.startswith("btc"):
 
             if kur == "btc-try":
-                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + adet + '&From=XBT&To=TRY'
+                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + str(adet) + '&From=XBT&To=TRY'
 
             elif kur == "btc-usd":
-                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + adet + '&From=XBT&To=USD'
+                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + str(adet) + '&From=XBT&To=USD'
 
         else:
-            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + adet + "&From=" + kur + "&To=TRY"
+            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + kur + "&To=TRY"
         
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
@@ -126,24 +127,24 @@ def DovizAlgila(kur):
         return kur
 
     
-
 def KriptoParse(kur,don,adet):
-    kur,kisa_ad = KriptoAlgila(kur)
+    kur,kisa_ad,grafik_link = KriptoAlgila(kur)
 
     if not kur == "hata" and int(adet) >= 1:
 
-        kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + adet + '&From=' + kisa_ad + '&To=' + don.upper()
+        kurURL = 'https://coinmarketcap.com/currencies/' + kur
     
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
 
-        kripto_deger = parse.find("span","uccResultAmount")
+        kripto_deger = parse.find("span","h2 text-semi-bold details-panel-item--price__value")
 
         kur_degeri = kripto_deger.text
-        return kur.upper(),kur_degeri
+
+        return kur.upper(),kur_degeri,grafik_link
 
     else :
-        return kur,kisa_ad
+        return kur,kisa_ad,grafik_link
 
 
 def KriptoAlgila(kur):
@@ -151,47 +152,56 @@ def KriptoAlgila(kur):
     if kur.upper() == "BTC" or kur.upper() == "BITCOIN":
         kur = "bitcoin"
         kisa_ad = "xbt"
-        return kur,kisa_ad
+        grafik_link = 'https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1.png'
+        return kur,kisa_ad,grafik_link
     
     elif kur.upper() == "BTCCASH" or kur.upper() == "BITCOINCASH" or kur.upper() == "BCH":
         kur = "bitcoin-cash"
         kisa_ad = "bch"
-        return kur,kisa_ad
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1831.png"
+        return kur,kisa_ad,grafik_link
             
     elif kur.upper() == "ETH" or kur.upper() == "ETHEREUM":
 
         kur = "ethereum"
         kisa_ad = "eth"
-        return kur,kisa_ad
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1027.png"
+        return kur,kisa_ad,grafik_link
 
     elif kur.upper() == "XRP" or kur.upper() == "RIPPLE":
         kur = "ripple"
         kisa_ad = "xrp"
-        return kur,kisa_ad
+        grafik_link = 'https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/52.png'
+        return kur,kisa_ad,grafik_link
 
     elif kur.upper() == "EOS":
         kur = "eos"
         kisa_ad = "eos"
-        return kur,kisa_ad
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1765.png"
+        return kur,kisa_ad,grafik_link
 
     elif kur.upper() == "XMR" or kur.upper() == "MONERO":
         kur = "monero"
         kisa_ad = "xmr"
-        return kur,kisa_ad
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/328.png"
+        return kur,kisa_ad,grafik_link
 
     elif kur.upper() == "LITE" or kur.upper() == "LTC" or kur.upper() == "LITECOIN":
         kur = "litecoin"
         kisa_ad = "ltc"
-        return kur,kisa_ad
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/2.png"
+        return kur,kisa_ad,grafik_link
 
     elif kur.upper() == "XLM" or kur.upper() == "STELLAR":
         kur = "stellar"
         kisa_ad = "xlm"
-        return kur,kisa_ad
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/512.png"
+        return kur,kisa_ad,grafik_link
 
     else:
         kur = "hata"
         kisa_ad = "hata"
-        return kur,kisa_ad
+        grafik_link = "hata"
+        return kur,kisa_ad,grafik_link
 
     

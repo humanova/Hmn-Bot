@@ -3,15 +3,10 @@
 # MIT License, see LICENSE for more details
 
 #	NOTLAR
-#  unutmadan buraya yazayim, site acabilirsem eklenecekler
 
 #  Fikir sunanlar ve gelistirirken emegi gecenler :
 #  112'nin Yaz Turnuvasi Sunucusu, 112servis, barisuraz, selindesu ve digerleri!
-# hava durumu https://www.mgm.gov.tr/FTPDATA/analiz/sonSOA.xml
-# http://www.saatkac.com/xml_saat_kod.php?u=TR&lisans=3590dk4fd5123 12 - 13
-# http://212.175.180.28/api/merkezler?il=Ankara
-# ceviri ffff99
-# server #990033 , #ff6600 #660066
+
 
 import os,sys
 import random
@@ -316,7 +311,7 @@ async def on_message(message):
                     embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
                     embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value="~" + str(deger_TL), inline=True)
                     embed.add_field(name="Son 7 günlük grafik", value="", inline=False)
-                    embed.set_image(url=grafik_link)
+                    embed.set_thumbnail(url=grafik_link)
                     embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
                     await client.send_message(message.channel,embed=embed)
                     #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))

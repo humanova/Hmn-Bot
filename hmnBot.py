@@ -28,7 +28,7 @@ import ceviri
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.4a\n17/07/18"
+version = "hmnBot v0.2.5\n17/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 
@@ -432,10 +432,11 @@ async def on_message(message):
             
         if message.content.upper().startswith("!SRVRS"):
             if message.author.id == myID:
+                liste = ""
                 server_listesi = list(client.servers)
 
-                for a in range(len(servers)):
-                    server_listesi += servers[a-1].name + "\n"
+                for a in range(len(server_listesi)):
+                    liste += server_listesi[a-1].name + "\n"
 
                 embed=discord.Embed(title=" ", color=0x75df00)
                 embed.set_author(name="Aktif Serverlar", icon_url=client.user.avatar_url)

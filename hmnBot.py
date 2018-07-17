@@ -292,19 +292,17 @@ async def on_message(message):
         if message.content.upper().startswith("!KRIPTO") or message.content.upper().startswith("!CRYPTO"):
             msg = message.content.split(" ")
             if msg[1]:
-                if msg[1].upper().startswith("FETOCU") or kur[1].upper().startswith("FETÖCÜ"):
+                if msg[1].upper().startswith("FETOCU") or msg[1].upper().startswith("FETÖCÜ"):
                     await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
 
                 if msg[2]:
                     if msg[2].isnumeric():
                         adet = msg[2]
-
                     else:
                         adet = 1
                 else:
                     adet = 1
                 
-                #set_image
                 kurUSD,deger_USD,grafik_link = doviz.KriptoParse(kur[1],"usd",adet)
                 a,dolar_degeri = doviz.DovizParse("USD",1)
                 kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
@@ -329,7 +327,6 @@ async def on_message(message):
                 if msg[2]:
                     if msg[2].isnumeric():
                         adet = msg[2]
-
                     else:
                         adet = 1
                 else:

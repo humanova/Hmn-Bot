@@ -33,11 +33,11 @@ import ceviri
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.2a\n27/06/18"
+version = "hmnBot v0.2.4\n17/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 
-#uyarilar = ["EMIR","HUMAN","HUMANOVAN","HUMANOVA","HUMANOV","HUMANDESU"]
+
 uyari_disi = [botID,myID]
 
 def serverSayisi():
@@ -225,7 +225,7 @@ async def on_message(message):
                 await client.add_reaction(msg,'👎')
             
 
-        # !google,!ara (NOT! ozel karakterler desteklenmiyor!)
+        #!google,!ara 
         if message.content.upper().startswith("!GOOGLE") or message.content.upper().startswith("!ARA"):
             searchQ = "https://google.com/search?q="
             msg = message.content.split(" ")
@@ -239,7 +239,7 @@ async def on_message(message):
                 await client.send_message(message.channel, "%s" % (searchQ))
 
 
-        #!lmgtfy (NOT! ozel karakterler desteklenmiyor!)
+        #!lmgtfy
         if message.content.upper().startswith("!LMGTFY"):
             searchQ = "http://lmgtfy.com/?q="
             msg = message.content.split(" ")
@@ -290,17 +290,23 @@ async def on_message(message):
         
         #!kripto
         if message.content.upper().startswith("!KRIPTO") or message.content.upper().startswith("!CRYPTO"):
-            kur = message.content.split(" ")
-            if kur[1]:
-                if kur[1].upper().startswith("FETOCU") or kur[1].upper().startswith("FETÖCÜ"):
+            msg = message.content.split(" ")
+            if msg[1]:
+                if msg[1].upper().startswith("FETOCU") or kur[1].upper().startswith("FETÖCÜ"):
                     await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
+
+                if msg[2].isnumeric():
+                    adet = msg[2]
+                else:
+                    adet = 1
+
                 kurTL,deger_TL = doviz.KriptoParse(kur[1],"try")
                 kurUSD,deger_USD = doviz.KriptoParse(kur[1],"usd")
                 if not kurTL == "hata":
                     embed=discord.Embed(title=" ", color=0x2079ff)
                     embed.set_author(name="Kripto Kurları [" + kur[1] +"]", icon_url=client.user.avatar_url)
-                    embed.add_field(name=kurUSD + "/USD", value=deger_USD, inline=True)
-                    embed.add_field(name=kurTL + "/TL" , value=deger_TL, inline=True)
+                    embed.add_field(name=adet + " " + kurUSD + "/USD", value=deger_USD, inline=True)
+                    embed.add_field(name=adet + " " + kurTL + "/TL" , value=deger_TL, inline=True)
                     await client.send_message(message.channel,embed=embed)
                     #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))
            
@@ -309,11 +315,16 @@ async def on_message(message):
             msg = message.content.split(" ")
             if msg[1]:
                 kur = msg[1]
-                kur,kur_degeri = doviz.DovizParse(kur)
+                if msg[2].isnumeric():
+                    adet = msg[2]
+                else:
+                    adet = 1
+
+                kur,kur_degeri = doviz.DovizParse(kur,adet)
                 if not kur == "hata":
                     embed=discord.Embed(title=" ", color=0x2b80ff)
                     embed.set_author(name="Döviz Bilgileri", icon_url=client.user.avatar_url)
-                    embed.add_field(name=kur + "/TL", value=kur_degeri, inline=True)
+                    embed.add_field(name=adet + " " + kur + "/TL", value=kur_degeri, inline=True)
                     await client.send_message(message.channel,embed=embed)
                     # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
         
@@ -407,7 +418,7 @@ async def on_message(message):
                 server_listesi = ""
 
                 for server in client.servers:
-                    server_listesi += server.name + "\n"
+                    server_listesi += client.server.name + "\n"
 
                 embed=discord.Embed(title=" ", color=0x75df00)
                 embed.set_author(name="Aktif Serverlar", icon_url=client.user.avatar_url)
@@ -481,11 +492,15 @@ async def on_message(message):
             if op == 4:
                 await client.send_message(message.channel, yazi.komut["bot4"])
 
-        #omurcek ozel
+        #dead server - ded server (MESAJI EKLE)
+        if "DEAD SERVER" in message.content.upper() or "DED SERVER" in message.content.upper() or "DEADSERVER" in message.content.upper():
+            await client.send_message(message.channel, yazi.komut["deadserver"])
+
+        #omurcek
         if message.content.upper().startswith("OMURCEK") or message.content.upper().startswith("ÖMÜRCEK"):
             await client.send_message(message.channel, yazi.komut["omurcek"])
         
-        #no more hiding "send nudes" msg (anti selindesu)
+        #send nudes
         if "nude" in message.content:
             await client.add_reaction(message,"🇳")
             await client.add_reaction(message,"🇺")

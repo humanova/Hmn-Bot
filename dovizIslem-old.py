@@ -4,7 +4,8 @@
 
 #hmnBot Doviz islemleri
 
-#KAYNAK : www.xe.com
+#buna gec : https://www.xe.com/currencyconverter/convert/?Amount=3.5&From=USD&To=TRY
+#daha iyi span uccResultAmount
 
 
 from bs4 import BeautifulSoup
@@ -12,27 +13,32 @@ from urllib.request import urlopen, Request
 
 
 
-def DovizParse(kur,adet):
+def DovizParse(kur):
     kur = DovizAlgila(kur)
 
-    if not kur == "hata" and int(adet) >= 1:
+    if not kur == "hata":
         if kur.startswith("btc"):
 
             if kur == "btc-try":
-                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + adet + '&From=XBT&To=TRY'
+                kurURL = 'https://tr.investing.com/crypto/bitcoin/btc-try'
 
             elif kur == "btc-usd":
-                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + adet + '&From=XBT&To=USD'
+                kurURL = 'https://tr.investing.com/crypto/bitcoin/btc-usd'
 
         else:
-            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + adet + "&From=" + kur + "&To=TRY"
+            kurURL = "http://tr.investing.com/currencies/" + kur + "-try"
         
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
-            
-        doviz = parse.find("span","uccResultAmount")
 
-        kur_degeri = doviz.text
+        for doviz in parse.find_all('span', id="last_last"):
+            liste = list(doviz)
+        
+        liste = str(liste)
+        for char in "[']":
+            liste = liste.replace(char,'')
+
+        kur_degeri = liste
 
         return kur.upper(),kur_degeri
         
@@ -127,19 +133,25 @@ def DovizAlgila(kur):
 
     
 
-def KriptoParse(kur,don,adet):
+def KriptoParse(kur,don):
     kur,kisa_ad = KriptoAlgila(kur)
 
-    if not kur == "hata" and int(adet) >= 1:
+    if not kur == "hata":
 
-        kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + adet + '&From=' + kisa_ad + '&To=' + don.upper()
+        kurURL = "https://tr.investing.com/crypto/" + kur + "/" + kisa_ad + "-" + don
     
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
 
-        kripto_deger = parse.find("span","uccResultAmount")
+        for doviz in parse.find_all('span', id="last_last"):
+            liste = list(doviz)
+        
+        liste = str(liste)
+        for char in "[']":
+            liste = liste.replace(char,'')
 
-        kur_degeri = kripto_deger.text
+        kur_degeri = liste
+
         return kur.upper(),kur_degeri
 
     else :
@@ -150,7 +162,7 @@ def KriptoAlgila(kur):
 
     if kur.upper() == "BTC" or kur.upper() == "BITCOIN":
         kur = "bitcoin"
-        kisa_ad = "xbt"
+        kisa_ad = "btc"
         return kur,kisa_ad
     
     elif kur.upper() == "BTCCASH" or kur.upper() == "BITCOINCASH" or kur.upper() == "BCH":

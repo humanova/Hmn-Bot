@@ -5,7 +5,6 @@
 from googletrans import Translator
 
 
-
 def Cevir(curr,hedef,yazi):
 
     translator = Translator()

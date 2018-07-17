@@ -33,6 +33,7 @@ yardim = {
     "self" :        "!ben,!self             (kendi kendini öv!)\n",
     "ceviri":       "!cevir                 (ceviri yap!)\n",
     "oyla" :        "!oyla,!vote            (oylama baslat!)\n",
+    "leet" :        "!leet,!l33t            (h4v4l1 y4z!)\n",
     "durt" :        "!dürt,!ping            (birisini dürt!)\n",
     "firlat" :      "!fırlat,!flip          (yazı mı, tura mı!)\n",
     "sikayet" :     "!şikayet               (bir durumu yetkiliye sikayet et!)\n",
@@ -41,7 +42,7 @@ yardim = {
 
 
 komut = {
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["genel"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["eglence"] + yardim["sence"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["genel"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["eglence"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",
@@ -66,6 +67,7 @@ komut = {
     "firlatYazi" : "Yazı geldi!",
     "firlatTura" : "Tura geldi!",
     "omurcek" : ":spider: ::)",
+    "deadserver" : "https://media.discordapp.net/attachments/406172843580063784/463424761318473729/LegitimateWrongBengaltiger.png",
     "kedi1" : "https://cdn.discordapp.com/attachments/455819920140271626/456190563360702484/3.jpg",
     "kedi2" : "https://cdn.discordapp.com/attachments/455821524285259778/456190685301833738/4.jpg",
     "kedi3" : "https://cdn.discordapp.com/attachments/455821524285259778/456190723620864011/1.jpg",

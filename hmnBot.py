@@ -303,7 +303,7 @@ async def on_message(message):
                 kur = msg[1]
                 kurUSD,deger_USD,grafik_link = doviz.KriptoParse(kur,"usd",adet)
                 a,dolar_degeri = doviz.DovizParse("USD",1)
-                kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
+                kurTL,deger_TL = kurUSD,round((float(deger_USD) * float(dolar_degeri)),2)
 
                 if not kurUSD == "hata":
                     embed=discord.Embed(title=" ", color=0x2079ff)

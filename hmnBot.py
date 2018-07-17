@@ -154,7 +154,11 @@ async def on_message(message):
                 if msg[1].isdigit():
                     kul_sayisi = int(msg[1])
 
-            davet = await client.create_invite(message.channel,max_uses=kul_sayisi)
+            try:
+                davet = await client.create_invite(message.channel,max_uses=kul_sayisi)
+            except discord.errors.NotFound:
+                await client.send_message(message.channel,"Yetkim yok!")
+
             embed=discord.Embed(title=" ", color=0x75df00)
             embed.set_author(name=message.channel.name + " Kanal Daveti", icon_url=client.user.avatar_url)
             embed.add_field(name="%d kullanımlık davet linki : " % (kul_sayisi), value=davet.url, inline=False)
@@ -428,10 +432,10 @@ async def on_message(message):
             
         if message.content.upper().startswith("!SRVRS"):
             if message.author.id == myID:
-                server_listesi = ""
+                server_listesi = list(client.servers)
 
-                for server in client.servers:
-                    server_listesi += client.server.name + "\n"
+                for a in range(len(servers)):
+                    server_listesi += servers[a-1].name + "\n"
 
                 embed=discord.Embed(title=" ", color=0x75df00)
                 embed.set_author(name="Aktif Serverlar", icon_url=client.user.avatar_url)

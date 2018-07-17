@@ -8,8 +8,8 @@ import pyowm
 from datetime import datetime
 from dateutil import tz
 
-
-token = os.environ['OWM_TOKEN']
+token = "ea5a67bd0fa9f96d5dee7c9c7180f6cc"
+#token = os.environ['OWM_TOKEN']
 owm = pyowm.OWM(token)
 iconURL = "http://openweathermap.org/img/w/"
 havaURL = "https://www.mgm.gov.tr/FTPDATA/analiz/sonSOA.xml"

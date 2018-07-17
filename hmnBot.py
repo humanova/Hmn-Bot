@@ -313,8 +313,8 @@ async def on_message(message):
                 if not kurUSD == "hata":
                     embed=discord.Embed(title=" ", color=0x2079ff)
                     embed.set_author(name="Kripto Kurları [" + kur[1] +"]", icon_url=client.user.avatar_url)
-                    embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value=deger_USD, inline=True)
-                    embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value="~" + deger_TL, inline=True)
+                    embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
+                    embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value="~" + str(deger_TL), inline=True)
                     embed.add_field(name="Son 7 günlük grafik", value="", inline=False)
                     embed.set_image(url=grafik_link)
                     embed.set_footer(text="💎 Kaynak : coinmarketcap.com")

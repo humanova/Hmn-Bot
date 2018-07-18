@@ -137,13 +137,16 @@ def KriptoParse(kur,don,adet):
         parse = BeautifulSoup(data,'html.parser')
 
         kripto_deger = parse.find("span","h2 text-semi-bold details-panel-item--price__value")
-
+        kripto_degisim = parse.find("span", "data-format-percentage")
+        
         kur_degeri = kripto_deger.text
+        kur_degisim = kripto_degisim.text
 
-        return kur.upper(),kur_degeri,grafik_link
+        return kur.upper(),kur_degeri,kur_degisim,grafik_link
 
     else :
-        return kur,kisa_ad,grafik_link
+        kur_degisim = "hata"
+        return kur,kisa_ad,kur_degisim,grafik_link
 
 
 def KriptoAlgila(kur):

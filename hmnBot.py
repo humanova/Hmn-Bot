@@ -305,12 +305,13 @@ async def on_message(message):
                     adet = 1
 
                 kur = msg[1]
-                kurUSD,deger_USD,grafik_link = doviz.KriptoParse(kur,"usd",adet)
+                kurUSD,deger_USD,kur_degisim,grafik_link = doviz.KriptoParse(kur,"usd",adet)
                 a,dolar_degeri = doviz.DovizParse("USD",1)
                 kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
 
-                deger_USD *= round(deger_USD * adet,2)
-                deger_TL *= round(deger_TL * adet,2)
+                deger_USD = round(float(deger_USD) * adet,2)
+                deger_TL = round(float(deger_TL) * adet,2)
+                kur_degisim = round(float(kur_degisim),2)
 
 
                 if not kurUSD == "hata":
@@ -318,7 +319,13 @@ async def on_message(message):
                     embed.set_author(name="Kripto Kurları [" + kur.upper() +"]", icon_url=client.user.avatar_url)
                     embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
                     embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
-                    embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=False)
+
+                    if not kur_degisim.startswith("-"):
+                        embed.add_field(name="Günlük Değişim",value=":arrow_up_small: % " + str(kur_degisim), inline=False)
+                    else:
+                        embed.add_field(name="Günlük Değişim",value=":arrow_down_small: % " + str(kur_degisim), inline=False)
+
+                    embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=True)
                     embed.set_image(url=grafik_link)
                     embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
                     await client.send_message(message.channel,embed=embed)

@@ -307,6 +307,10 @@ async def on_message(message):
                         if not msg[2] == "0":
                             if is_float(msg[2]):
                                 adet = float(msg[2])
+
+                            elif msg[2].isnumeric():
+                                adet = msg[2]
+                            
                             else:
                                 adet = 1
                         else:
@@ -352,6 +356,10 @@ async def on_message(message):
                         if not msg[2] == "0":
                             if is_float(msg[2]):
                                 adet = float(msg[2])
+
+                            elif msg[2].isnumeric():
+                                adet = msg[2]
+                            
                             else:
                                 adet = 1
                         else:

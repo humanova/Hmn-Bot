@@ -205,6 +205,12 @@ def KriptoAlgila(kur):
         grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/512.png"
         return kur,kisa_ad,grafik_link
 
+    elif kur.upper() == "NTY" or kur.upper() == "NEXTY":
+        kur = "nexty"
+        kisa_ad = "nty"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/2714.png"
+        return kur,kisa_ad,grafik_link
+
     else:
         kur = "hata"
         kisa_ad = "hata"

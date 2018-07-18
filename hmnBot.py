@@ -298,7 +298,10 @@ async def on_message(message):
                 try:
                     if msg[2]:
                         if msg[2].isnumeric():
-                            adet = msg[2]
+                            if not msg[2] == "0":
+                                adet = msg[2]
+                            else:
+                                adet = 1
                         else:
                             adet = 1
                 except:
@@ -321,9 +324,9 @@ async def on_message(message):
                     embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
 
                     if not str(kur_degisim).startswith("-"):
-                        embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=False)
+                        embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=True)
                     else:
-                        embed.add_field(name="Günlük Değişim",value=":arrow_down_small: % " + str(kur_degisim) + "%", inline=False)
+                        embed.add_field(name="Günlük Değişim",value=":arrow_down_small: % " + str(kur_degisim) + "%", inline=True)
 
                     embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=True)
                     embed.set_image(url=grafik_link)
@@ -340,7 +343,10 @@ async def on_message(message):
                 try:
                     if msg[2]:
                         if msg[2].isnumeric():
-                            adet = msg[2]
+                            if not msg[2] == "0":
+                                adet = msg[2]
+                            else:
+                                adet = 1
                         else:
                             adet = 1
                 except:

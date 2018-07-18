@@ -320,7 +320,7 @@ async def on_message(message):
                     embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
                     embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
 
-                    if not kur_degisim.startswith("-"):
+                    if not str(kur_degisim).startswith("-"):
                         embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=False)
                     else:
                         embed.add_field(name="Günlük Değişim",value=":arrow_down_small: % " + str(kur_degisim) + "%", inline=False)

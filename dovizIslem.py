@@ -136,13 +136,14 @@ def KriptoParse(kur,don,adet):
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
 
+        kripto_degisim = parse.find("span", "h2 text-semi-bold positive_change ")
         kripto_deger = parse.find("span","h2 text-semi-bold details-panel-item--price__value")
-        kripto_degisim = parse.find("span", "data-format-percentage")
         
+
         kur_degeri = kripto_deger.text
         kur_degisim = kripto_degisim.text
 
-        return kur.upper(),kur_degeri,kur_degisim,grafik_link
+        return kur.upper(),kur_degeri,kur_degisim[2:-3],grafik_link
 
     else :
         kur_degisim = "hata"

@@ -321,9 +321,9 @@ async def on_message(message):
                     embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
 
                     if not kur_degisim.startswith("-"):
-                        embed.add_field(name="Günlük Değişim",value=":arrow_up_small: % " + str(kur_degisim), inline=False)
+                        embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=False)
                     else:
-                        embed.add_field(name="Günlük Değişim",value=":arrow_down_small: % " + str(kur_degisim), inline=False)
+                        embed.add_field(name="Günlük Değişim",value=":arrow_down_small: % " + str(kur_degisim) + "%", inline=False)
 
                     embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=True)
                     embed.set_image(url=grafik_link)

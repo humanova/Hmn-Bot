@@ -7,7 +7,11 @@
 
 bot_game = {
     "meme" : "lookin' at r/dankmemes",
-    "cok-komik" : "Aklınla" #oynuyor hahahaha
+    "knack" : "Knack 2 Baby",
+    "mario" : "Super Mario Bros. 2",
+    "despacito" : "Despacito 2",
+    "sotarks" : "Sotarks Map",
+    "respect" : "Pressing F Simulator 2018"
 }
 
 yardim = {

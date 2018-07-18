@@ -59,7 +59,7 @@ def kullaniciSayisi():
 async def on_ready():
     print("Bot hazir!\n")
     print("%s adiyla giris yapildi" % (client.user.name))
-    await client.change_presence(game=discord.Game(name=yazi.bot_game["meme"]))
+    await client.change_presence(game=discord.Game(name=yazi.bot_game["knack"]))
 
 @client.event
 async def on_server_join(server):
@@ -500,6 +500,25 @@ async def on_message(message):
 
 
         #++========================== OZEL ============================++#
+        
+        #oyun degisme
+        if message.content.upper().startswith("!OYUN"):
+            if message.author.id == myID:
+                msg = message.content.split(" ")
+
+                try:
+                    if msg[1]:
+                        try:
+                            await client.change_presence(game=discord.Game(name=yazi.bot_game[msg[1]]))
+                        except:
+                            await client.send_message(message.channel,"Hata olustu")
+                            return 
+                except:
+                    return
+
+            else:
+                await client.send_mesage(message.channel, "Yetkin yok!")
+
         
         #buglubot
         if "buglubot" in message.content:

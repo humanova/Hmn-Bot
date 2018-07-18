@@ -199,16 +199,64 @@ def KriptoAlgila(kur):
         grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/2.png"
         return kur,kisa_ad,grafik_link
 
+    elif kur.upper() == "ETC" or kur.upper() == "ETHEREUM CLASSIC":
+        kur = "ethereum-classic"
+        kisa_ad = "etc"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1321.png"
+        return kur,kisa_ad,grafik_link
+    
+    elif kur.upper() == "ZEC" or kur.upper() == "ZCASH":
+        kur = "zcash"
+        kisa_ad = "zec"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1437.png"
+        return kur,kisa_ad,grafik_link
+
+    elif kur.upper() == "BCN" or kur.upper() == "BYTECOIN":
+        kur = "bytecoin-bcn"
+        kisa_ad = "bcn"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/372.png"
+        return kur,kisa_ad,grafik_link
+
     elif kur.upper() == "XLM" or kur.upper() == "STELLAR":
         kur = "stellar"
         kisa_ad = "xlm"
         grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/512.png"
         return kur,kisa_ad,grafik_link
 
+    elif kur.upper() == "ADA" or kur.upper() == "CARDANO":
+        kur = "cardano"
+        kisa_ad = "ada"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/2010.png"
+        return kur,kisa_ad,grafik_link
+
+    elif kur.upper() == "MIOTA" or kur.upper() == "IOTA":
+        kur = "iota"
+        kisa_ad = "miota"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1720.png"
+        return kur,kisa_ad,grafik_link
+
+    elif kur.upper() == "TRX" or kur.upper() == "TRON":
+        kur = "tron"
+        kisa_ad = "trx"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1958.png"
+        return kur,kisa_ad,grafik_link
+
+    elif kur.upper() == "NEO":
+        kur = "neo"
+        kisa_ad = "neo"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/1376.png"
+        return kur,kisa_ad,grafik_link
+
     elif kur.upper() == "NTY" or kur.upper() == "NEXTY":
         kur = "nexty"
         kisa_ad = "nty"
         grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/2714.png"
+        return kur,kisa_ad,grafik_link
+
+    elif kur.upper() == "PPC" or kur.upper() == "PEERCOIN":
+        kur = "peercoin"
+        kisa_ad = "ppc"
+        grafik_link = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/5.png"
         return kur,kisa_ad,grafik_link
 
     else:

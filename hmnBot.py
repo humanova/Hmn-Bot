@@ -55,6 +55,13 @@ def kullaniciSayisi():
             i = i + 1     
     return i
 
+def is_float(string):
+  try:
+    return float(string) and '.' in string 
+  except ValueError:  
+    return False
+
+
 @client.event
 async def on_ready():
     print("Bot hazir!\n")
@@ -297,9 +304,9 @@ async def on_message(message):
 
                 try:
                     if msg[2]:
-                        if msg[2].isnumeric():
-                            if not msg[2] == "0":
-                                adet = msg[2]
+                        if not msg[2] == "0":
+                            if is_float(msg[2]):
+                                adet = float(msg[2])
                             else:
                                 adet = 1
                         else:
@@ -342,16 +349,15 @@ async def on_message(message):
 
                 try:
                     if msg[2]:
-                        if msg[2].isnumeric():
-                            if not msg[2] == "0":
-                                adet = msg[2]
+                        if not msg[2] == "0":
+                            if is_float(msg[2]):
+                                adet = float(msg[2])
                             else:
                                 adet = 1
                         else:
                             adet = 1
                 except:
                     adet = 1
-
 
                 kur,kur_degeri = doviz.DovizParse(kur,adet)
                 if not kur == "hata":

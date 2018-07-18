@@ -79,22 +79,7 @@ async def on_server_join(server):
 async def on_message(message):
 
     if not message.author.bot == 1:
-        '''
-        #bana seslenilme
-        if "human" in message.content or "emir" in message.content:
-            if not message.author.id in uyari_disi:
-                userID = message.author.id
-                await client.send_message(message.channel, "**<@%s>,  <@%s> sana seslendi!**" % (myID,userID))
         
-        #bu yontem gereksiz yavas (ve diger isleri de yavaslatiyor)
-        
-        contents = message.content.split(" ")
-        for word in contents:
-            if word.upper() in uyarilar:
-                if not message.author.id in uyari_disi:
-                    userID = message.author.id
-                    await client.send_message(message.channel, "**<@%s>,  <@%s> sana seslendi!**" % (myID,userID))
-        '''
         #++========================== GENEL============================++#
 
         #!surum,!version,!versiyon

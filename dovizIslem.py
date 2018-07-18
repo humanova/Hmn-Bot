@@ -15,7 +15,7 @@ from urllib.request import urlopen, Request
 def DovizParse(kur,adet):
     kur = DovizAlgila(kur)
 
-    if not kur == "hata" and int(adet) >= 1:
+    if not kur == "hata" and int(adet) > 0:
         if kur.startswith("btc"):
 
             if kur == "btc-try":
@@ -37,6 +37,7 @@ def DovizParse(kur,adet):
         return kur.upper(),kur_degeri
         
     else:
+        kur = "hata"
         kur_degeri = "hata"
         return kur,kur_degeri
 
@@ -129,7 +130,7 @@ def DovizAlgila(kur):
 def KriptoParse(kur,don,adet):
     kur,kisa_ad,grafik_link = KriptoAlgila(kur)
 
-    if not kur == "hata" and int(adet) >= 1:
+    if not kur == "hata" and int(adet) > 0:
 
         kurURL = 'https://coinmarketcap.com/currencies/' + kur
     
@@ -146,7 +147,10 @@ def KriptoParse(kur,don,adet):
         return kur.upper(),kur_degeri,kur_degisim[2:-3],grafik_link
 
     else :
+        kur = "hata"
+        kisa_ad = "hata"
         kur_degisim = "hata"
+        grafik_link = "hata"
         return kur,kisa_ad,kur_degisim,grafik_link
 
 

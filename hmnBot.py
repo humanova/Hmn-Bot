@@ -309,8 +309,8 @@ async def on_message(message):
                 a,dolar_degeri = doviz.DovizParse("USD",1)
                 kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
 
-                deger_USD = round(float(deger_USD) * adet,2)
-                deger_TL = round(float(deger_TL) * adet,2)
+                deger_USD = round(float(deger_USD) * float(adet),2)
+                deger_TL = round(float(deger_TL) * float(adet),2)
                 kur_degisim = round(float(kur_degisim),2)
 
 

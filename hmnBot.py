@@ -28,7 +28,7 @@ import ceviri
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.5\n17/07/18"
+version = "hmnBot v0.2.6\n18/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 
@@ -282,8 +282,8 @@ async def on_message(message):
             
             embed=discord.Embed(title=" ", color=0x2079ff)
             embed.set_author(name="Bitcoin Kuru", icon_url=client.user.avatar_url)
-            embed.add_field(name="BTC" + "/USD", value=btc_usd, inline=True)
-            embed.add_field(name="BTC" + "/TL" , value=btc_tl, inline=True)
+            embed.add_field(name="1 BTC" + "/USD", value=btc_usd, inline=True)
+            embed.add_field(name="1 BTC" + "/TL" , value=btc_tl, inline=True)
             await client.send_message(message.channel,embed=embed)
             #await client.send_message(message.channel, yazi.komut["bitcoin"] % (btc_usd,btc_tl))
         
@@ -307,7 +307,11 @@ async def on_message(message):
                 kur = msg[1]
                 kurUSD,deger_USD,grafik_link = doviz.KriptoParse(kur,"usd",adet)
                 a,dolar_degeri = doviz.DovizParse("USD",1)
-                kurTL,deger_TL = kurUSD,round((float(deger_USD) * float(dolar_degeri)),2)
+                kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
+
+                deger_USD *= round(deger_USD * adet,2)
+                deger_TL *= round(deger_TL * adet,2)
+
 
                 if not kurUSD == "hata":
                     embed=discord.Embed(title=" ", color=0x2079ff)

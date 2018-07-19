@@ -248,8 +248,8 @@ async def on_message(message):
         if message.content.upper().startswith("!HAVA"):
             msg = message.content.split(" ")
             if msg[1]:
-                sehir,durum = hava.havaParse(msg[1])
-                yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(msg[1])
+                sehir,durum = hava.havaParse(" ".join(msg[1:]))
+                yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(" ".join(msg[1:]))
 
                 if not yer == "hata":
                     embed=discord.Embed(title=" ", color=0x00ffff)

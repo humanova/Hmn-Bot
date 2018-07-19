@@ -28,7 +28,7 @@ import ceviri
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.6\n18/07/18"
+version = "hmnBot v0.2.7\n19/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 
@@ -129,14 +129,18 @@ async def on_message(message):
         #!durt,!ping
         if message.content.upper().startswith('!PING') or message.content.upper().startswith("!DÜRT") or message.content.upper().startswith("!DURT"):
             contents = message.content.split(" ")
-            if contents[1]: 
-                userID = message.author.id
-                member = message.server.get_member_named(contents[1])
-                if not userID == member.id:
-                    await client.send_message(message.channel, yazi.komut["durt"] % (member.id,userID))
-                else:
-                    await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
-        
+
+            try:
+                if contents[1]: 
+                    userID = message.author.id
+                    member = message.server.get_member_named(contents[1])
+                    if not userID == member.id:
+                        await client.send_message(message.channel, yazi.komut["durt"] % (member.id,userID))
+                    else:
+                        await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
+            except:
+                return    
+
 
         #!davet,invite
         if message.content.upper().startswith("!DAVET") or message.content.upper().startswith("!INVITE"):
@@ -161,114 +165,137 @@ async def on_message(message):
         if message.content.upper().startswith("!SAY"):
             if message.author.id == myID:
                 args = message.content.split(" ")
-                if args[1]:
-                    try:
-                        await client.delete_message(message)
-                    except discord.errors.NotFound:
-                        return
-
-                    await client.send_message(message.channel, "%s" % (" ".join(args[1:])))
+                try:
+                    if args[1]:
+                        try:
+                            await client.delete_message(message)
+                        except discord.errors.NotFound:
+                            return
+                        await client.send_message(message.channel, "%s" % (" ".join(args[1:])))
+                except:
+                    return
+                        
             else:
                 await client.send_message(message.channel,"**Buna yetkin yok!**")
+
 
         #!cevir , ffff99
         if message.content.upper().startswith("!CEVIR"):
             raw_msg = message.content.split(" ")
-            if raw_msg[1]:
-                raw_msg = raw_msg[1:len(raw_msg)]
-                son_msg = ""
+            try:
+                if raw_msg[1]:
+                    raw_msg = raw_msg[1:len(raw_msg)]
+                    son_msg = ""
 
-                
-                if raw_msg[0].startswith("-") and raw_msg[1].startswith("-"):
-                    currDil = raw_msg[0].replace("-","")
-                    hedefDil = raw_msg[1].replace("-","")
                     
-                    
-                    msg = raw_msg[2:len(raw_msg)]
+                    if raw_msg[0].startswith("-") and raw_msg[1].startswith("-"):
+                        currDil = raw_msg[0].replace("-","")
+                        hedefDil = raw_msg[1].replace("-","")
+                        
+                        
+                        msg = raw_msg[2:len(raw_msg)]
 
-                elif raw_msg[0].startswith("-") and raw_msg[1].startswith("-") == 0:
-                    currDil = "auto"
-                    hedefDil = raw_msg[0].replace("-","")
+                    elif raw_msg[0].startswith("-") and raw_msg[1].startswith("-") == 0:
+                        currDil = "auto"
+                        hedefDil = raw_msg[0].replace("-","")
+                        
+                        msg = raw_msg[1:len(raw_msg)]
+                        
+                    else :
+                        msg = raw_msg
+                        currDil = "auto"
+                        hedefDil = "tr"
+                        
+                    son_msg = " ".join(msg)
+                    metin,currDil,hedefDil,oran = ceviri.Cevir(currDil,hedefDil,son_msg)
                     
-                    msg = raw_msg[1:len(raw_msg)]
-                    
-                else :
-                    msg = raw_msg
-                    currDil = "auto"
-                    hedefDil = "tr"
-                    
-                son_msg = " ".join(msg)
-                metin,currDil,hedefDil,oran = ceviri.Cevir(currDil,hedefDil,son_msg)
-                
-                embed=discord.Embed(title=" ", color=0x75df00)
-                embed.set_author(name="Google Çeviri", icon_url=client.user.avatar_url)
-                embed.add_field(name="["+currDil+" -> "+hedefDil+"]", value=metin, inline=False)
-                embed.set_footer(text=oran)
-                await client.send_message(message.channel,embed=embed)
+                    embed=discord.Embed(title=" ", color=0x75df00)
+                    embed.set_author(name="Google Çeviri", icon_url=client.user.avatar_url)
+                    embed.add_field(name="["+currDil+" -> "+hedefDil+"]", value=metin, inline=False)
+                    embed.set_footer(text=oran)
+                    await client.send_message(message.channel,embed=embed)
+
+            except:
+                return
+
 
         #!oyla,!vote
         if message.content.upper().startswith("!VOTE") or message.content.upper().startswith("!OYLA"):
             userID = message.author.id
             msg = message.content.split(" ")
-            if msg[1]:
-                msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
-                await client.add_reaction(msg,'👍')
-                await client.add_reaction(msg,'👎')
-            
 
+            try:
+                if msg[1]:
+                    msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
+                    await client.add_reaction(msg,'👍')
+                    await client.add_reaction(msg,'👎')
+            except:
+                return
+                
+                
         #!google,!ara 
         if message.content.upper().startswith("!GOOGLE") or message.content.upper().startswith("!ARA"):
             searchQ = "https://google.com/search?q="
             msg = message.content.split(" ")
-            if msg[1]:
-                for word in range(1,len(msg)):
-                    if not word == len(msg) - 1:
-                        searchQ += msg[word] + "+"
-                    else:
-                        searchQ += msg[word]
 
-                await client.send_message(message.channel, "%s" % (searchQ))
+            try:
+                if msg[1]:
+                    for word in range(1,len(msg)):
+                        if not word == len(msg) - 1:
+                            searchQ += msg[word] + "+"
+                        else:
+                            searchQ += msg[word]
 
+                    await client.send_message(message.channel, "%s" % (searchQ))
+            except:
+                return
 
         #!lmgtfy
         if message.content.upper().startswith("!LMGTFY"):
             searchQ = "http://lmgtfy.com/?q="
             msg = message.content.split(" ")
-            if msg[1]:
-                for word in range(1,len(msg)):
-                    if not word == len(msg) - 1:
-                        searchQ += msg[word] + "+"
-                    else:
-                        searchQ += msg[word]
 
-                await client.send_message(message.channel, "%s" % (searchQ))
+            try:
+                if msg[1]:
+                    for word in range(1,len(msg)):
+                        if not word == len(msg) - 1:
+                            searchQ += msg[word] + "+"
+                        else:
+                            searchQ += msg[word]
 
+                    await client.send_message(message.channel, "%s" % (searchQ))
+            except:
+                return
         
         #!hava
         if message.content.upper().startswith("!HAVA"):
             msg = message.content.split(" ")
-            if msg[1]:
-                sehir,durum = hava.havaParse(" ".join(msg[1:]))
-                yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(" ".join(msg[1:]))
 
-                if not yer == "hata":
-                    embed=discord.Embed(title=" ", color=0x00ffff)
-                    #embed.set_author(name="Hava Durumu", icon_url=client.user.avatar_url)
-                    embed.set_thumbnail(url=durum_ikon_url)
-                    embed.add_field(name=":earth_africa: Yer", value=yer, inline=True)
-                    embed.add_field(name=":thermometer: Sıcaklık" , value=str(sicaklik) + "°C", inline=True)
-                    embed.add_field(name=":droplet: Nem" , value=str(nem_orani)+"%", inline=True)
-                    embed.add_field(name=":dash: Rüzgar Hızı" , value=str(ruzgar_hizi)+" m/s", inline=True)
-                    embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu + " (utc+3)", inline=True)
-                    embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi + " (utc+3)", inline=True)
+            try:
+                if msg[1]:
+                    sehir,durum = hava.havaParse(" ".join(msg[1:]))
+                    yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(" ".join(msg[1:]))
 
-                if not sehir == "hata":
-                    embed.add_field(name="Durum :" , value=durum, inline=False)
+                    if not yer == "hata":
+                        embed=discord.Embed(title=" ", color=0x00ffff)
+                        #embed.set_author(name="Hava Durumu", icon_url=client.user.avatar_url)
+                        embed.set_thumbnail(url=durum_ikon_url)
+                        embed.add_field(name=":earth_africa: Yer", value=yer, inline=True)
+                        embed.add_field(name=":thermometer: Sıcaklık" , value=str(sicaklik) + "°C", inline=True)
+                        embed.add_field(name=":droplet: Nem" , value=str(nem_orani)+"%", inline=True)
+                        embed.add_field(name=":dash: Rüzgar Hızı" , value=str(ruzgar_hizi)+" m/s", inline=True)
+                        embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu + " (utc+3)", inline=True)
+                        embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi + " (utc+3)", inline=True)
 
-                embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
-                #print(sehir + tarih + durum + maks + minn + peryot)
-                await client.send_message(message.channel,embed=embed)
-        
+                    if not sehir == "hata":
+                        embed.add_field(name="Durum :" , value=durum, inline=False)
+
+                    embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
+                    #print(sehir + tarih + durum + maks + minn + peryot)
+                    await client.send_message(message.channel,embed=embed)
+
+            except:
+                return
 
         #!bitcoin,!btc
         if message.content.upper().startswith("!BITCOIN") or message.content.upper().startswith("!BTC"):
@@ -285,85 +312,95 @@ async def on_message(message):
         #!kripto
         if message.content.upper().startswith("!KRIPTO") or message.content.upper().startswith("!CRYPTO"):
             msg = message.content.split(" ")
-            if msg[1]:
-                
-                if msg[1].upper().startswith("FETOCU") or msg[1].upper().startswith("FETÖCÜ"):
-                    await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
 
-                try:
-                    if msg[2]:
-                        if not msg[2] == "0":
-                            if is_float(msg[2]):
-                                adet = float(msg[2])
+            try:
+                if msg[1]:
+                    
+                    if msg[1].upper().startswith("FETOCU") or msg[1].upper().startswith("FETÖCÜ"):
+                        await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
 
-                            elif msg[2].isnumeric():
-                                adet = msg[2]
-                            
+                    try:
+                        if msg[2]:
+                            if not msg[2] == "0":
+                                if is_float(msg[2]):
+                                    adet = float(msg[2])
+
+                                elif msg[2].isnumeric():
+                                    adet = msg[2]
+                                
+                                else:
+                                    adet = 1
                             else:
                                 adet = 1
+                    except:
+                        adet = 1
+
+                    kur = msg[1]
+                    kurUSD,deger_USD,kur_degisim,grafik_link = doviz.KriptoParse(kur,"usd",adet)
+                    a,dolar_degeri = doviz.DovizParse("USD",1)
+                    kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
+
+                    deger_USD = round(float(deger_USD) * float(adet),2)
+                    deger_TL = round(float(deger_TL) * float(adet),2)
+                    kur_degisim = round(float(kur_degisim),2)
+
+
+                    if not kurUSD == "hata":
+                        embed=discord.Embed(title=" ", color=0x2079ff)
+                        embed.set_author(name="Kripto Kurları [" + kur.upper() +"]", icon_url=client.user.avatar_url)
+                        embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
+                        embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
+
+                        if not str(kur_degisim).startswith("-"):
+                            embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=True)
                         else:
-                            adet = 1
-                except:
-                    adet = 1
+                            embed.add_field(name="Günlük Değişim",value=":arrow_down_small: " + str(kur_degisim) + "%", inline=True)
 
-                kur = msg[1]
-                kurUSD,deger_USD,kur_degisim,grafik_link = doviz.KriptoParse(kur,"usd",adet)
-                a,dolar_degeri = doviz.DovizParse("USD",1)
-                kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
-
-                deger_USD = round(float(deger_USD) * float(adet),2)
-                deger_TL = round(float(deger_TL) * float(adet),2)
-                kur_degisim = round(float(kur_degisim),2)
+                        embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=True)
+                        embed.set_image(url=grafik_link)
+                        embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
+                        await client.send_message(message.channel,embed=embed)
+                        #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))
+            except:
+                return
 
 
-                if not kurUSD == "hata":
-                    embed=discord.Embed(title=" ", color=0x2079ff)
-                    embed.set_author(name="Kripto Kurları [" + kur.upper() +"]", icon_url=client.user.avatar_url)
-                    embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
-                    embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
-
-                    if not str(kur_degisim).startswith("-"):
-                        embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=True)
-                    else:
-                        embed.add_field(name="Günlük Değişim",value=":arrow_down_small: " + str(kur_degisim) + "%", inline=True)
-
-                    embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=True)
-                    embed.set_image(url=grafik_link)
-                    embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
-                    await client.send_message(message.channel,embed=embed)
-                    #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))
-           
         #!doviz kur
         if message.content.upper().startswith("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
             msg = message.content.split(" ")
-            if msg[1]:
-                kur = msg[1]
 
-                try:
-                    if msg[2]:
-                        if not msg[2] == "0":
-                            if is_float(msg[2]):
-                                adet = float(msg[2])
+            try:
+                if msg[1]:
+                    kur = msg[1]
 
-                            elif msg[2].isnumeric():
-                                adet = msg[2]
-                            
+                    try:
+                        if msg[2]:
+                            if not msg[2] == "0":
+                                if is_float(msg[2]):
+                                    adet = float(msg[2])
+
+                                elif msg[2].isnumeric():
+                                    adet = msg[2]
+                                
+                                else:
+                                    adet = 1
                             else:
                                 adet = 1
-                        else:
-                            adet = 1
-                except:
-                    adet = 1
+                    except:
+                        adet = 1
 
-                kur,kur_degeri = doviz.DovizParse(kur,adet)
-                if not kur == "hata":
-                    embed=discord.Embed(title=" ", color=0x2b80ff)
-                    embed.set_author(name="Döviz Kurları", icon_url=client.user.avatar_url)
-                    embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
-                    embed.set_footer(text="💰 Kaynak : xe.com")
-                    await client.send_message(message.channel,embed=embed)
-                    # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
-        
+                    kur,kur_degeri = doviz.DovizParse(kur,adet)
+                    if not kur == "hata":
+                        embed=discord.Embed(title=" ", color=0x2b80ff)
+                        embed.set_author(name="Döviz Kurları", icon_url=client.user.avatar_url)
+                        embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
+                        embed.set_footer(text="💰 Kaynak : xe.com")
+                        await client.send_message(message.channel,embed=embed)
+                        # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
+
+            except:
+                return
+
 
         #!roller,!roles
         if message.content.upper().startswith("!ROLLER") or message.content.upper().startswith("!ROLES"):
@@ -397,25 +434,30 @@ async def on_message(message):
         #!sikayet (server sahibine)
         if message.content.upper().startswith("!ŞIKAYET") or message.content.upper().startswith("!SIKAYET"):
             sikayet = message.content.split(" ")
-            if sikayet[1]:
-                owner = message.server.owner
-                sikayetci = message.author.name + "#" + message.author.discriminator
-                sikayetci_nick = message.author.display_name
-                serverAdi = message.server.name
-                kanalAdi = message.channel.name
-                tarih = zaman.tamTarih() + " (UTC+3)"
-                
-                try:
-                    client.start_private_message(owner)
-                    await client.send_message(owner, yazi.komut['sikayet_admin'] % (tarih,serverAdi,kanalAdi,sikayetci,sikayetci_nick," ".join(sikayet[1:])))
-                    await client.send_message(message.channel, yazi.komut['sikayet_kullanici'])
-                    try:
-                        await client.delete_message(message)
-                    except discord.errors.NotFound:
-                        return
 
-                except discord.errors.NotFound:
-                    await client.send_message(message.channel, yazi.komut['sikayet_hata'])
+            try:
+                if sikayet[1]:
+                    owner = message.server.owner
+                    sikayetci = message.author.name + "#" + message.author.discriminator
+                    sikayetci_nick = message.author.display_name
+                    serverAdi = message.server.name
+                    kanalAdi = message.channel.name
+                    tarih = zaman.tamTarih() + " (UTC+3)"
+                    
+                    try:
+                        client.start_private_message(owner)
+                        await client.send_message(owner, yazi.komut['sikayet_admin'] % (tarih,serverAdi,kanalAdi,sikayetci,sikayetci_nick," ".join(sikayet[1:])))
+                        await client.send_message(message.channel, yazi.komut['sikayet_kullanici'])
+                        try:
+                            await client.delete_message(message)
+                        except discord.errors.NotFound:
+                            return
+
+                    except discord.errors.NotFound:
+                        await client.send_message(message.channel, yazi.komut['sikayet_hata'])
+            
+            except:
+                return
 
 
         #!server,!serverstats
@@ -448,7 +490,8 @@ async def on_message(message):
             await client.send_message(message.channel,embed=embed)
 
             #await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))
-            
+
+
         if message.content.upper().startswith("!SRVRS"):
             if message.author.id == myID:
                 liste = ""
@@ -469,22 +512,33 @@ async def on_message(message):
         #!leet,!l33t
         if message.content.upper().startswith("!LEET") or message.content.upper().startswith("!L33T"):
             msg = message.content
-            if msg[6]:
-                msg = msg[6:]
-                msg = msg.replace('e','3')
-                msg = msg.replace('a','4')
-                msg = msg.replace('i','1')
-                msg = msg.replace('ı','1')
-                msg = msg.replace('s','5')
-                msg = msg.replace('o','0')
-                    
-                await client.send_message(message.channel,msg)
+
+            try:
+                if msg[6]:
+                    msg = msg[6:]
+                    msg = msg.replace('e','3')
+                    msg = msg.replace('a','4')
+                    msg = msg.replace('i','1')
+                    msg = msg.replace('ı','1')
+                    msg = msg.replace('s','5')
+                    msg = msg.replace('o','0')
+                        
+                    await client.send_message(message.channel,msg)
+
+            except:
+                return
+
 
         #!ben,!self
         if message.content.upper().startswith("!SELF") or message.content.upper().startswith("!BEN"):
             msg = message.content.split(" ")
-            if msg[1]:
-                await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
+
+            try:
+                if msg[1]:
+                    await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
+            
+            except:
+                return
 
 
         #!sence

@@ -79,7 +79,7 @@ async def on_server_join(server):
 async def on_message(message):
 
     if not message.author.bot == 1:
-
+    
         #++========================== GENEL============================++#
 
         #!surum,!version,!versiyon
@@ -259,8 +259,8 @@ async def on_message(message):
                     embed.add_field(name=":thermometer: Sıcaklık" , value=str(sicaklik) + "°C", inline=True)
                     embed.add_field(name=":droplet: Nem" , value=str(nem_orani)+"%", inline=True)
                     embed.add_field(name=":dash: Rüzgar Hızı" , value=str(ruzgar_hizi)+" m/s", inline=True)
-                    embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu, inline=True)
-                    embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi, inline=True)
+                    embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu + " (utc+3)", inline=True)
+                    embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi + " (utc+3)", inline=True)
 
                 if not sehir == "hata":
                     embed.add_field(name="Durum :" , value=durum, inline=False)

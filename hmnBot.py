@@ -79,7 +79,7 @@ async def on_server_join(server):
 async def on_message(message):
 
     if not message.author.bot == 1:
-        
+
         #++========================== GENEL============================++#
 
         #!surum,!version,!versiyon
@@ -129,7 +129,7 @@ async def on_message(message):
         #!durt,!ping
         if message.content.upper().startswith('!PING') or message.content.upper().startswith("!DÜRT") or message.content.upper().startswith("!DURT"):
             contents = message.content.split(" ")
-            if contents[1]:
+            if contents[1]: 
                 userID = message.author.id
                 member = message.server.get_member_named(contents[1])
                 if not userID == member.id:
@@ -251,7 +251,7 @@ async def on_message(message):
                 sehir,durum = hava.havaParse(msg[1])
                 yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(msg[1])
 
-                if not sehir == "hata":
+                if not yer == "hata":
                     embed=discord.Embed(title=" ", color=0x00ffff)
                     #embed.set_author(name="Hava Durumu", icon_url=client.user.avatar_url)
                     embed.set_thumbnail(url=durum_ikon_url)
@@ -261,10 +261,13 @@ async def on_message(message):
                     embed.add_field(name=":dash: Rüzgar Hızı" , value=str(ruzgar_hizi)+" m/s", inline=True)
                     embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu, inline=True)
                     embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi, inline=True)
+
+                if not sehir == "hata":
                     embed.add_field(name="Durum :" , value=durum, inline=False)
-                    embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
-                    #print(sehir + tarih + durum + maks + minn + peryot)
-                    await client.send_message(message.channel,embed=embed)
+
+                embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
+                #print(sehir + tarih + durum + maks + minn + peryot)
+                await client.send_message(message.channel,embed=embed)
         
 
         #!bitcoin,!btc

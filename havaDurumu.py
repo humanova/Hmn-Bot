@@ -8,7 +8,6 @@ import pyowm
 from datetime import datetime
 from dateutil import tz
 
-
 token = os.environ['OWM_TOKEN']
 owm = pyowm.OWM(token)
 iconURL = "http://openweathermap.org/img/w/"
@@ -18,29 +17,43 @@ zaman_kusagi = 3  #utc + 3
 
 
 def havaParseOWM(sehir):
-    yer = sehir + ',TR'
-    raw_hava = owm.weather_at_place(yer)
-    hava = raw_hava.get_weather()
-    #kisa_durum = hava.get_status()
-    ruzgar_hizi = hava.get_wind()['speed']
-    nem_orani = hava.get_humidity()
-    sicaklik = hava.get_temperature('celsius')['temp']
-    #sicaklik_max = hava.get_temperature('celsius').temp_max
-    #sicaklik_min = hava.get_temperature('celsius').temp_min
-    
-    gun_dogumu_saat = hava.get_sunrise_time('iso')[11:13]
-    gun_dogumu_dak = hava.get_sunrise_time('iso')[14:16]
-    gun_batimi_saat = hava.get_sunset_time('iso')[11:13]
-    gun_batimi_dak = hava.get_sunset_time('iso')[14:16]
+    yer = sehir
 
-    gun_dogumu = str(((int(gun_dogumu_saat) + zaman_kusagi) % 24)) + ":" + str(gun_dogumu_dak)
-    gun_batimi = str(((int(gun_batimi_saat) + zaman_kusagi) % 24)) + ":" + str(gun_batimi_dak)
-    #zaman = hava.get_reception_time(timeformat='iso')   
-    ikon = hava.get_weather_icon_name()
-    #print("asad")
-    #print(gun_batimi)
-    
-    durum_ikon_url = iconURL + ikon + ".png"
+    try:
+        raw_hava = owm.weather_at_place(yer)
+    except:
+        yer = "hata"
+        sicaklik = "hata"
+        nem_orani = "hata"
+        ruzgar_hizi = "hata"
+        gun_dogumu = "hata"
+        gun_batimi = "hata"
+        durum_ikon_url = "hata"
+
+
+    if not yer == "hata":
+
+        hava = raw_hava.get_weather()
+        #kisa_durum = hava.get_status()
+        ruzgar_hizi = hava.get_wind()['speed']
+        nem_orani = hava.get_humidity()
+        sicaklik = hava.get_temperature('celsius')['temp']
+        #sicaklik_max = hava.get_temperature('celsius').temp_max
+        #sicaklik_min = hava.get_temperature('celsius').temp_min
+        
+        gun_dogumu_saat = hava.get_sunrise_time('iso')[11:13]
+        gun_dogumu_dak = hava.get_sunrise_time('iso')[14:16]
+        gun_batimi_saat = hava.get_sunset_time('iso')[11:13]
+        gun_batimi_dak = hava.get_sunset_time('iso')[14:16]
+
+        gun_dogumu = str(((int(gun_dogumu_saat) + zaman_kusagi) % 24)) + ":" + str(gun_dogumu_dak)
+        gun_batimi = str(((int(gun_batimi_saat) + zaman_kusagi) % 24)) + ":" + str(gun_batimi_dak)
+        #zaman = hava.get_reception_time(timeformat='iso')   
+        ikon = hava.get_weather_icon_name()
+        #print("asad")
+        #print(gun_batimi)
+        
+        durum_ikon_url = iconURL + ikon + ".png"
 
     return yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url
 

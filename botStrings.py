@@ -32,7 +32,7 @@ yardim = {
     "davet" :       "!davet,!invite         (kanal davet linki olustur!)\n",
     "lmgtfy" :      "!lmgtfy                (birisine googlelamayı öğret!)\n",
     "btc" :         "!bitcoin,!btc          (anlık bitcoin kuru!)\n" ,
-    "kripto" :      "!kripto,!crypto        (kripto para kurlarI!)\n",
+    "kripto" :      "!kripto,!crypto        (kripto para kurları!)\n",
     "doviz" :       "!döviz                 (anlık doviz kurları!)\n",
     "self" :        "!ben,!self             (kendi kendini öv!)\n",
     "ceviri":       "!cevir                 (ceviri yap!)\n",

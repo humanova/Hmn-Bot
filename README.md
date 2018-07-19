@@ -1,6 +1,6 @@
 # Hmn-Bot
 
-[Bot site](https://humanova.github.io/hmnbot.github.io/)
+[Bot Website](https://humanova.github.io/hmnbot)
 
 [Bot invite](https://discordapp.com/oauth2/authorize?client_id=455819835486502933&permissions=8&scope=bot)
 

@@ -14,8 +14,10 @@ import discord
 import aiohttp
 from discord.ext.commands import Bot
 from discord.ext import commands
+import threading
 import asyncio
 import time
+from datetime import datetime
 
 #kendi importlarim
 import havaDurumu as hava
@@ -28,12 +30,64 @@ import ceviri
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.7\n19/07/18"
+version = "hmnBot v0.2.8n22/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 
-
 uyari_disi = [botID,myID]
+
+# ======================== LOGLAMA ========================= #
+
+log_num = 0
+temel_log = "\n[TEMEL]\n"
+komut_log = "\n[KOMUT LOGLARI]\n"
+online_server_log = "\n[ONLINE SERVERLAR]\n"
+
+
+def temelLog():
+    global temel_log
+    temel_log += "Online Server Sayisi : " + str(serverSayisi()) + "\n"
+    temel_log += "Online Kullanici Sayisi : " + str(kullaniciSayisi()) + "\n"
+    temel_log += "Online Kanal Sayisi : " + str(channelSayisi()) + "\n"
+
+    
+
+def onlineServerLog():
+    global online_server_log
+    servers = list(client.servers)
+
+    for i in range(len(servers)):
+        online_server_log += servers[i-1].name + "\n"
+
+    
+def bot_logla():
+    temelLog()
+    onlineServerLog()
+
+
+    threading.Timer(1800,bot_logla).start()
+    
+    global log_num
+    global temel_log
+    global komut_log
+    global online_server_log
+
+    log_num += 1
+    
+    tarih = str(datetime.now())
+    log_baslangic = "\nLOG[" + str(log_num) + "] : " + tarih + "\n"
+    
+    log_son = log_baslangic + str(temel_log) + str(online_server_log) + str(komut_log)
+    log_dosya = open("hmnBot_log.txt","a")
+    log_dosya.write(log_son)
+    log_dosya.close()
+
+    temel_log = "\n[TEMEL]\n"
+    komut_log = "\n[KOMUT LOGLARI]\n"
+    online_server_log = "\n[ONLINE SERVERLAR]\n"
+
+    return
+
 
 def serverSayisi():
     i = 0
@@ -55,6 +109,11 @@ def kullaniciSayisi():
             i = i + 1     
     return i
 
+
+
+# ===================== LOGLAMA BITIS ====================== #
+
+
 def is_float(string):
   try:
     return float(string) and '.' in string 
@@ -66,6 +125,7 @@ def is_float(string):
 async def on_ready():
     print("Bot hazir!\n")
     print("%s adiyla giris yapildi" % (client.user.name))
+    bot_logla()
     await client.change_presence(game=discord.Game(name=yazi.bot_game["knack"]))
 
 @client.event
@@ -84,6 +144,9 @@ async def on_message(message):
 
         #!surum,!version,!versiyon
         if message.content.upper().startswith("!VERSION") or message.content.upper().startswith("!VERSIYON") or message.content.upper().startswith("!SÜRÜM") or message.content.upper().startswith("!SURUM"):
+            global komut_log
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+
             embed=discord.Embed(title=" ", color=0x75df00)
             embed.set_author(name=client.user.name + " Versiyonu", icon_url=client.user.avatar_url)
             embed.add_field(name="Version : ", value=version, inline=False)
@@ -93,6 +156,8 @@ async def on_message(message):
 
         #!gelistirici,!developer
         if message.content.upper().startswith("!DEV") or message.content.upper().startswith("!GELISTIRICI") or message.content.startswith("!geliştirici"):
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             userID = message.author.id
             embed=discord.Embed(title=" ", color=0x75df00)
             embed.set_author(name=client.user.name + " Geliştirici", icon_url=client.user.avatar_url)
@@ -105,6 +170,9 @@ async def on_message(message):
 
         #!help,!yardim
         if message.content.upper().startswith("!HELP") or message.content.upper().startswith("!YARDIM") or message.content.startswith("!yardim"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             #embed=discord.Embed(title=" ", color=0xce6c6f)
             #embed.set_author(name=client.user.name + " Yardım", icon_url=client.user.avatar_url)
             #embed.add_field(name="", value=yazi.komut["yardim"], inline=False)
@@ -114,6 +182,9 @@ async def on_message(message):
 
         #!statu,!stats
         if message.content.upper().startswith("!STATS") or message.content.upper().startswith("!STATÜ") or message.content.upper().startswith("!STATU"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             servers = serverSayisi()
             users = kullaniciSayisi()
             channels = channelSayisi()
@@ -128,6 +199,9 @@ async def on_message(message):
 
         #!durt,!ping
         if message.content.upper().startswith('!PING') or message.content.upper().startswith("!DÜRT") or message.content.upper().startswith("!DURT"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             contents = message.content.split(" ")
 
             try:
@@ -144,6 +218,9 @@ async def on_message(message):
 
         #!davet,invite
         if message.content.upper().startswith("!DAVET") or message.content.upper().startswith("!INVITE"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             msg = message.content.split(" ")
             kul_sayisi = 1
             if len(msg)>1:
@@ -163,6 +240,9 @@ async def on_message(message):
 
         #!soyle,!say (sadece benim id'm)
         if message.content.upper().startswith("!SAY"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             if message.author.id == myID:
                 args = message.content.split(" ")
                 try:
@@ -181,6 +261,9 @@ async def on_message(message):
 
         #!cevir , ffff99
         if message.content.upper().startswith("!CEVIR"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             raw_msg = message.content.split(" ")
             try:
                 if raw_msg[1]:
@@ -221,6 +304,9 @@ async def on_message(message):
 
         #!oyla,!vote
         if message.content.upper().startswith("!VOTE") or message.content.upper().startswith("!OYLA"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+
             userID = message.author.id
             msg = message.content.split(" ")
 
@@ -235,6 +321,9 @@ async def on_message(message):
                 
         #!google,!ara 
         if message.content.upper().startswith("!GOOGLE") or message.content.upper().startswith("!ARA"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             searchQ = "https://google.com/search?q="
             msg = message.content.split(" ")
 
@@ -252,6 +341,9 @@ async def on_message(message):
 
         #!lmgtfy
         if message.content.upper().startswith("!LMGTFY"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             searchQ = "http://lmgtfy.com/?q="
             msg = message.content.split(" ")
 
@@ -269,6 +361,9 @@ async def on_message(message):
         
         #!hava
         if message.content.upper().startswith("!HAVA"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             msg = message.content.split(" ")
 
             try:
@@ -299,6 +394,9 @@ async def on_message(message):
 
         #!bitcoin,!btc
         if message.content.upper().startswith("!BITCOIN") or message.content.upper().startswith("!BTC"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             a,btc_tl = doviz.DovizParse("BTC-TRY",1)
             a,btc_usd = doviz.DovizParse("BTC-USD",1)
             
@@ -311,6 +409,9 @@ async def on_message(message):
         
         #!kripto
         if message.content.upper().startswith("!KRIPTO") or message.content.upper().startswith("!CRYPTO"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             msg = message.content.split(" ")
 
             try:
@@ -367,6 +468,9 @@ async def on_message(message):
 
         #!doviz kur
         if message.content.upper().startswith("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             msg = message.content.split(" ")
 
             try:
@@ -404,6 +508,9 @@ async def on_message(message):
 
         #!roller,!roles
         if message.content.upper().startswith("!ROLLER") or message.content.upper().startswith("!ROLES"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             currServer = message.server.name
             roles = message.server.role_hierarchy
             roller = ""
@@ -433,6 +540,9 @@ async def on_message(message):
 
         #!sikayet (server sahibine)
         if message.content.upper().startswith("!ŞIKAYET") or message.content.upper().startswith("!SIKAYET"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             sikayet = message.content.split(" ")
 
             try:
@@ -462,6 +572,9 @@ async def on_message(message):
 
         #!server,!serverstats
         if message.content.upper().startswith("!SERVER"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             serverName = message.server.name
             serverID = message.server.id
             serverOwner = message.server.owner.name
@@ -493,6 +606,9 @@ async def on_message(message):
 
 
         if message.content.upper().startswith("!SRVRS"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             if message.author.id == myID:
                 liste = ""
                 server_listesi = list(client.servers)
@@ -511,6 +627,9 @@ async def on_message(message):
 
         #!leet,!l33t
         if message.content.upper().startswith("!LEET") or message.content.upper().startswith("!L33T"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             msg = message.content
 
             try:
@@ -531,6 +650,9 @@ async def on_message(message):
 
         #!ben,!self
         if message.content.upper().startswith("!SELF") or message.content.upper().startswith("!BEN"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             msg = message.content.split(" ")
 
             try:
@@ -543,6 +665,9 @@ async def on_message(message):
 
         #!sence
         if message.content.upper().startswith("!SENCE"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             option = random.randint(1,4)
             if option == 1 :
                 await client.send_message(message.channel, yazi.komut["senceEvet1"])
@@ -556,6 +681,9 @@ async def on_message(message):
 
         #!firlat,!flip
         if message.content.upper().startswith("!FIRLAT") or message.content.startswith("!fırlat") or message.content.upper().startswith("!FLIP"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             gelen = random.randint(1,100)
             if gelen % 2 == 1:
                 await client.send_message(message.channel, yazi.komut["firlatYazi"])
@@ -572,6 +700,9 @@ async def on_message(message):
         
         #oyun degisme
         if message.content.upper().startswith("!OYUN"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
             if message.author.id == myID:
                 msg = message.content.split(" ")
 
@@ -645,7 +776,6 @@ async def on_message(message):
             await client.add_reaction(message,"🇲")
             await client.add_reaction(message,"🇳")
         '''
-
 
 token = os.environ['PP_BOT_TOKEN']
 client.run(token)

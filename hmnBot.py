@@ -41,8 +41,8 @@ uyari_disi = [botID,myID]
 
 log_num = 0
 temel_log = "\n[TEMEL]\n"
-komut_log = "\n[KOMUT LOGLARI]\n"
-online_server_log = "\n[ONLINE SERVERLAR]\n"
+komut_log = "\n[KOMUT LOGLARI]\n```"
+online_server_log = "\n[ONLINE SERVERLAR]\n```"
 
 
 def temelLog():
@@ -70,13 +70,13 @@ async def bot_logla():
         global log_num
         global temel_log
         global komut_log
-        global online_server_log
+        global online_server_log 
 
         log_num += 1
         
         tarih = str(datetime.now())
         log_baslangic = "\nLOG[" + str(log_num) + "] : " + tarih + "\n"
-        log_son = str(log_baslangic) + str(temel_log) + str(online_server_log) + str(komut_log)
+        log_son = str(log_baslangic) + str(temel_log) + str(online_server_log) + "```" +str(komut_log) + "```"
 
         await client.send_message(discord.Object(id=logChannelID), log_son)
         

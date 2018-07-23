@@ -33,6 +33,7 @@ client = commands.Bot(command_prefix = "!")
 version = "hmnBot v0.2.8\n22/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
+logChannelID = "470853011233570817"
 
 uyari_disi = [botID,myID]
 
@@ -60,33 +61,34 @@ def onlineServerLog():
         online_server_log += servers[i-1].name + "\n"
 
     
-def bot_logla():
-    temelLog()
-    onlineServerLog()
+async def bot_logla():
 
+    while not client.is_closed:
+        temelLog()
+        onlineServerLog()
+        
+        global log_num
+        global temel_log
+        global komut_log
+        global online_server_log
 
-    threading.Timer(1800,bot_logla).start()
-    
-    global log_num
-    global temel_log
-    global komut_log
-    global online_server_log
+        log_num += 1
+        
+        tarih = str(datetime.now())
+        log_baslangic = "\nLOG[" + str(log_num) + "] : " + tarih + "\n"
+        log_son = str(log_baslangic) + str(temel_log) + str(online_server_log) + str(komut_log)
 
-    log_num += 1
-    
-    tarih = str(datetime.now())
-    log_baslangic = "\nLOG[" + str(log_num) + "] : " + tarih + "\n"
-    
-    log_son = log_baslangic + str(temel_log) + str(online_server_log) + str(komut_log)
-    log_dosya = open("hmnBot_log.txt","a")
-    log_dosya.write(log_son)
-    log_dosya.close()
+        await client.send_message(discord.Object(id=logChannelID), log_son)
+        
+        #log_dosya = open("hmnBot_log.txt","a")
+        #log_dosya.write(log_son)
+        #log_dosya.close()
 
-    temel_log = "\n[TEMEL]\n"
-    komut_log = "\n[KOMUT LOGLARI]\n"
-    online_server_log = "\n[ONLINE SERVERLAR]\n"
+        temel_log = "\n[TEMEL]\n"
+        komut_log = "\n[KOMUT LOGLARI]\n"
+        online_server_log = "\n[ONLINE SERVERLAR]\n"
 
-    return
+        await asyncio.sleep(1800) 
 
 
 def serverSayisi():
@@ -125,7 +127,7 @@ def is_float(string):
 async def on_ready():
     print("Bot hazir!\n")
     print("%s adiyla giris yapildi" % (client.user.name))
-    bot_logla()
+    await bot_logla()
     await client.change_presence(game=discord.Game(name=yazi.bot_game["knack"]))
 
 @client.event
@@ -777,6 +779,7 @@ async def on_message(message):
             await client.add_reaction(message,"🇳")
         '''
 
+        
 token = os.environ['PP_BOT_TOKEN']
 client.run(token)
 

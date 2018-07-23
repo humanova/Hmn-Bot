@@ -85,8 +85,8 @@ async def bot_logla():
         #log_dosya.close()
 
         temel_log = "\n[TEMEL]\n"
-        komut_log = "\n[KOMUT LOGLARI]\n"
-        online_server_log = "\n[ONLINE SERVERLAR]\n"
+        komut_log = "\n[KOMUT LOGLARI]\n```"
+        online_server_log = "\n[ONLINE SERVERLAR]\n```"
 
         await asyncio.sleep(1800) 
 

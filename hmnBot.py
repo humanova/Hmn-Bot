@@ -25,12 +25,13 @@ import botStrings as yazi
 import dovizIslem as doviz
 import zaman
 import ceviri
+import meme
 ################################
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.8\n22/07/18"
+version = "hmnBot v0.2.9\n22/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
@@ -625,6 +626,21 @@ async def on_message(message):
                 await client.send_message(message.channel,"Buna yetkin yok.")
 
         #++========================== EGLENCE ============================++#
+
+
+        #!meme
+        if message.content.upper().startswith("!meme"):
+
+            memeURL = meme.memeParse("dankmemes")
+
+            if not memeURL == "hata":
+
+                embed=discord.Embed(title=" ", color=0xFF0000)
+                embed.set_author(name="r/dankmemes", icon_url=client.user.avatar_url)
+                embed.set_image(url = memeURL)
+
+                await client.send_message(message.channel,embed=embed)
+
 
 
         #!leet,!l33t

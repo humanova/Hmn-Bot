@@ -615,7 +615,14 @@ async def on_message(message):
 
             komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
             
-            memeURL,yazar,baslik,link,upvote = meme.memeParse("dankmemes")
+            msg = message.content.split(" ")
+            
+            try:
+                subreddit = " ".join(msg[1:])
+            except:
+                return
+
+            memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit)
 
             if not memeURL == "hata":
 

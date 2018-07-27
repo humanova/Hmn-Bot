@@ -1,6 +1,6 @@
 import meme
 
 
-memeURL = meme.memeParse("dankmemes")
+memeURL,a,a,a,a = meme.memeParse("turkeyjerky")
 
 print(memeURL)

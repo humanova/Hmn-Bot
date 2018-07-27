@@ -1,6 +1,6 @@
-import meme
+import botStrings as yazi
 
 
-memeURL,a,a,a,a = meme.memeParse("turkeyjerky")
 
-print(memeURL)
+
+print(yazi.komut["yardim"])

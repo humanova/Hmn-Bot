@@ -176,11 +176,23 @@ async def on_message(message):
             
             komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
             
-            #embed=discord.Embed(title=" ", color=0xce6c6f)
-            #embed.set_author(name=client.user.name + " Yardım", icon_url=client.user.avatar_url)
-            #embed.add_field(name="", value=yazi.komut["yardim"], inline=False)
-            #await client.send_message(message.channel,embed=embed)
-            await client.send_message(message.channel, yazi.komut["yardim"])
+            msg = message.content.split(" ")
+
+            try: 
+                if msg[1]:
+                    komut = msg[1] 
+                else:
+                    komut = "yok"            
+            except:
+                komut = "yok"
+
+            if not komut == "yok":
+                try:
+                    await client.send_message(message.channel, yazi.yardim[komut])
+                except:
+                    return
+            else:
+                await client.send_message(message.channel, yazi.komut["yardim"])
             
 
         #!statu,!stats

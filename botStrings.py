@@ -29,6 +29,7 @@ yardim = {
     "gelistirici" : "!dev,!geliştirici      (beni yazan kişi!)\n",
     "sence" :       "!sence                 (bana soru sor![evet-hayır])\n",
     "google" :      "!google,!ara           (google'da ara!)\n",
+    "meme" :        "!meme                  (istediğin subredditteki memeleri gör",
     "davet" :       "!davet,!invite         (kanal davet linki olustur!)\n",
     "lmgtfy" :      "!lmgtfy                (birisine googlelamayı öğret!)\n",
     "btc" :         "!bitcoin,!btc          (anlık bitcoin kuru!)\n" ,

@@ -627,7 +627,7 @@ async def on_message(message):
             if not memeURL == "hata":
 
                 embed=discord.Embed(title=" ",description = "**["+baslik+"]"+"("+link+")**", color=0xFF0000)
-                embed.set_author(name="r/dankmemes", icon_url=client.user.avatar_url)
+                embed.set_author(name="r/" + subreddit, icon_url=client.user.avatar_url)
                 embed.set_footer(text= "👍 " + str(upvote) + " | Yaratıcı : u/" + yazar)
                 embed.set_image(url = memeURL)
 

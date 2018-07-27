@@ -247,9 +247,9 @@ async def on_message(message):
 
                         await client.send_message(message.channel, embed=embed)
             
-        else:
+            else:
 
-            await client.send_message(message.channel,"Buna yetkiniz yok!")
+                await client.send_message(message.channel,"Buna yetkiniz yok!")
 
 
         #!durt,!ping

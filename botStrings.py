@@ -74,11 +74,11 @@ komutYardim = {
     "bitcoin" :     "```asciidoc\n== !bitcoin komutu ==\nAçıklama : Bitcoin kurunu gösterir\nÖrnek : !bitcoin | !btc```",
     "kripto" :      "```asciidoc\n== !kripto komutu ==\nAçıklama : Girilen kripto para kurunu gösterir\nÖrnek : !kripto monero | !kripto xmr```",
     "crypto" :      "```asciidoc\n== !kripto komutu ==\nAçıklama : Girilen kripto para kurunu gösterir\nÖrnek : !kripto monero | !kripto xmr```",
-    "doviz" :       "```asciidoc\n== !döviz komutu ==\nAçıklama : Girilen döviz kurunu gösterir\nÖrnek : !döviz dolar 20| !döviz euro```",
-    "döviz" :       "```asciidoc\n== !döviz komutu ==\nAçıklama : Girilen döviz kurunu gösterir\nÖrnek : !döviz dolar | !döviz usd```",
+    "doviz" :       "```asciidoc\n== !döviz komutu ==\nAçıklama : Girilen döviz kurunu gösterir\nÖrnek : !döviz dolar 20 | !döviz euro```",
+    "döviz" :       "```asciidoc\n== !döviz komutu ==\nAçıklama : Girilen döviz kurunu gösterir\nÖrnek : !döviz dolar 20 | !döviz usd```",
     "self" :        "```asciidoc\n== !self komutu ==\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\nÖrnek : !ben Müthiş```",
     "ben" :         "```asciidoc\n== !ben komutu ==\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\nÖrnek : !ben Müthiş```",
-    "cevir":        "```asciidoc\n== !çeviri komutu ==\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\nÖrnek : !cevir -fr -en J'aime mon vie (bu durumda fransızcadan ingilizceye çeviri yapar)\nÖrnek : !cevir -en Konnichiwa (bu durumda algılanan dilden(japonca) ingilizceye çeviri yapar\nÖrnek : !cevir Conscious (bu durumda algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
+    "cevir":        "```asciidoc\n== !çeviri komutu ==\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\n\nÖrnek : !cevir -fr -en J'aime mon vie (bu durumda fransızcadan ingilizceye çeviri yapar)\nÖrnek : !cevir -en Konnichiwa (bu durumda algılanan dilden(japonca) ingilizceye çeviri yapar\nÖrnek : !cevir Conscious (bu durumda algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
     "çevir":        "```asciidoc\n== !çeviri komutu ==\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\nÖrnek : !cevir -fr -en J'aime mon vie (bu durumda fransızcadan ingilizceye çeviri yapar)\nÖrnek : !cevir -en Konnichiwa (bu durumda algılanan dilden(japonca) ingilizceye çeviri yapar\nÖrnek : !cevir Conscious (bu durumda algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
     "oyla" :        "```asciidoc\n== !oyla komutu ==\nAçıklama : Girilen bir durum için oylama başlatır\nÖrnek : !oyla Servera yeni kanal eklemeli miyim?```",
     "vote" :        "```asciidoc\n== !oyla komutu ==\nAçıklama : Girilen bir durum için oylama başlatır\nÖrnek : !oyla Servera yeni kanal eklemeli miyim?```",
@@ -89,7 +89,8 @@ komutYardim = {
     "sikayet" :     "```asciidoc\n== !şikayet komutu ==\nAçıklama : Server sahibine şikayet gönderir\nÖrnek : !sikayet Kanalda spam yapılıyor```",
     "şikayet" :     "```asciidoc\n== !şikayet komutu ==\nAçıklama : Server sahibine şikayet gönderir\nÖrnek : !sikayet Kanalda spam yapılıyor```",
     "yardim" :      "```asciidoc\n== !yardim komutu ==\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\nÖrnek : !yardim cevir```",
-    "yardım" :      "```asciidoc\n== !yardim komutu ==\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\nÖrnek : !yardim cevir```"
+    "yardım" :      "```asciidoc\n== !yardim komutu ==\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\nÖrnek : !yardim cevir```",
+    "help" :      "```asciidoc\n== !help komutu ==\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\nÖrnek : !help cevir```"
 }
 
 

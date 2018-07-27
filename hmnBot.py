@@ -26,12 +26,13 @@ import dovizIslem as doviz
 import zaman
 import ceviri
 import meme
+import music
 ################################
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.9\n27/07/18"
+version = "hmnBot v0.3.0\n27/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
@@ -93,19 +94,17 @@ async def bot_logla():
 
 
 def serverSayisi():
-    i = 0
-    for server in client.servers:
-        i = i + 1
-    return i
+
+    servers = list(client.servers)
+    return len(servers)
 
 def channelSayisi():
-    i = 0
-    for server in client.servers:
-        for channel in server.channels:
-            i = i + 1
-    return i
+
+    channels = list(client.channels)
+    return len(channels)
 
 def kullaniciSayisi():
+
     i = 0
     for server in client.servers:
         for member in server.members:
@@ -214,8 +213,8 @@ async def on_message(message):
         #!temizle
         if message.content.upper().startswith("!TEMIZLE"):
 
-            if message.author.server_permissions.administrator:
-
+            if message.author.server_permissions.manage_messages:
+                flag = True
                 msg = message.content.split(" ")
 
                 try:
@@ -223,31 +222,34 @@ async def on_message(message):
                         msg_sayisi = msg[1]
                         
                     else:
+                        flag = False
                         return
 
-                except: 
+                except:
+                    flag = False
                     return
 
-                mgs = []
-                msg_sayisi = int(msg_sayisi) 
-                async for x in client.logs_from(message.channel, limit = msg_sayisi):
-                    mgs.append(x)
-                
-                try:
-                    await client.delete_messages(mgs)
-                except:
-                    await client.send_message(message.channel,"Buna yetkim yok")
-                    botYetki = "yok"
+                if not flag == False:
+                    mgs = []
+                    msg_sayisi = int(msg_sayisi) 
+                    async for x in client.logs_from(message.channel, limit = msg_sayisi + 1):
+                        mgs.append(x)
+                    
+                    try:
+                        await client.delete_messages(mgs)
+                    except:
+                        await client.send_message(message.channel,"Buna yetkim yok")
+                        botYetki = "yok"
 
-                if not botYetki == "yok":
-                    embed=discord.Embed(title=" ", description=str(msg_sayisi) + " mesaj silindi" , color=0x75df00)
-                    embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
+                    if not botYetki == "yok":
+                        embed=discord.Embed(title=" ", description=str(msg_sayisi) + " mesaj silindi" , color=0x75df00)
+                        embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
 
-                    await client.send_message(message.channel, embed=embed)
+                        await client.send_message(message.channel, embed=embed)
             
-            else:
+        else:
 
-                await client.send_message(message.channel,"Buna yetkiniz yok!")
+            await client.send_message(message.channel,"Buna yetkiniz yok!")
 
 
         #!durt,!ping
@@ -481,7 +483,6 @@ async def on_message(message):
 
                                 elif msg[2].isnumeric():
                                     adet = msg[2]
-                                
                                 else:
                                     adet = 1
                             else:
@@ -529,7 +530,6 @@ async def on_message(message):
             try:
                 if msg[1]:
                     kur = msg[1]
-
                     try:
                         if msg[2]:
                             if not msg[2] == "0":
@@ -538,7 +538,7 @@ async def on_message(message):
 
                                 elif msg[2].isnumeric():
                                     adet = msg[2]
-                                
+
                                 else:
                                     adet = 1
                             else:
@@ -659,6 +659,48 @@ async def on_message(message):
 
         #++========================== EGLENCE ============================++#
 
+        #!soz,!lyrics
+        if message.content.upper().startswith("!SOZ") or message.content.upper().startswith("!SÖZ") or message.content.upper.startswith("!LYRICS"):
+            
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
+            flag = True
+            msg = message.content.split(" ")
+            msg = " ".join(msg[1:])
+
+            '''
+            try:
+                if msg[0:]:
+                    if "-" in msg:
+                        sarki = msg[0:msg.find('-')]
+                        artist = msg[msg.find('-') + 1:]
+
+                    else:
+                        sarki = msg[0:]
+                        artist = ""
+                else:
+                    flag = False
+            except:
+                flag = False
+                return
+            '''
+
+            try:
+                if msg[0:]:
+                    sarki = msg[0:]
+                    artist = ""
+            except:
+                flag = False
+
+            if not flag == False:
+                
+                sozler,sarki_adi,sarki_artist = music.sozParse(artist,sarki)
+
+                embed=discord.Embed(title=" ", description=sarki_adi + " - " + sarki_artist, color=0x75df00)
+                embed.add_field(name="Şarkı Sözleri : ", value=sozler, inline=False)
+                
+                await client.send_message(message.channel,embed=embed)
+
 
         #!meme
         if message.content.upper().startswith("!MEME"):
@@ -684,7 +726,6 @@ async def on_message(message):
                 await client.send_message(message.channel,embed=embed)
 
 
-
         #!leet,!l33t
         if message.content.upper().startswith("!LEET") or message.content.upper().startswith("!L33T"):
             
@@ -703,7 +744,6 @@ async def on_message(message):
                     msg = msg.replace('o','0')
                         
                     await client.send_message(message.channel,msg)
-
             except:
                 return
 
@@ -718,7 +758,6 @@ async def on_message(message):
             try:
                 if msg[1]:
                     await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
-            
             except:
                 return
 

@@ -1,6 +1,10 @@
 
 # 2018 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
+
+#hmnBot hava
+
+
 import os
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request

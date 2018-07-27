@@ -26,10 +26,13 @@ memeSubreddits = [
     "+ anime_irl",
     "+ coaxedintoasnafu",
     "+ notgayporn",
+    "+ blackpeopletwitter",
+    "+ 2meirl4meirl",
     "+ turkeyjerky"
 ]
 
 memeSubs = "\n".join(memeSubreddits[:])
+
 
 yardim = {
     "komutlar" :    "```asciidoc\n== Hmn-Bot Komutları ==\n\n",
@@ -56,13 +59,15 @@ yardim = {
     "self" :        "!ben,!self         :: yazdıklarınız ile sizi över\n",
     "ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
     "oyla" :        "!oyla,!vote        :: bir oylama başlatır\n",
-    "yardim" :      "!yardim,help       :: bir komut hakkında yardımı gösterir (!yardım <komut>)\n",
+    "soz" :         "!soz,!lyrics       :: istenilen şarkının sözlerini gösterir\n",
+    "yardim" :      "!yardim,!help      :: bir komut hakkında yardımı gösterir (!yardım <komut>)\n",
     "leet" :        "!leet,!l33t        :: yazılarınızı h4v4l1 yapar\n",
     "durt" :        "!dürt,!ping        :: tam ismi girilen birini dürter\n",
     "firlat" :      "!fırlat,!flip      :: bozuk para fırlatır\n",
     "sikayet" :     "!şikayet           :: server sahibine şikayet yollar\n",
     "karakter" :    "\nNot: Türkçe komutları türkçe karakter kullanmadan da çalıştırabilirsiniz.\n(!sürüm == !surum, !döviz usd == !doviz usd)"
 }
+
 
 komutYardim = {
     "durt" :        "```asciidoc\n== !dürt komutu ==\n\nAçıklama : Tam ismini yazdığın birini dürter\n\nÖrnek : !durt Hmn-Bot | !ping Hmn-Bot```",
@@ -80,6 +85,9 @@ komutYardim = {
     "gelistirici" : "```asciidoc\n== !geliştirici komutu ==\n\nAçıklama : Geliştirici bilgilerini gösterir\n\nÖrnek : !geliştirici | !dev```",
     "geliştirici" : "```asciidoc\n== !geliştirici komutu ==\n\nAçıklama : Geliştirici bilgilerini gösterir\n\nÖrnek : !geliştirici | !dev```",
     "dev" :         "```asciidoc\n== !dev komutu ==\n\nAçıklama : Geliştirici bilgilerini gösterir\n\nÖrnek : !geliştirici | !dev```",
+    "soz" :       "```asciidoc\n== !söz komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
+    "söz" :       "```asciidoc\n== !söz komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
+    "lyrics" :       "```asciidoc\n== !lyrics komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
     "sence" :       "```asciidoc\n== !sence komutu ==\n\nAçıklama : Bir evet-hayır sorusunu cevaplar\n\nÖrnek : !sence Bugün yağmur yağar mı?```",
     "google" :      "```asciidoc\n== !google komutu ==\n\nAçıklama : Girilen kelimelerle arama linki oluşturur\n\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
     "ara" :         "```asciidoc\n== !ara komutu ==\n\nAçıklama : Girilen kelimelerle arama linki oluşturur\n\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
@@ -112,7 +120,7 @@ komutYardim = {
 
 
 komut = {
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["soz"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",

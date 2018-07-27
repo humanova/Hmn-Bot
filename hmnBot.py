@@ -752,8 +752,8 @@ async def on_message(message):
                 await client.send_message(message.channel, yazi.komut["bot4"])
 
         #dead server - ded server (MESAJI EKLE)
-        if "DEAD SERVER" in message.content.upper() or "DED SERVER" in message.content.upper() or "DEADSERVER" in message.content.upper():
-            await client.send_message(message.channel, yazi.komut["deadserver"])
+        #if "DEAD SERVER" in message.content.upper() or "DED SERVER" in message.content.upper() or "DEADSERVER" in message.content.upper():
+            #await client.send_message(message.channel, yazi.komut["deadserver"])
 
         #omurcek
         if message.content.upper().startswith("OMURCEK") or message.content.upper().startswith("ÖMÜRCEK"):

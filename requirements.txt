@@ -8,3 +8,4 @@ websockets==3.4
 googletrans==2.3.0
 lxml==4.2.1
 pyowm==2.8.0
+lyricsgenius==0.7.0

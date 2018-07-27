@@ -237,12 +237,13 @@ async def on_message(message):
                     await client.delete_messages(mgs)
                 except:
                     await client.send_message(message.channel,"Buna yetkim yok")
+                    botYetki = "yok"
 
+                if not botYetki == "yok":
+                    embed=discord.Embed(title=" ", description=str(msg_sayisi) + " mesaj silindi" , color=0x75df00)
+                    embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
 
-                embed=discord.Embed(title=" ", description=str(msg_sayisi) + " mesaj silindi" , color=0x75df00)
-                embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
-
-                await client.send_message(message.channel, embed=embed)
+                    await client.send_message(message.channel, embed=embed)
             
             else:
 

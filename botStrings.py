@@ -15,21 +15,22 @@ bot_game = {
 }
 
 yardim = {
-    "komutlar" :    "\n\n\n" +"**[Komutlar]**\n",
-    "eglence" :     "```\n**-Eğlence-**\n```",
-    "genel" :       "```\n**-Genel-**\n```",
-    "yonetim" :     "\n\n**-Yönetim-**\n```",
-    "bitis" :       "```:spider::spider::spider::spider::spider::spider::spider::spider::spider:",
+    "komutlar" :    "```asciidoc\n == Hmn-Bot Komutları ==\n",
+    "eglence" :     "[EGLENCE]",
+    "genel" :       "[GENEL]",
+    "yonetim" :     "[YONETIM]",
+    "bitis" :       "```",
     "surum" :       "!sürüm,!version        (versiyonum!)\n",
     "statu" :       "!statü,!stats          (istatisiklerim!)\n",
     "server" :      "!server                (server bilgileri!)\n",
+    "temizle":      "!temizle               (mesajlari temizle!)\n",
     "hava" :        "!hava                  (şehrindeki hava durumunu gör!)\n",
     "roller" :      "!roller,roles          (serverdaki roller!)\n",
     "rolver" :      "!rolver                (etiketlenen kullanicilara rol ver!)\n",
     "gelistirici" : "!dev,!geliştirici      (beni yazan kişi!)\n",
     "sence" :       "!sence                 (bana soru sor![evet-hayır])\n",
     "google" :      "!google,!ara           (google'da ara!)\n",
-    "meme" :        "!meme                  (istediğin subredditteki memeleri gör",
+    "meme" :        "!meme                  (istediğin subredditteki memeleri gör\n",
     "davet" :       "!davet,!invite         (kanal davet linki olustur!)\n",
     "lmgtfy" :      "!lmgtfy                (birisine googlelamayı öğret!)\n",
     "btc" :         "!bitcoin,!btc          (anlık bitcoin kuru!)\n" ,
@@ -42,7 +43,7 @@ yardim = {
     "durt" :        "!dürt,!ping            (birisini dürt!)\n",
     "firlat" :      "!fırlat,!flip          (yazı mı, tura mı!)\n",
     "sikayet" :     "!şikayet               (bir durumu yetkiliye sikayet et!)\n",
-    "karakter" :    "\nNot: Türkçe komutları türkçe karakter kullanmadan da çalıştırabilirsiniz. ```!sürüm == !surum, !döviz usd == !doviz usd```"
+    "karakter" :    "\nNot: Türkçe komutları türkçe karakter kullanmadan da çalıştırabilirsiniz.\n(!sürüm == !surum, !döviz usd == !doviz usd)"
 }
 
 

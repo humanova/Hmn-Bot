@@ -199,6 +199,38 @@ async def on_message(message):
             await client.send_message(message.channel,embed=embed)
             #await client.send_message(message.channel, yazi.komut["statu"] % (servers,users,channels))
 
+        #!temizle
+        if message.content.upper().startswith("!TEMIZLE"):
+
+            if message.author.server_permissions.administrator:
+
+                msg = message.content.split(" ")
+
+                try:
+                    if msg[1].isdigit():
+                        msg_sayisi = msg[1]
+                        
+                    else:
+                        return
+
+                except: 
+                    return
+
+                mgs = []
+                msg_sayisi = int(msg_sayisi) 
+                async for x in Client.logs_from(message.channel, limit = msg_sayisi):
+                    mgs.append(x)
+                await client.delete_messages(mgs)
+
+                embed=discord.Embed(title=" ", description=str(msg_sayisi) + " mesaj silindi" , color=0x75df00)
+                embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
+
+                await client.send_message(message.channel, embed=embed)
+            
+            else:
+
+                await client.send_message(message.channel,"Buna yetkiniz yok!")
+
 
         #!durt,!ping
         if message.content.upper().startswith('!PING') or message.content.upper().startswith("!DÜRT") or message.content.upper().startswith("!DURT"):

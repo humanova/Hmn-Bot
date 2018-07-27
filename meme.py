@@ -66,7 +66,7 @@ def subredditAlgila(subreddit):
         url = "https://www.reddit.com/r/memes.json?count=20"
         return url
 
-    elif subreddit ==  "animememes":
+    elif subreddit ==  "animemes":
         url = "https://www.reddit.com/r/Animemes.json?count=20"
         return url
 

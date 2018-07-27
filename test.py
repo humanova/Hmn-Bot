@@ -3,4 +3,4 @@ import botStrings as yazi
 
 
 
-print(yazi.komut["yardim"])
+print(yazi.memeSubs)

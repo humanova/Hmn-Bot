@@ -14,6 +14,23 @@ bot_game = {
     "respect" : "Pressing F Simulator 2018"
 }
 
+memeSubreddits = [
+    "dankmemes",
+    "memeeconomy",
+    "deepfriedmemes",
+    "me_irl",
+    "meirl",
+    "memes",
+    "animemes",
+    "okbuddyretard",
+    "anime_irl",
+    "coaxedintoasnafu",
+    "notgayporn",
+    "turkeyjerky"
+]
+
+memeSubs = "\n".join(memeSubreddits[:])
+
 yardim = {
     "komutlar" :    "```asciidoc\n== Hmn-Bot Komutları ==\n\n",
     "eglence" :     "\n[EGLENCE]\n",
@@ -66,7 +83,7 @@ komutYardim = {
     "sence" :       "```asciidoc\n== !sence komutu ==\nAçıklama : Bir evet-hayır sorusunu cevaplar\nÖrnek : !sence Bugün yağmur yağar mı?```",
     "google" :      "```asciidoc\n== !google komutu ==\nAçıklama : Girilen kelimelerle arama linki oluşturur\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
     "ara" :         "```asciidoc\n== !ara komutu ==\nAçıklama : Girilen kelimelerle arama linki oluşturur\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
-    "meme" :        "```asciidoc\n== !meme komutu ==\nAçıklama : Girilen subredditten rastgele bir meme gönderir\nÖrnek : !meme dankmemes | !meme turkeyjerky```",
+    "meme" :        "```asciidoc\n== !meme komutu ==\nAçıklama : Girilen subredditten rastgele bir meme gönderir\nDesteklenen Subredditler : \n" + memeSubs +"\nÖrnek : !meme dankmemes | !meme turkeyjerky```",
     "davet" :       "```asciidoc\n== !davet komutu ==\nAçıklama : Bulunulan kanal için x kullanımlık davet linki oluşturur\nÖrnek : !davet 10```",
     "invite" :      "```asciidoc\n== !invite komutu ==\nAçıklama : Bulunulan kanal için x kullanımlık davet linki oluşturur\nÖrnek : !davet 10```",
     "lmgtfy" :      "```asciidoc\n== !lmgtfy komutu ==\nAçıklama : Girilen kelimelerle lmgtfy linki oluşturur\nÖrnek : !lmgtfy How to use Google```",
@@ -131,3 +148,4 @@ komut = {
     "bot4" : "https://media2.giphy.com/media/EizPK3InQbrNK/giphy.gif",
     "kripto-cizgi" : "-------------------------------"
 }
+

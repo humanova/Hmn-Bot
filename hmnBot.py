@@ -232,7 +232,12 @@ async def on_message(message):
                 msg_sayisi = int(msg_sayisi) 
                 async for x in Client.logs_from(message.channel, limit = msg_sayisi):
                     mgs.append(x)
-                await client.delete_messages(mgs)
+                
+                try:
+                    await client.delete_messages(mgs)
+                except:
+                    await client.send_message(message.channel,"Buna yetkim yok")
+
 
                 embed=discord.Embed(title=" ", description=str(msg_sayisi) + " mesaj silindi" , color=0x75df00)
                 embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)

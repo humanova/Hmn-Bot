@@ -660,7 +660,7 @@ async def on_message(message):
         #++========================== EGLENCE ============================++#
 
         #!soz,!lyrics
-        if message.content.upper().startswith("!SOZ") or message.content.upper().startswith("!SÖZ") or message.content.upper.startswith("!LYRICS"):
+        if message.content.upper().startswith("!SOZ") or message.content.upper().startswith("!SÖZ") or message.content.upper().startswith("!LYRICS"):
             
             komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
             

@@ -230,7 +230,7 @@ async def on_message(message):
 
                 mgs = []
                 msg_sayisi = int(msg_sayisi) 
-                async for x in Client.logs_from(message.channel, limit = msg_sayisi):
+                async for x in client.logs_from(message.channel, limit = msg_sayisi):
                     mgs.append(x)
                 
                 try:

@@ -188,7 +188,7 @@ async def on_message(message):
 
             if not komut == "yok":
                 try:
-                    await client.send_message(message.channel, yazi.yardim[komut])
+                    await client.send_message(message.channel, yazi.komutYardim[komut])
                 except:
                     return
             else:

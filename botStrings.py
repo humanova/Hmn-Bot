@@ -39,7 +39,7 @@ yardim = {
     "self" :        "!ben,!self         :: yazdıklarınız ile sizi över\n",
     "ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
     "oyla" :        "!oyla,!vote        :: bir oylama başlatır\n",
-    "yardim" :      "!yardim,help       :: bir komut hakkında yardımı gösterir (!yardım <komut>)",
+    "yardim" :      "!yardim,help       :: bir komut hakkında yardımı gösterir (!yardım <komut>)\n",
     "leet" :        "!leet,!l33t        :: yazılarınızı h4v4l1 yapar\n",
     "durt" :        "!dürt,!ping        :: tam ismi girilen birini dürter\n",
     "firlat" :      "!fırlat,!flip      :: bozuk para fırlatır\n",

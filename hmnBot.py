@@ -100,8 +100,12 @@ def serverSayisi():
 
 def channelSayisi():
 
-    channels = list(client.channels)
-    return len(channels)
+    i = 0
+    for server in client.servers:
+        for channel in server.channels:
+            i += 1
+            
+    return i
 
 def kullaniciSayisi():
 

@@ -31,7 +31,7 @@ import meme
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.2.9\n22/07/18"
+version = "hmnBot v0.2.9\n27/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
@@ -752,8 +752,8 @@ async def on_message(message):
                 await client.send_message(message.channel, yazi.komut["bot4"])
 
         #dead server - ded server (MESAJI EKLE)
-        #if "DEAD SERVER" in message.content.upper() or "DED SERVER" in message.content.upper() or "DEADSERVER" in message.content.upper():
-            #await client.send_message(message.channel, yazi.komut["deadserver"])
+        if "DEAD SERVER" in message.content.upper() or "DED SERVER" in message.content.upper() or "DEADSERVER" in message.content.upper():
+            await client.send_message(message.channel, yazi.komut["deadserver"])
 
         #omurcek
         if message.content.upper().startswith("OMURCEK") or message.content.upper().startswith("ÖMÜRCEK"):

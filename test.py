@@ -1,6 +1,6 @@
-import botLogger as log
+import meme
 
-log = "deneme"
-log_sayisi = 0
 
-bot_logla("log.txt",log,log_sayisi)
+memeURL = meme.memeParse("dankmemes")
+
+print(memeURL)

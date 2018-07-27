@@ -72,7 +72,7 @@ komutYardim = {
     "version" :     "```asciidoc\n== !sürüm komutu ==\n\nAçıklama : Bot sürümünü gösterir\n\nÖrnek : !surum | !version```",
     "statu" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
     "stats" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
-    "server" :      "```asciidoc\n== !server komutu ==\n\nAçıklama : Bulunulan serverın bilgilerini gösterir\n\nÖrnek : !durt Hmn-Bot | !ping Hmn-Bot```",
+    "server" :      "```asciidoc\n== !server komutu ==\n\nAçıklama : Bulunulan serverın bilgilerini gösterir\n\nÖrnek : !server```",
     "temizle":      "```asciidoc\n== !temizle komutu ==\n\nAçıklama : Belirtilen miktarda mesajı kanaldan siler\n\nÖrnek : !temizle 10```",
     "hava" :        "```asciidoc\n== !hava komutu ==\n\nAçıklama : Belirtilen şehirdeki hava durumunu gösterir\n\nÖrnek : !hava Istanbul | !hava Berlin```",
     "roller" :      "```asciidoc\n== !roller komutu ==\n\nAçıklama : Bulunulan serverdaki rolleri listeler\n\nÖrnek : !roller```",

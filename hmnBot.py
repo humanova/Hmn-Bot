@@ -607,36 +607,21 @@ async def on_message(message):
 
             #await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))
 
-
-        if message.content.upper().startswith("!SRVRS"):
-            
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            if message.author.id == myID:
-                liste = ""
-                server_listesi = list(client.servers)
-
-                for a in range(len(server_listesi)):
-                    liste += server_listesi[a-1].name + "\n"
-
-                embed=discord.Embed(title=" ", color=0x75df00)
-                embed.set_author(name="Aktif Serverlar", icon_url=client.user.avatar_url)
-                embed.add_field(name="Liste", value=server_listesi, inline=False)
-            else:
-                await client.send_message(message.channel,"Buna yetkin yok.")
-
         #++========================== EGLENCE ============================++#
 
 
         #!meme
-        if message.content.upper().startswith("!meme"):
+        if message.content.upper().startswith("!MEME"):
 
-            memeURL = meme.memeParse("dankmemes")
+            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            
+            memeURL,yazar,baslik,link,upvote = meme.memeParse("dankmemes")
 
             if not memeURL == "hata":
 
-                embed=discord.Embed(title=" ", color=0xFF0000)
+                embed=discord.Embed(title=" ",description = "**["+baslik+"]"+"("+link+")**", color=0xFF0000)
                 embed.set_author(name="r/dankmemes", icon_url=client.user.avatar_url)
+                embed.set_footer(text= "👍 " + str(upvote) + " | Yaratıcı : u/" + yazar)
                 embed.set_image(url = memeURL)
 
                 await client.send_message(message.channel,embed=embed)
@@ -795,7 +780,6 @@ async def on_message(message):
             await client.add_reaction(message,"🇳")
         '''
 
-        
 token = os.environ['PP_BOT_TOKEN']
 client.run(token)
 

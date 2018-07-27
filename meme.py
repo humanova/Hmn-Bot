@@ -15,20 +15,25 @@ def memeParse(subreddit):
 
     while imgURL == "https://www.polltab.com" or imgURL == "https://i.imgur.com/qNGc9uX.png" or imgURL == "giris":
         if subreddit == "dankmemes":
-            memeURL = "https://www.reddit.com/r/dankmemes.json"
+            memeURL = "https://www.reddit.com/r/dankmemes.json?count=20"
 
         else :
             imgURL = "hata"
-            return imgURL
+            break
 
 
         data = urlopen(Request(memeURL, headers={'User-Agent': 'Mozilla'})).read()
         page = json.loads(data.decode('utf-8'))
 
-        imgURL = random.choice(page["data"]["children"])["data"]["url"]
+        meme = random.choice(page["data"]["children"])
 
+        imgURL = meme["data"]["url"]
+        memeAuthor = meme["data"]["author"]
+        memeTitle = meme["data"]["title"]
+        permaLink = "https://reddit.com" + meme["data"]["permalink"]
+        memeUpvote = meme["data"]["ups"]
 
-    return imgURL
+    return imgURL,memeAuthor,memeTitle,permaLink,memeUpvote
 
 
 

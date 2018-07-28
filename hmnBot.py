@@ -94,7 +94,7 @@ async def bot_logla():
             a = 0
             string = log_son
             for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
-                if a == 0 : client.send_message(discord.Object(id=logChannelID), chunk + "```")
+                if a == 0 : await client.send_message(discord.Object(id=logChannelID), chunk + "```")
                 else : await client.send_message(discord.Object(id=logChannelID), "```" + chunk + "```")
                 a += 1
 

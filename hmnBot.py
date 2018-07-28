@@ -54,6 +54,16 @@ def temelLog():
     temel_log += "Online Kanal Sayisi : " + str(channelSayisi()) + "\n"
 
     
+def onlineServer():
+    servers = list(client.servers)
+    
+    temp_liste = ""
+
+    for i in range(len(servers)):
+        temp_liste += servers[i-1].name + "\n"
+
+    return temp_liste
+
 
 def onlineServerLog():
     global online_server_log
@@ -1078,6 +1088,12 @@ async def on_message(message):
 
             else:
                 await client.send_mesage(message.channel, "Yetkin yok!")
+
+        
+        #!srvrs
+        if message.content == "srvrs" and message.author.id == myID:
+
+            await client.send_message(message.channel,"Server sayisi : " + serverSayisi() + "\n" + onlineServer())
 
         
         #buglubot

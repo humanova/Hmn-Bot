@@ -152,6 +152,7 @@ komut = {
     "firlatYazi" : "Yazı geldi!",
     "firlatTura" : "Tura geldi!",
     "memeHata" : "Subreddit anlaşılamadı. **_!yardim meme_** yazarak geçerli subredditleri görebilirsiniz.",
+    "temizlikHata" : "Mesaj sayısı anlaşılamadı. **_!yardim temizle_** yazarak kullanımını görebilirsiniz.",
     "omurcek" : ":spider: ::)",
     "deadserver" : "https://media.discordapp.net/attachments/406172843580063784/463424761318473729/LegitimateWrongBengaltiger.png",
     "kedi1" : "https://cdn.discordapp.com/attachments/455819920140271626/456190563360702484/3.jpg",

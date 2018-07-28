@@ -317,8 +317,8 @@ async def on_message(message):
                     
                     if not flag == False:
                         msg_sayisi = int(msg_sayisi) 
-                        
-                        if msg_sayisi > 1 and msg_sayisi < 100:
+
+                        if msg_sayisi > 0 and msg_sayisi < 100:
                             mgs = []
                             
                             async for x in client.logs_from(message.channel, limit = msg_sayisi + 1):
@@ -339,6 +339,10 @@ async def on_message(message):
                         else :
                             await client.send_message(message.channel,"Aynı anda 1 - 99 arasında mesaj silebilirim.")
 
+                    else:
+                        embed=discord.Embed(title=" ",description = yazi.komut["temizlikHata"], color=0xFF0000)
+                        embed.set_author(name="Hmn-Bot Yardım", icon_url=client.user.avatar_url)
+                        await client.send_message(message.channel,embed=embed)
                 
                 else:
                     await client.send_message(message.channel,"Buna yetkiniz yok!")

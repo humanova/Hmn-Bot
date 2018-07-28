@@ -316,9 +316,11 @@ async def on_message(message):
                         return
                     
                     if not flag == False:
+                        msg_sayisi = int(msg_sayisi) 
+                        
                         if msg_sayisi > 1 and msg_sayisi < 100:
                             mgs = []
-                            msg_sayisi = int(msg_sayisi) 
+                            
                             async for x in client.logs_from(message.channel, limit = msg_sayisi + 1):
                                 mgs.append(x)
                             
@@ -332,8 +334,6 @@ async def on_message(message):
                                 embed=discord.Embed(title=" " , color=0x75df00)
                                 embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
                                 embed.add_field(name="Tamamlandı", value=str(msg_sayisi) + " mesaj silindi", inline=False)
-                                
-
                                 await client.send_message(message.channel, embed=embed)
 
                         else :
@@ -341,7 +341,6 @@ async def on_message(message):
 
                 
                 else:
-
                     await client.send_message(message.channel,"Buna yetkiniz yok!")
 
 

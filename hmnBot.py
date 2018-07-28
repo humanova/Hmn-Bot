@@ -274,6 +274,7 @@ async def on_message(message):
 
                 if message.author.server_permissions.manage_messages:
                     flag = True
+                    botYetki = "var"
                     msg = message.content.split(" ")
 
                     try:

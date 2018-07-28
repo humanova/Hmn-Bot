@@ -46,6 +46,7 @@ yardim = {
     "bitis" :       "```",
     "surum" :       "!sürüm,!version    :: bot sürümünü gösterir\n",
     "statu" :       "!statü,!stats      :: bot istatistiklerini gösterir\n",
+    "destek" :      "!destek            :: destek sunucusu davet linki gönderir\n",
     "server" :      "!server            :: server bilgilierini gösterir\n",
     "temizle":      "!temizle           :: kanaldaki son x mesajı temizler\n",
     "hava" :        "!hava              :: istenilen şehirdeki hava durumunu gösterir\n",
@@ -81,6 +82,7 @@ komutYardim = {
     "version" :     "```asciidoc\n== !sürüm komutu ==\n\nAçıklama : Bot sürümünü gösterir\n\nÖrnek : !surum | !version```",
     "statu" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
     "stats" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
+    "destek" :       "```asciidoc\n== !destek komutu ==\n\nAçıklama : Hmn-Bot hakkında önerileriniz ya da sorunlarınız için destek sunucusunun davet linkini gönderir\n\nÖrnek : !destek```",
     "server" :      "```asciidoc\n== !server komutu ==\n\nAçıklama : Bulunulan serverın bilgilerini gösterir\n\nÖrnek : !server```",
     "temizle":      "```asciidoc\n== !temizle komutu ==\n\nAçıklama : Belirtilen miktarda mesajı kanaldan siler\n\nÖrnek : !temizle 10```",
     "hava" :        "```asciidoc\n== !hava komutu ==\n\nAçıklama : Belirtilen şehirdeki hava durumunu gösterir\n\nÖrnek : !hava Istanbul | !hava Berlin```",
@@ -124,7 +126,7 @@ komutYardim = {
 
 
 komut = {
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["soz"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["soz"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",

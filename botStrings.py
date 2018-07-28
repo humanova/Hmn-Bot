@@ -84,7 +84,7 @@ komutYardim = {
     "stats" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
     "destek" :       "```asciidoc\n== !destek komutu ==\n\nAçıklama : Hmn-Bot hakkında önerileriniz ya da sorunlarınız için destek sunucusunun davet linkini gönderir\n\nÖrnek : !destek```",
     "server" :      "```asciidoc\n== !server komutu ==\n\nAçıklama : Bulunulan serverın bilgilerini gösterir\n\nÖrnek : !server```",
-    "temizle":      "```asciidoc\n== !temizle komutu ==\n\nAçıklama : Belirtilen miktarda mesajı kanaldan siler\n\nÖrnek : !temizle 10```",
+    "temizle":      "```asciidoc\n== !temizle komutu ==\n\nAçıklama : Belirtilen miktarda mesajı kanaldan siler. En fazla 99 mesaj silebilir.\n\nÖrnek : !temizle 10```",
     "hava" :        "```asciidoc\n== !hava komutu ==\n\nAçıklama : Belirtilen şehirdeki hava durumunu gösterir\n\nÖrnek : !hava Istanbul | !hava Berlin```",
     "roller" :      "```asciidoc\n== !roller komutu ==\n\nAçıklama : Bulunulan serverdaki rolleri listeler\n\nÖrnek : !roller```",
     "rolver" :      "```asciidoc\n== !rolver komutu ==\n\nAçıklama : Etiketlenen kullanıcıya etiketlenen rolü verir\n\nÖrnek : !rolver @Hmn-Bot @Bot```",

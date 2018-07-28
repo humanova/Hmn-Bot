@@ -314,26 +314,31 @@ async def on_message(message):
                     except:
                         flag = False
                         return
-
+                    
                     if not flag == False:
-                        mgs = []
-                        msg_sayisi = int(msg_sayisi) 
-                        async for x in client.logs_from(message.channel, limit = msg_sayisi + 1):
-                            mgs.append(x)
-                        
-                        try:
-                            await client.delete_messages(mgs)
-                        except:
-                            await client.send_message(message.channel,"Buna yetkim yok")
-                            botYetki = "yok"
-
-                        if not botYetki == "yok":
-                            embed=discord.Embed(title=" " , color=0x75df00)
-                            embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
-                            embed.add_field(name="Tamamlandı", value=str(msg_sayisi) + " mesaj silindi", inline=False)
+                        if msg_sayisi > 1 and msg_sayisi < 100:
+                            mgs = []
+                            msg_sayisi = int(msg_sayisi) 
+                            async for x in client.logs_from(message.channel, limit = msg_sayisi + 1):
+                                mgs.append(x)
                             
+                            try:
+                                await client.delete_messages(mgs)
+                            except:
+                                await client.send_message(message.channel,"Buna yetkim yok")
+                                botYetki = "yok"
 
-                            await client.send_message(message.channel, embed=embed)
+                            if not botYetki == "yok":
+                                embed=discord.Embed(title=" " , color=0x75df00)
+                                embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
+                                embed.add_field(name="Tamamlandı", value=str(msg_sayisi) + " mesaj silindi", inline=False)
+                                
+
+                                await client.send_message(message.channel, embed=embed)
+
+                        else :
+                            await client.send_message(message.channel,"Aynı anda 1 - 99 arasında mesaj silebilirim.")
+
                 
                 else:
 

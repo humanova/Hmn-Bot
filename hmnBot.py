@@ -1094,6 +1094,22 @@ async def on_message(message):
 
         #++========================== OZEL ============================++#
         
+        #!4head
+        if message.content == "!4head":
+            
+            rand = random.randint(1,4)
+            if rand == 1:
+                foto = yazi.komut["4head1"]
+            if rand == 2:
+                foto = yazi.komut["4head2"]
+            if rand == 3:
+                foto = yazi.komut["4head3"]
+            if rand == 4:
+                foto = yazi.komut["4head4"]
+        
+            await client.send_message(message.channel, foto)
+
+
         #oyun degisme
         if message.content.upper().startswith("!OYUN"):
             
@@ -1134,7 +1150,10 @@ async def on_message(message):
         if message.content == "!logla" and message.author.id == myID:
 
             await bot_logla()
-        
+
+
+
+        '''
         #buglubot
         if "buglubot" in message.content:
             op = random.randint(1,4)
@@ -1148,6 +1167,7 @@ async def on_message(message):
             if op == 4:
                 await client.send_message(message.channel, yazi.komut["bot4"])
 
+        
         #dead server - ded server (MESAJI EKLE)
         if "DEAD SERVER" in message.content.upper() or "DED SERVER" in message.content.upper() or "DEADSERVER" in message.content.upper():
             await client.send_message(message.channel, yazi.komut["deadserver"])
@@ -1163,6 +1183,7 @@ async def on_message(message):
             await client.add_reaction(message,"🇩")
             await client.add_reaction(message,"🇪")
             await client.add_reaction(message,"🇸")
+        
 
         #crazy cries 
         if "crazy cries" in message.content:
@@ -1177,7 +1198,7 @@ async def on_message(message):
             if op == 4:
                 await client.send_message(message.channel, yazi.komut["kedi4"])
 
-        '''
+        
         #server sahibini dogrula
         if message.author.id == message.server.owner.id:
             try:

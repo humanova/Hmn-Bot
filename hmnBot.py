@@ -90,7 +90,6 @@ async def bot_logla():
         log_baslangic = "\nLOG[" + str(log_num) + "] : " + tarih + "\n"
         log_son = str(log_baslangic) + str(temel_log) + str(online_server_log) + "```" +str(komut_log)
 
-        string = log_son
         try:
             a = 0
             string = log_son
@@ -1123,6 +1122,10 @@ async def on_message(message):
 
             await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + "```asciidoc\n" + onlineServer() + "```")
 
+        #!logla
+        if message.content == "!logla" and message.author.id == myID:
+
+            await bot_logla()
         
         #buglubot
         if "buglubot" in message.content:

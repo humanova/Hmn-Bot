@@ -1,21 +1,22 @@
 import music
   
-message = "!soz Human Rag"
+
+message = "!soz thriller"
+flag = True
 msg = message.split(" ")
 msg = " ".join(msg[1:])
 
+
 try:
     if msg[0:]:
-        if "-" in msg:
-            sarki = msg[0:msg.find('-')]
-            artist = msg[msg.find('-') + 1:]
-
-        else:
-            sarki = msg[0:]
-            artist = ""
-    else:
-        flag = False
+        sarki = msg[0:]
+        artist = ""
 except:
     flag = False
-  
-music.sozParse("","Human - Rag")
+
+if not flag == False:
+    
+    sozler,sarki_adi,sarki_artist = music.sozParse(artist,sarki)
+    print(sozler)
+
+    

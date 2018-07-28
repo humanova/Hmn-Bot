@@ -151,7 +151,16 @@ async def on_message(message):
         #!surum,!version,!versiyon
         if message.content.upper().startswith("!VERSION") or message.content.upper().startswith("!VERSIYON") or message.content.upper().startswith("!SÜRÜM") or message.content.upper().startswith("!SURUM"):
             global komut_log
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
             embed=discord.Embed(title=" ", color=0x75df00)
             embed.set_author(name=client.user.name + " Versiyonu", icon_url=client.user.avatar_url)
@@ -162,8 +171,16 @@ async def on_message(message):
 
         #!gelistirici,!developer
         if message.content.upper().startswith("!DEV") or message.content.upper().startswith("!GELISTIRICI") or message.content.startswith("!geliştirici"):
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
             userID = message.author.id
             embed=discord.Embed(title=" ", color=0x75df00)
             embed.set_author(name=client.user.name + " Geliştirici", icon_url=client.user.avatar_url)
@@ -177,8 +194,16 @@ async def on_message(message):
         #!help,!yardim
         if message.content.upper().startswith("!HELP") or message.content.upper().startswith("!YARDIM") or message.content.startswith("!yardim"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
             msg = message.content.split(" ")
 
             try: 
@@ -201,8 +226,16 @@ async def on_message(message):
         #!statu,!stats
         if message.content.upper().startswith("!STATS") or message.content.upper().startswith("!STATÜ") or message.content.upper().startswith("!STATU"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
             servers = serverSayisi()
             users = kullaniciSayisi()
             channels = channelSayisi()
@@ -217,91 +250,132 @@ async def on_message(message):
         #!temizle
         if message.content.upper().startswith("!TEMIZLE"):
 
-            if message.author.server_permissions.manage_messages:
-                flag = True
-                msg = message.content.split(" ")
+            server_flag = True
 
-                try:
-                    if msg[1].isdigit():
-                        msg_sayisi = msg[1]
-                        
-                    else:
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+            if not server_flag:
+
+                if message.author.server_permissions.manage_messages:
+                    flag = True
+                    msg = message.content.split(" ")
+
+                    try:
+                        if msg[1].isdigit():
+                            msg_sayisi = msg[1]
+                            
+                        else:
+                            flag = False
+                            return
+
+                    except:
                         flag = False
                         return
 
-                except:
-                    flag = False
-                    return
+                    if not flag == False:
+                        mgs = []
+                        msg_sayisi = int(msg_sayisi) 
+                        async for x in client.logs_from(message.channel, limit = msg_sayisi + 1):
+                            mgs.append(x)
+                        
+                        try:
+                            await client.delete_messages(mgs)
+                        except:
+                            await client.send_message(message.channel,"Buna yetkim yok")
+                            botYetki = "yok"
 
-                if not flag == False:
-                    mgs = []
-                    msg_sayisi = int(msg_sayisi) 
-                    async for x in client.logs_from(message.channel, limit = msg_sayisi + 1):
-                        mgs.append(x)
-                    
-                    try:
-                        await client.delete_messages(mgs)
-                    except:
-                        await client.send_message(message.channel,"Buna yetkim yok")
-                        botYetki = "yok"
+                        if not botYetki == "yok":
+                            embed=discord.Embed(title=" " , color=0x75df00)
+                            embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
+                            embed.add_field(name="Tamamlandı", value=str(msg_sayisi) + " mesaj silindi", inline=False)
+                            
 
-                    if not botYetki == "yok":
-                        embed=discord.Embed(title=" ", description=str(msg_sayisi) + " mesaj silindi" , color=0x75df00)
-                        embed.set_author(name="Temizlik",icon_url=client.user.avatar_url)
+                            await client.send_message(message.channel, embed=embed)
+                
+                else:
 
-                        await client.send_message(message.channel, embed=embed)
-            
-            else:
-
-                await client.send_message(message.channel,"Buna yetkiniz yok!")
+                    await client.send_message(message.channel,"Buna yetkiniz yok!")
 
 
         #!durt,!ping
         if message.content.upper().startswith('!PING') or message.content.upper().startswith("!DÜRT") or message.content.upper().startswith("!DURT"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            contents = message.content.split(" ")
+            server_flag = True
 
-            try:
-                if contents[1]: 
-                    userID = message.author.id
-                    member = message.server.get_member_named(contents[1])
-                    if not userID == member.id:
-                        await client.send_message(message.channel, yazi.komut["durt"] % (member.id,userID))
-                    else:
-                        await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
-            except:
-                return    
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+            if not server_flag:            
+                contents = message.content.split(" ")
+
+                try:
+                    if contents[1]: 
+                        userID = message.author.id
+                        member = message.server.get_member_named(contents[1])
+                        if not userID == member.id:
+                            await client.send_message(message.channel, yazi.komut["durt"] % (member.id,userID))
+                        else:
+                            await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
+                except:
+                    return    
 
 
         #!davet,invite
         if message.content.upper().startswith("!DAVET") or message.content.upper().startswith("!INVITE"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            msg = message.content.split(" ")
-            kul_sayisi = 1
-            if len(msg)>1:
-                if msg[1].isdigit():
-                    kul_sayisi = int(msg[1])
+            server_flag = True
 
-            try:
-                davet = await client.create_invite(message.channel,max_uses=kul_sayisi)
-            except discord.errors.NotFound:
-                await client.send_message(message.channel,"Yetkim yok!")
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-            embed=discord.Embed(title=" ", color=0x75df00)
-            embed.set_author(name=message.channel.name + " Kanal Daveti", icon_url=client.user.avatar_url)
-            embed.add_field(name="%d kullanımlık davet linki : " % (kul_sayisi), value=davet.url, inline=False)
-            await client.send_message(message.channel,embed=embed)
+            if not server_flag:    
+
+                msg = message.content.split(" ")
+                kul_sayisi = 1
+                if len(msg)>1:
+                    if msg[1].isdigit():
+                        kul_sayisi = int(msg[1])
+
+                try:
+                    davet = await client.create_invite(message.channel,max_uses=kul_sayisi)
+                except discord.errors.NotFound:
+                    await client.send_message(message.channel,"Yetkim yok!")
+
+                embed=discord.Embed(title=" ", color=0x75df00)
+                embed.set_author(name=message.channel.name + " Kanal Daveti", icon_url=client.user.avatar_url)
+                embed.add_field(name="%d kullanımlık davet linki : " % (kul_sayisi), value=davet.url, inline=False)
+                await client.send_message(message.channel,embed=embed)
 
 
         #!soyle,!say (sadece benim id'm)
         if message.content.upper().startswith("!SAY"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+           
             if message.author.id == myID:
                 args = message.content.split(" ")
                 try:
@@ -321,68 +395,96 @@ async def on_message(message):
         #!cevir , ffff99
         if message.content.upper().startswith("!CEVIR"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            raw_msg = message.content.split(" ")
-            try:
-                if raw_msg[1]:
-                    raw_msg = raw_msg[1:len(raw_msg)]
-                    son_msg = ""
+            server_flag = True
 
-                    
-                    if raw_msg[0].startswith("-") and raw_msg[1].startswith("-"):
-                        currDil = raw_msg[0].replace("-","")
-                        hedefDil = raw_msg[1].replace("-","")
-                        
-                        
-                        msg = raw_msg[2:len(raw_msg)]
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-                    elif raw_msg[0].startswith("-") and raw_msg[1].startswith("-") == 0:
-                        currDil = "auto"
-                        hedefDil = raw_msg[0].replace("-","")
-                        
-                        msg = raw_msg[1:len(raw_msg)]
-                        
-                    else :
-                        msg = raw_msg
-                        currDil = "auto"
-                        hedefDil = "tr"
-                        
-                    son_msg = " ".join(msg)
-                    metin,currDil,hedefDil,oran = ceviri.Cevir(currDil,hedefDil,son_msg)
-                    
-                    embed=discord.Embed(title=" ", color=0x75df00)
-                    embed.set_author(name="Google Çeviri", icon_url=client.user.avatar_url)
-                    embed.add_field(name="["+currDil+" -> "+hedefDil+"]", value=metin, inline=False)
-                    embed.set_footer(text=oran)
-                    await client.send_message(message.channel,embed=embed)
+            if not server_flag:   
 
-            except:
-                return
+                raw_msg = message.content.split(" ")
+                try:
+                    if raw_msg[1]:
+                        raw_msg = raw_msg[1:len(raw_msg)]
+                        son_msg = ""
+
+                        
+                        if raw_msg[0].startswith("-") and raw_msg[1].startswith("-"):
+                            currDil = raw_msg[0].replace("-","")
+                            hedefDil = raw_msg[1].replace("-","")
+                            
+                            
+                            msg = raw_msg[2:len(raw_msg)]
+
+                        elif raw_msg[0].startswith("-") and raw_msg[1].startswith("-") == 0:
+                            currDil = "auto"
+                            hedefDil = raw_msg[0].replace("-","")
+                            
+                            msg = raw_msg[1:len(raw_msg)]
+                            
+                        else :
+                            msg = raw_msg
+                            currDil = "auto"
+                            hedefDil = "tr"
+                            
+                        son_msg = " ".join(msg)
+                        metin,currDil,hedefDil,oran = ceviri.Cevir(currDil,hedefDil,son_msg)
+                        
+                        embed=discord.Embed(title=" ", color=0x75df00)
+                        embed.set_author(name="Google Çeviri", icon_url=client.user.avatar_url)
+                        embed.add_field(name="["+currDil+" -> "+hedefDil+"]", value=metin, inline=False)
+                        embed.set_footer(text=oran)
+                        await client.send_message(message.channel,embed=embed)
+
+                except:
+                    return
 
 
         #!oyla,!vote
         if message.content.upper().startswith("!VOTE") or message.content.upper().startswith("!OYLA"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            server_flag = True
 
-            userID = message.author.id
-            msg = message.content.split(" ")
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-            try:
-                if msg[1]:
-                    msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
-                    await client.add_reaction(msg,'👍')
-                    await client.add_reaction(msg,'👎')
-            except:
-                return
+            if not server_flag:   
+
+                userID = message.author.id
+                msg = message.content.split(" ")
+
+                try:
+                    if msg[1]:
+                        msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
+                        await client.add_reaction(msg,'👍')
+                        await client.add_reaction(msg,'👎')
+                except:
+                    return
                 
                 
         #!google,!ara 
         if message.content.upper().startswith("!GOOGLE") or message.content.upper().startswith("!ARA"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+          
             searchQ = "https://google.com/search?q="
             msg = message.content.split(" ")
 
@@ -401,8 +503,16 @@ async def on_message(message):
         #!lmgtfy
         if message.content.upper().startswith("!LMGTFY"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+           
             searchQ = "http://lmgtfy.com/?q="
             msg = message.content.split(" ")
 
@@ -421,164 +531,211 @@ async def on_message(message):
         #!hava
         if message.content.upper().startswith("!HAVA"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            msg = message.content.split(" ")
+            server_flag = True
 
-            try:
-                if msg[1]:
-                    sehir,durum = hava.havaParse(" ".join(msg[1:]))
-                    yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(" ".join(msg[1:]))
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-                    if not yer == "hata":
-                        embed=discord.Embed(title=" ", color=0x00ffff)
-                        #embed.set_author(name="Hava Durumu", icon_url=client.user.avatar_url)
-                        embed.set_thumbnail(url=durum_ikon_url)
-                        embed.add_field(name=":earth_africa: Yer", value=yer, inline=True)
-                        embed.add_field(name=":thermometer: Sıcaklık" , value=str(sicaklik) + "°C", inline=True)
-                        embed.add_field(name=":droplet: Nem" , value=str(nem_orani)+"%", inline=True)
-                        embed.add_field(name=":dash: Rüzgar Hızı" , value=str(ruzgar_hizi)+" m/s", inline=True)
-                        embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu + " (utc+3)", inline=True)
-                        embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi + " (utc+3)", inline=True)
+            if not server_flag:   
 
-                    if not sehir == "hata":
-                        embed.add_field(name="Durum :" , value=durum, inline=False)
+                msg = message.content.split(" ")
 
-                    embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
-                    #print(sehir + tarih + durum + maks + minn + peryot)
-                    await client.send_message(message.channel,embed=embed)
+                try:
+                    if msg[1]:
+                        sehir,durum = hava.havaParse(" ".join(msg[1:]))
+                        yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(" ".join(msg[1:]))
 
-            except:
-                return
+                        if not yer == "hata":
+                            embed=discord.Embed(title=" ", color=0x00ffff)
+                            #embed.set_author(name="Hava Durumu", icon_url=client.user.avatar_url)
+                            embed.set_thumbnail(url=durum_ikon_url)
+                            embed.add_field(name=":earth_africa: Yer", value=yer, inline=True)
+                            embed.add_field(name=":thermometer: Sıcaklık" , value=str(sicaklik) + "°C", inline=True)
+                            embed.add_field(name=":droplet: Nem" , value=str(nem_orani)+"%", inline=True)
+                            embed.add_field(name=":dash: Rüzgar Hızı" , value=str(ruzgar_hizi)+" m/s", inline=True)
+                            embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu + " (utc+3)", inline=True)
+                            embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi + " (utc+3)", inline=True)
+
+                        if not sehir == "hata":
+                            embed.add_field(name="Durum :" , value=durum, inline=False)
+
+                        embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
+                        #print(sehir + tarih + durum + maks + minn + peryot)
+                        await client.send_message(message.channel,embed=embed)
+
+                except:
+                    return
 
         #!bitcoin,!btc
         if message.content.upper().startswith("!BITCOIN") or message.content.upper().startswith("!BTC"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            server_flag = True
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+            if not server_flag:               
+                a,btc_tl = doviz.DovizParse("BTC-TRY",1)
+                a,btc_usd = doviz.DovizParse("BTC-USD",1)
+                
+                embed=discord.Embed(title=" ", color=0x2079ff)
+                embed.set_author(name="Bitcoin Kuru", icon_url=client.user.avatar_url)
+                embed.add_field(name="1 BTC" + "/USD", value=btc_usd, inline=True)
+                embed.add_field(name="1 BTC" + "/TL" , value=btc_tl, inline=True)
+                await client.send_message(message.channel,embed=embed)
+                #await client.send_message(message.channel, yazi.komut["bitcoin"] % (btc_usd,btc_tl))
             
-            a,btc_tl = doviz.DovizParse("BTC-TRY",1)
-            a,btc_usd = doviz.DovizParse("BTC-USD",1)
-            
-            embed=discord.Embed(title=" ", color=0x2079ff)
-            embed.set_author(name="Bitcoin Kuru", icon_url=client.user.avatar_url)
-            embed.add_field(name="1 BTC" + "/USD", value=btc_usd, inline=True)
-            embed.add_field(name="1 BTC" + "/TL" , value=btc_tl, inline=True)
-            await client.send_message(message.channel,embed=embed)
-            #await client.send_message(message.channel, yazi.komut["bitcoin"] % (btc_usd,btc_tl))
-        
         #!kripto
         if message.content.upper().startswith("!KRIPTO") or message.content.upper().startswith("!CRYPTO"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            msg = message.content.split(" ")
+            server_flag = True
 
-            try:
-                if msg[1]:
-                    
-                    if msg[1].upper().startswith("FETOCU") or msg[1].upper().startswith("FETÖCÜ"):
-                        await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-                    try:
-                        if msg[2]:
-                            if not msg[2] == "0":
-                                if is_float(msg[2]):
-                                    adet = float(msg[2])
+            if not server_flag:               
+                msg = message.content.split(" ")
 
-                                elif msg[2].isnumeric():
-                                    adet = msg[2]
+                try:
+                    if msg[1]:
+                        
+                        if msg[1].upper().startswith("FETOCU") or msg[1].upper().startswith("FETÖCÜ"):
+                            await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
+
+                        try:
+                            if msg[2]:
+                                if not msg[2] == "0":
+                                    if is_float(msg[2]):
+                                        adet = float(msg[2])
+
+                                    elif msg[2].isnumeric():
+                                        adet = msg[2]
+                                    else:
+                                        adet = 1
                                 else:
                                     adet = 1
+                        except:
+                            adet = 1
+
+                        kur = msg[1]
+                        kurUSD,deger_USD,kur_degisim,grafik_link = doviz.KriptoParse(kur,"usd",adet)
+                        a,dolar_degeri = doviz.DovizParse("USD",1)
+                        kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
+
+                        deger_USD = round(float(deger_USD) * float(adet),2)
+                        deger_TL = round(float(deger_TL) * float(adet),2)
+                        kur_degisim = round(float(kur_degisim),2)
+
+
+                        if not kurUSD == "hata":
+                            embed=discord.Embed(title=" ", color=0x2079ff)
+                            embed.set_author(name="Kripto Kurları [" + kur.upper() +"]", icon_url=client.user.avatar_url)
+                            embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
+                            embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
+
+                            if not str(kur_degisim).startswith("-"):
+                                embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=True)
                             else:
-                                adet = 1
-                    except:
-                        adet = 1
+                                embed.add_field(name="Günlük Değişim",value=":arrow_down_small: " + str(kur_degisim) + "%", inline=True)
 
-                    kur = msg[1]
-                    kurUSD,deger_USD,kur_degisim,grafik_link = doviz.KriptoParse(kur,"usd",adet)
-                    a,dolar_degeri = doviz.DovizParse("USD",1)
-                    kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
-
-                    deger_USD = round(float(deger_USD) * float(adet),2)
-                    deger_TL = round(float(deger_TL) * float(adet),2)
-                    kur_degisim = round(float(kur_degisim),2)
-
-
-                    if not kurUSD == "hata":
-                        embed=discord.Embed(title=" ", color=0x2079ff)
-                        embed.set_author(name="Kripto Kurları [" + kur.upper() +"]", icon_url=client.user.avatar_url)
-                        embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
-                        embed.add_field(name=str(adet) + " " + kurTL + "/TL" , value=str(deger_TL), inline=True)
-
-                        if not str(kur_degisim).startswith("-"):
-                            embed.add_field(name="Günlük Değişim",value=":arrow_up_small: " + str(kur_degisim) + "%", inline=True)
-                        else:
-                            embed.add_field(name="Günlük Değişim",value=":arrow_down_small: " + str(kur_degisim) + "%", inline=True)
-
-                        embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=True)
-                        embed.set_image(url=grafik_link)
-                        embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
-                        await client.send_message(message.channel,embed=embed)
-                        #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))
-            except:
-                return
+                            embed.add_field(name="Son 7 günlük grafik", value=yazi.komut["kripto-cizgi"], inline=True)
+                            embed.set_image(url=grafik_link)
+                            embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
+                            await client.send_message(message.channel,embed=embed)
+                            #await client.send_message(message.channel, yazi.komut["kripto"] % (kurUSD,deger_USD,kurTL,deger_TL))
+                except:
+                    return
 
 
         #!doviz kur
         if message.content.upper().startswith("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            msg = message.content.split(" ")
+            server_flag = True
 
-            try:
-                if msg[1]:
-                    kur = msg[1]
-                    try:
-                        if msg[2]:
-                            if not msg[2] == "0":
-                                if is_float(msg[2]):
-                                    adet = float(msg[2])
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-                                elif msg[2].isnumeric():
-                                    adet = msg[2]
+            if not server_flag:          
+                msg = message.content.split(" ")
 
+                try:
+                    if msg[1]:
+                        kur = msg[1]
+                        try:
+                            if msg[2]:
+                                if not msg[2] == "0":
+                                    if is_float(msg[2]):
+                                        adet = float(msg[2])
+
+                                    elif msg[2].isnumeric():
+                                        adet = msg[2]
+
+                                    else:
+                                        adet = 1
                                 else:
                                     adet = 1
-                            else:
-                                adet = 1
-                    except:
-                        adet = 1
+                        except:
+                            adet = 1
 
-                    kur,kur_degeri = doviz.DovizParse(kur,adet)
-                    if not kur == "hata":
-                        embed=discord.Embed(title=" ", color=0x2b80ff)
-                        embed.set_author(name="Döviz Kurları", icon_url=client.user.avatar_url)
-                        embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
-                        embed.set_footer(text="💰 Kaynak : xe.com")
-                        await client.send_message(message.channel,embed=embed)
-                        # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
+                        kur,kur_degeri = doviz.DovizParse(kur,adet)
+                        if not kur == "hata":
+                            embed=discord.Embed(title=" ", color=0x2b80ff)
+                            embed.set_author(name="Döviz Kurları", icon_url=client.user.avatar_url)
+                            embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
+                            embed.set_footer(text="💰 Kaynak : xe.com")
+                            await client.send_message(message.channel,embed=embed)
+                            # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
 
-            except:
-                return
+                except:
+                    return
 
 
         #!roller,!roles
         if message.content.upper().startswith("!ROLLER") or message.content.upper().startswith("!ROLES"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            currServer = message.server.name
-            roles = message.server.role_hierarchy
-            roller = ""
-            for role in roles:
-                roller += role.name + "\n"
-            
-            embed=discord.Embed(title=" ", color=0x001a40)
-            embed.set_author(name=currServer + " Rolleri", icon_url=client.user.avatar_url)
-            embed.add_field(name="Roller", value="```"+roller+"```", inline=True)
-            await client.send_message(message.channel,embed=embed)
-            #await client.send_message(message.channel, yazi.komut["roller"] % (currServer,roller))
+            server_flag = True
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+            if not server_flag: 
+
+                currServer = message.server.name
+                roles = message.server.role_hierarchy
+                roller = ""
+                for role in roles:
+                    roller += role.name + "\n"
+                
+                embed=discord.Embed(title=" ", color=0x001a40)
+                embed.set_author(name=currServer + " Rolleri", icon_url=client.user.avatar_url)
+                embed.add_field(name="Roller", value="```"+roller+"```", inline=True)
+                await client.send_message(message.channel,embed=embed)
+                #await client.send_message(message.channel, yazi.komut["roller"] % (currServer,roller))
             
         '''
         #!rolver (sadece sahipler)
@@ -598,76 +755,104 @@ async def on_message(message):
         #!sikayet (server sahibine)
         if message.content.upper().startswith("!ŞIKAYET") or message.content.upper().startswith("!SIKAYET"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            sikayet = message.content.split(" ")
+            server_flag = True
 
-            try:
-                if sikayet[1]:
-                    owner = message.server.owner
-                    sikayetci = message.author.name + "#" + message.author.discriminator
-                    sikayetci_nick = message.author.display_name
-                    serverAdi = message.server.name
-                    kanalAdi = message.channel.name
-                    tarih = zaman.tamTarih() + " (UTC+3)"
-                    
-                    try:
-                        client.start_private_message(owner)
-                        await client.send_message(owner, yazi.komut['sikayet_admin'] % (tarih,serverAdi,kanalAdi,sikayetci,sikayetci_nick," ".join(sikayet[1:])))
-                        await client.send_message(message.channel, yazi.komut['sikayet_kullanici'])
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+            if not server_flag:             
+                sikayet = message.content.split(" ")
+
+                try:
+                    if sikayet[1]:
+                        owner = message.server.owner
+                        sikayetci = message.author.name + "#" + message.author.discriminator
+                        sikayetci_nick = message.author.display_name
+                        serverAdi = message.server.name
+                        kanalAdi = message.channel.name
+                        tarih = zaman.tamTarih() + " (UTC+3)"
+                        
                         try:
-                            await client.delete_message(message)
-                        except discord.errors.NotFound:
-                            return
+                            client.start_private_message(owner)
+                            await client.send_message(owner, yazi.komut['sikayet_admin'] % (tarih,serverAdi,kanalAdi,sikayetci,sikayetci_nick," ".join(sikayet[1:])))
+                            await client.send_message(message.channel, yazi.komut['sikayet_kullanici'])
+                            try:
+                                await client.delete_message(message)
+                            except discord.errors.NotFound:
+                                return
 
-                    except discord.errors.NotFound:
-                        await client.send_message(message.channel, yazi.komut['sikayet_hata'])
-            
-            except:
-                return
+                        except discord.errors.NotFound:
+                            await client.send_message(message.channel, yazi.komut['sikayet_hata'])
+                
+                except:
+                    return
 
 
         #!server,!serverstats
         if message.content.upper().startswith("!SERVER"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
-            serverName = message.server.name
-            serverID = message.server.id
-            serverOwner = message.server.owner.name
-            serverOwnerN = message.server.owner.nick
-            serverMemCount = str(message.server.member_count)
-            serverRegion = str(message.server.region)
-            serverDate = str(message.server.created_at)
-            serverKanal = 0
-            serverRol = 0
-            
-            for i in message.server.channels:
-                serverKanal += 1
+            server_flag = True
 
-            for i in message.server.roles:
-                serverRol +=1
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-            embed=discord.Embed(title=" ", color=0xff6600)
-            embed.set_author(name="Server Bilgileri", icon_url=client.user.avatar_url)
-            embed.add_field(name="Server Adı :", value=serverName + "  (ID : " + serverID +")", inline=False)
-            embed.add_field(name="Server Sahibi :", value=serverOwner+"(" + str(serverOwnerN) + ")", inline=False)
-            embed.add_field(name="Kullanıcı Sayısı :", value=serverMemCount, inline=False)
-            embed.add_field(name="Kanal Sayısı : ",value=serverKanal, inline=False)
-            embed.add_field(name="Rol Sayısı : ",value=serverRol, inline=False)
-            embed.add_field(name="Server Bölgesi :", value=serverRegion, inline=False)
-            embed.add_field(name="Server Yaratılma Tarihi(UTC) : ", value=serverDate, inline=False)
-            await client.send_message(message.channel,embed=embed)
+            if not server_flag: 
+                serverName = message.server.name
+                serverID = message.server.id
+                serverOwner = message.server.owner.name
+                serverOwnerN = message.server.owner.nick
+                serverMemCount = str(message.server.member_count)
+                serverRegion = str(message.server.region)
+                serverDate = str(message.server.created_at)
+                serverKanal = 0
+                serverRol = 0
+                
+                for i in message.server.channels:
+                    serverKanal += 1
 
-            #await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))
+                for i in message.server.roles:
+                    serverRol +=1
+
+                embed=discord.Embed(title=" ", color=0xff6600)
+                embed.set_author(name="Server Bilgileri", icon_url=client.user.avatar_url)
+                embed.add_field(name="Server Adı :", value=serverName + "  (ID : " + serverID +")", inline=False)
+                embed.add_field(name="Server Sahibi :", value=serverOwner+"(" + str(serverOwnerN) + ")", inline=False)
+                embed.add_field(name="Kullanıcı Sayısı :", value=serverMemCount, inline=False)
+                embed.add_field(name="Kanal Sayısı : ",value=serverKanal, inline=False)
+                embed.add_field(name="Rol Sayısı : ",value=serverRol, inline=False)
+                embed.add_field(name="Server Bölgesi :", value=serverRegion, inline=False)
+                embed.add_field(name="Server Yaratılma Tarihi(UTC) : ", value=serverDate, inline=False)
+                await client.send_message(message.channel,embed=embed)
+
+                #await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))
 
         #++========================== EGLENCE ============================++#
 
         #!soz,!lyrics
         if message.content.upper().startswith("!SOZ") or message.content.upper().startswith("!SÖZ") or message.content.upper().startswith("!LYRICS"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+        
+            ilk_msg = await client.send_message(message.channel, "Şarkı aranıyor...") 
+
             flag = True
             msg = message.content.split(" ")
             msg = " ".join(msg[1:])
@@ -700,41 +885,78 @@ async def on_message(message):
                 
                 sozler,sarki_adi,sarki_artist = music.sozParse(artist,sarki)
 
-                embed=discord.Embed(title=" ", description=sarki_adi + " - " + sarki_artist, color=0x75df00)
-                embed.add_field(name="Şarkı Sözleri : ", value=sozler, inline=False)
-                
-                await client.send_message(message.channel,embed=embed)
+                kisa_ad = sarki_artist + " - " + sarki_adi + " Sözleri" 
+                soz_son = yazi.komut["lyrics"] % (kisa_ad,sozler)
 
+                string = soz_son
+            
+                a = 0
+                try:
+                    for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
+
+                        if a == 0:
+                            await client.edit_message(ilk_msg,chunk + "```")
+                        else:
+                            await client.send_message(message.channel,"```asciidoc\n" + chunk + "```")
+                        a += 1
+                except:
+                    await client.edit_message(ilk_msg,soz_son)
+                
+                #embed=discord.Embed(title=" ", description=sarki_adi + " - " + sarki_artist, color=0x75df00)
+                #embed.set_author(name="Hmn-Bot Lyrics", icon_url=client.user.avatar_url)
+                #embed.add_field(name="Şarkı Sözleri ", value=sozler, inline=False)
 
         #!meme
         if message.content.upper().startswith("!MEME"):
-
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
             
-            msg = message.content.split(" ")
-            
-            try:
-                subreddit = " ".join(msg[1:])
-            except:
-                return
+            server_flag = True
 
-            memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit)
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-            if not memeURL == "hata":
+            if not server_flag:
 
-                embed=discord.Embed(title=" ",description = "**["+baslik+"]"+"("+link+")**", color=0xFF0000)
-                embed.set_author(name="r/" + subreddit, icon_url=client.user.avatar_url)
-                embed.set_footer(text= "👍 " + str(upvote) + " | Yaratıcı : u/" + yazar)
-                embed.set_image(url = memeURL)
+                msg = message.content.split(" ")
+                
+                try:
+                    subreddit = " ".join(msg[1:])
+                except:
+                    return
 
-                await client.send_message(message.channel,embed=embed)
+                memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit)
 
+                if not memeURL == "hata":
+
+                    embed=discord.Embed(title=" ",description = "**["+baslik+"]"+"("+link+")**", color=0xFF0000)
+                    embed.set_author(name="r/" + subreddit, icon_url=client.user.avatar_url)
+                    embed.set_footer(text= "👍 " + str(upvote) + " | Yaratıcı : u/" + yazar)
+                    embed.set_image(url = memeURL)
+
+                    await client.send_message(message.channel,embed=embed)
+                
+                else:
+                    embed=discord.Embed(title=" ",description = yazi.komut["memeHata"], color=0xFF0000)
+                    embed.set_author(name="Hmn-Bot Yardım", icon_url=client.user.avatar_url)
+                    await client.send_message(message.channel,embed=embed)
 
         #!leet,!l33t
         if message.content.upper().startswith("!LEET") or message.content.upper().startswith("!L33T"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+        
             msg = message.content
 
             try:
@@ -755,7 +977,15 @@ async def on_message(message):
         #!ben,!self
         if message.content.upper().startswith("!SELF") or message.content.upper().startswith("!BEN"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
             
             msg = message.content.split(" ")
 
@@ -769,8 +999,17 @@ async def on_message(message):
         #!sence
         if message.content.upper().startswith("!SENCE"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+
             option = random.randint(1,4)
             if option == 1 :
                 await client.send_message(message.channel, yazi.komut["senceEvet1"])
@@ -785,8 +1024,17 @@ async def on_message(message):
         #!firlat,!flip
         if message.content.upper().startswith("!FIRLAT") or message.content.startswith("!fırlat") or message.content.upper().startswith("!FLIP"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+
             gelen = random.randint(1,100)
             if gelen % 2 == 1:
                 await client.send_message(message.channel, yazi.komut["firlatYazi"])
@@ -804,8 +1052,17 @@ async def on_message(message):
         #oyun degisme
         if message.content.upper().startswith("!OYUN"):
             
-            komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
-            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+                        
             if message.author.id == myID:
                 msg = message.content.split(" ")
 

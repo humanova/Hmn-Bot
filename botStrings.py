@@ -160,6 +160,7 @@ komut = {
     "bot2" : "https://media.giphy.com/media/10XpbAw59H1mog/giphy.gif",
     "bot3" : "https://media1.tenor.com/images/c771433f71582c244de8b3e7d6c8e241/tenor.gif",
     "bot4" : "https://media2.giphy.com/media/EizPK3InQbrNK/giphy.gif",
+    "redditico" : "https://vignette.wikia.nocookie.net/roosterteeth/images/1/10/Reddit.png/revision/latest?cb=20171218051745",
     "kripto-cizgi" : "-------------------------------"
 }
 

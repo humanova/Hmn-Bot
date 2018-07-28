@@ -257,6 +257,23 @@ async def on_message(message):
             await client.send_message(message.channel,embed=embed)
             #await client.send_message(message.channel, yazi.komut["statu"] % (servers,users,channels))
 
+        
+        #!destek
+        if message.content.upper().startswith("!DESTEK"):
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+            embed=discord.Embed(title=" ",description="**[Davet](https://discord.gg/4SycRsw)**", color=0x75df00)
+            embed.set_author(name="Hmn-Bot Destek", icon_url=client.user.avatar_url)
+            await client.send_message(message.channel,embed=embed)
+        
         #!temizle
         if message.content.upper().startswith("!TEMIZLE"):
 
@@ -944,7 +961,7 @@ async def on_message(message):
                 if not memeURL == "hata":
 
                     embed=discord.Embed(title=" ",description = "**["+baslik+"]"+"("+link+")**", color=0xFF0000)
-                    embed.set_author(name="r/" + subreddit, icon_url=client.user.avatar_url)
+                    embed.set_author(name="r/" + subreddit, icon_url=yazi.komut["redditico"])
                     embed.set_footer(text= "👍 " + str(upvote) + " | Yaratıcı : u/" + yazar)
                     embed.set_image(url = memeURL)
 
@@ -952,7 +969,7 @@ async def on_message(message):
                 
                 else:
                     embed=discord.Embed(title=" ",description = yazi.komut["memeHata"], color=0xFF0000)
-                    embed.set_author(name="Hmn-Bot Yardım", icon_url=client.user.avatar_url)
+                    embed.set_author(name="Hmn-Bot Yardım", icon_url=yazi.komut["redditico"])
                     await client.send_message(message.channel,embed=embed)
 
         #!leet,!l33t
@@ -1092,9 +1109,9 @@ async def on_message(message):
 
         
         #!srvrs
-        if message.content == "srvrs" and message.author.id == myID:
+        if message.content == "!srvrs" and message.author.id == myID:
 
-            await client.send_message(message.channel,"Server sayisi : " + serverSayisi() + "\n" + onlineServer())
+            await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + onlineServer())
 
         
         #buglubot

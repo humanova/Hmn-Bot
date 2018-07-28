@@ -88,9 +88,19 @@ async def bot_logla():
         
         tarih = str(datetime.now())
         log_baslangic = "\nLOG[" + str(log_num) + "] : " + tarih + "\n"
-        log_son = str(log_baslangic) + str(temel_log) + str(online_server_log) + "```" +str(komut_log) + "```"
+        log_son = str(log_baslangic) + str(temel_log) + str(online_server_log) + "```" +str(komut_log)
 
-        await client.send_message(discord.Object(id=logChannelID), log_son)
+        string = log_son
+        try:
+            a = 0
+            string = log_son
+            for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
+                if a == 0 : client.send_message(discord.Object(id=logChannelID), chunk + "```")
+                else : await client.send_message(discord.Object(id=logChannelID), "```" + chunk + "```")
+                a += 1
+
+        except:
+            await client.send_message(discord.Object(id=logChannelID), log_son + "```")
         
         #log_dosya = open("hmnBot_log.txt","a")
         #log_dosya.write(log_son)
@@ -1111,7 +1121,7 @@ async def on_message(message):
         #!srvrs
         if message.content == "!srvrs" and message.author.id == myID:
 
-            await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + onlineServer())
+            await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + "```asciidoc\n" + onlineServer() + "```")
 
         
         #buglubot

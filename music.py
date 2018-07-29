@@ -12,14 +12,9 @@ api = genius.Genius(token)
 
 def sozParse(artist,sarki):
 
-    bulundu_flag = True
+    song = api.search_song(sarki,artist)
 
-    try:
-        song = api.search_song(sarki,artist)
-    except:        
-        bulundu_flag = False
-
-    if bulundu_flag:
+    if not song == None:
         sarkiAdi = song.title
         sarkiArtist = song.artist
         sarkiLink = song.url

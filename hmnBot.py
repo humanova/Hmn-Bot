@@ -930,27 +930,31 @@ async def on_message(message):
                 
                 sozler,sarki_adi,sarki_artist,sarki_url = music.sozParse(artist,sarki)
 
-                kisa_ad = sarki_artist + " - " + sarki_adi + " Sözleri" 
-                soz_son = yazi.komut["lyrics"] % (kisa_ad,sozler)
+                if not sozler == "hata":
+                    kisa_ad = sarki_artist + " - " + sarki_adi + " Sözleri" 
+                    soz_son = yazi.komut["lyrics"] % (kisa_ad,sozler)
 
-                string = soz_son
-            
-                a = 0
-                try:
-                    for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
-                        
-                        if a == 3:
-                            await client.send_message(message.channel, "```asciidoc\n== Sözler 3 mesajı aştığı için kısaltıldı... ==\nTamamı için : " + sarki_url + "```")
-                            break
-                        elif a == 0:
-                            await client.edit_message(ilk_msg,chunk + "```")
-                        else:
-                            await client.send_message(message.channel,"```asciidoc\n" + chunk + "```")
-                        a += 1
+                    string = soz_son
+                
+                    a = 0
+                    try:
+                        for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
+                            
+                            if a == 3:
+                                await client.send_message(message.channel, "```asciidoc\n== Sözler 3 mesajı aştığı için kısaltıldı... ==\nTamamı için : " + sarki_url + "```")
+                                break
+                            elif a == 0:
+                                await client.edit_message(ilk_msg,chunk + "```")
+                            else:
+                                await client.send_message(message.channel,"```asciidoc\n" + chunk + "```")
+                            a += 1
 
 
-                except:
-                    await client.edit_message(ilk_msg,soz_son)
+                    except:
+                        await client.edit_message(ilk_msg,soz_son)
+                
+                else:
+                    await client.edit_message(ilk_msg,"```" + sarki +"``` bulunamadı... :()")
                 
                 #embed=discord.Embed(title=" ", description=sarki_adi + " - " + sarki_artist, color=0x75df00)
                 #embed.set_author(name="Hmn-Bot Lyrics", icon_url=client.user.avatar_url)

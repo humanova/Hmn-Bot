@@ -928,7 +928,7 @@ async def on_message(message):
 
             if not flag == False:
                 
-                sozler,sarki_adi,sarki_artist = music.sozParse(artist,sarki)
+                sozler,sarki_adi,sarki_artist,sarki_url = music.sozParse(artist,sarki)
 
                 kisa_ad = sarki_artist + " - " + sarki_adi + " Sözleri" 
                 soz_son = yazi.komut["lyrics"] % (kisa_ad,sozler)
@@ -940,6 +940,7 @@ async def on_message(message):
                     for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
                         
                         if a == 3:
+                            await client.send_message(message.channel, "```asciidoc\n== Sözler 3 mesajı aştığı için kısaltıldı... ==\nTamamı için : " + sarki_url + "```")
                             break
                         elif a == 0:
                             await client.edit_message(ilk_msg,chunk + "```")

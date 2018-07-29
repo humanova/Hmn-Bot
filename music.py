@@ -15,9 +15,10 @@ def sozParse(artist,sarki):
     song = api.search_song(sarki,artist)
     sarkiAdi = song.title
     sarkiArtist = song.artist
+    sarkiLink = song.url
     lyrics = song.save_lyrics(filename="lyrics_test.txt",format="txt",overwrite="no")
     
-    return lyrics,sarkiAdi,sarkiArtist
+    return lyrics,sarkiAdi,sarkiArtist,sarkiLink
 
 
 

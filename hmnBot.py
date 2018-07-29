@@ -938,12 +938,16 @@ async def on_message(message):
                 a = 0
                 try:
                     for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
-
-                        if a == 0:
+                        
+                        if a == 3:
+                            break
+                        elif a == 0:
                             await client.edit_message(ilk_msg,chunk + "```")
                         else:
                             await client.send_message(message.channel,"```asciidoc\n" + chunk + "```")
                         a += 1
+
+
                 except:
                     await client.edit_message(ilk_msg,soz_son)
                 

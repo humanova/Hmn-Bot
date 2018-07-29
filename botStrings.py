@@ -130,7 +130,7 @@ komut = {
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",
-    "sikayet_admin" : "[ŞIKAYET]\nTarih : %s\nServer : %s\nKanal : %s\nKullanıcı : %s(%s)\n\nŞikayet : %s\n(Not: Hatali sikayet durumunda lutfen gelistiriciye bildirin)",
+    "sikayet_admin" : "[ŞIKAYET]\nTarih : %s\nServer : %s\nKanal : %s\nKullanıcı : %s(%s)\n\nŞikayet : %s",
     "sikayet_kullanici" :  "Şikayet iletildi!",
     "sikayet_hata" : "Şikayet iletilemedi, yeniden deneyin.",
     "durt" : "<@%s>, <@%s> seni dürttü!",

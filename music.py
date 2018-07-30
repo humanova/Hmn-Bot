@@ -2,7 +2,7 @@
 # 2018 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
-#hmnBot muzik ve altyazi
+#hmnBot muzik ve sarki sozu* 
 
 import os
 import lyricsgenius as genius

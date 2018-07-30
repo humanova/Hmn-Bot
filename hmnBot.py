@@ -32,7 +32,7 @@ import music
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.3.0\n27/07/18"
+version = "hmnBot v0.3.1\n30/07/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
@@ -151,7 +151,7 @@ async def on_ready():
     print("Bot hazir!\n")
     print("%s adiyla giris yapildi" % (client.user.name))
     await bot_logla()
-    await client.change_presence(game=discord.Game(name=yazi.bot_game["knack"]))
+    await client.change_presence(game=discord.Game(name=yazi.bot_game["despacito"]))
 
 @client.event
 async def on_server_join(server):

@@ -32,6 +32,11 @@ memeSubreddits = [
     "+ animemes",
     "+ notgayporn", 
     "+ ihavesex",
+    "+ dank_meme",
+    "+ edgymemes",
+    "+ wholesomememes",
+    "+ historymemes",
+    "+ ligma",
     "+ turkeyjerky"
 ]
 

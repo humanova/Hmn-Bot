@@ -26,7 +26,8 @@ import dovizIslem as doviz
 import zaman
 import ceviri
 import meme
-import music
+import music 
+
 ################################
 
 Client = discord.Client()

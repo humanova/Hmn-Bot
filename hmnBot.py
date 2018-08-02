@@ -39,6 +39,7 @@ botID = "455819835486502933"
 logChannelID = "470853011233570817"
 
 uyari_disi = [botID,myID]
+kizginKaraliste[460563755772936212]
 
 # ======================== LOGLAMA ========================= #
 
@@ -1099,7 +1100,8 @@ async def on_message(message):
 
         #herkesi etiketleyenlere kizgin
         if message.mention_everyone:
-            await client.add_reaction(message,"😡")
+            if not message.server.id in kizginKaraliste:
+                await client.add_reaction(message,"😡")
 
 
         #++========================== OZEL ============================++#

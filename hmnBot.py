@@ -39,7 +39,7 @@ botID = "455819835486502933"
 logChannelID = "470853011233570817"
 
 uyari_disi = [botID,myID]
-kizginKaraliste[460563755772936212]
+kizginKaraliste = ["460563755772936212"]
 
 # ======================== LOGLAMA ========================= #
 

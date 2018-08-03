@@ -12,10 +12,11 @@ import json
 import praw
 
 redditPassword = os.environ['REDDIT_PASS']
+redditToken = os.environ['REDDIT_TOKEN']
 
 
-reddit = praw.Reddit(client_id='gDgxzAXgHFOYSg',
-                     client_secret='7Pe-f3D20LnuwPlTpqnAXPlomzc',
+reddit = praw.Reddit(client_id='zAMDWabp1WMohA',
+                     client_secret=redditToken,
                      password= redditPassword,
                      user_agent='Hmn-Bot',
                      username='humanovan')

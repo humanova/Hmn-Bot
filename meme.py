@@ -5,30 +5,56 @@
 #hmnBot reddit meme command
 
 import random
+import os
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
 import json
+import praw
 
-def memeParse(subreddit):
+redditPassword = os.environ['REDDIT_PASS']
+
+
+reddit = praw.Reddit(client_id='gDgxzAXgHFOYSg',
+                     client_secret='7Pe-f3D20LnuwPlTpqnAXPlomzc',
+                     password= redditPassword,
+                     user_agent='Hmn-Bot',
+                     username='humanovan')
+
+def memeParse(subreddit,is_top):
 
     subURL = subredditAlgila(subreddit)
 
     if not subURL == "hata":
         memeStickied = True
 
-        while memeStickied == True:
-    
-            data = urlopen(Request(subURL, headers={'User-Agent': 'Mozilla'})).read()
-            page = json.loads(data.decode('utf-8'))
+        if is_top:
+            hot_posts = reddit.subreddit(subreddit).hot(limit=4)
 
-            meme = random.choice(page["data"]["children"])
+            for post in hot_posts:
+                if not post.stickied:
+                    imgURL = post.url
+                    memeAuthor = post.author.name
+                    memeTitle = post.title 
+                    permaLink = "https://reddit.com" + post.permalink
+                    memeUpvote = post.ups
+                    memeStickied = post.stickied
+                    break
 
-            imgURL = meme["data"]["url"]
-            memeAuthor = meme["data"]["author"]
-            memeTitle = meme["data"]["title"]
-            permaLink = "https://reddit.com" + meme["data"]["permalink"]
-            memeUpvote = meme["data"]["ups"]
-            memeStickied = meme["data"]["stickied"]
+        else:
+
+            while memeStickied == True:
+        
+                data = urlopen(Request(subURL, headers={'User-Agent': 'Mozilla'})).read()
+                page = json.loads(data.decode('utf-8'))
+
+                meme = random.choice(page["data"]["children"])
+
+                imgURL = meme["data"]["url"]
+                memeAuthor = meme["data"]["author"]
+                memeTitle = meme["data"]["title"]
+                permaLink = "https://reddit.com" + meme["data"]["permalink"]
+                memeUpvote = meme["data"]["ups"]
+                memeStickied = meme["data"]["stickied"]
 
         return imgURL,memeAuthor,memeTitle,permaLink,memeUpvote
 

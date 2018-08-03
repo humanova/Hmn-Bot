@@ -33,7 +33,7 @@ import music
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.3.1\n30/07/18"
+version = "hmnBot v0.3.2\n03/08/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
@@ -980,11 +980,18 @@ async def on_message(message):
                 msg = message.content.split(" ")
                 
                 try:
-                    subreddit = " ".join(msg[1:])
+                    subreddit = msg[1]
                 except:
                     return
 
-                memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit)
+                try:
+                    is_top = msg[2]
+                    if is_top == "top" : is_top = True
+                    else: is_top = False
+                except:
+                    is_top = False
+
+                memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit,is_top)
 
                 if not memeURL == "hata":
 

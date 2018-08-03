@@ -102,7 +102,7 @@ komutYardim = {
     "sence" :       "```asciidoc\n== !sence komutu ==\n\nAçıklama : Bir evet-hayır sorusunu cevaplar\n\nÖrnek : !sence Bugün yağmur yağar mı?```",
     "google" :      "```asciidoc\n== !google komutu ==\n\nAçıklama : Girilen kelimelerle arama linki oluşturur\n\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
     "ara" :         "```asciidoc\n== !ara komutu ==\n\nAçıklama : Girilen kelimelerle arama linki oluşturur\n\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
-    "meme" :        "```asciidoc\n== !meme komutu ==\n\nAçıklama : Girilen subredditten rastgele bir meme gönderir\n\nDesteklenen Subredditler : \n\n" + memeSubs +"\n\nÖrnek : !meme dankmemes | !meme turkeyjerky```",
+    "meme" :        "```asciidoc\n== !meme komutu ==\n\nAçıklama : Girilen subredditten rastgele bir meme gönderir\nEk parametreler : top (seçilen subredditteki top postu gönderir) \n\nDesteklenen Subredditler : \n\n" + memeSubs +"\n\nÖrnek : !meme dankmemes top | !meme turkeyjerky```",
     "davet" :       "```asciidoc\n== !davet komutu ==\n\nAçıklama : Bulunulan kanal için x kullanımlık davet linki oluşturur\n\nÖrnek : !davet 10```",
     "invite" :      "```asciidoc\n== !invite komutu ==\n\nAçıklama : Bulunulan kanal için x kullanımlık davet linki oluşturur\n\nÖrnek : !davet 10```",
     "lmgtfy" :      "```asciidoc\n== !lmgtfy komutu ==\n\nAçıklama : Girilen kelimelerle lmgtfy linki oluşturur\n\nÖrnek : !lmgtfy How to use Google```",

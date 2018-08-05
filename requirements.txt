@@ -10,3 +10,4 @@ lxml==4.2.1
 pyowm==2.8.0
 lyricsgenius==0.7.0
 praw==6.0.0
+dblpy==0.1.6

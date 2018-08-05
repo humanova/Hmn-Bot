@@ -19,6 +19,8 @@ import asyncio
 import time
 from datetime import datetime
 
+import dbl  #discordbotlist.org api bot istatistikleri icin
+
 #kendi importlarim
 import havaDurumu as hava
 import botStrings as yazi
@@ -29,6 +31,9 @@ import meme
 import music 
 
 ################################
+
+token = os.environ['PP_BOT_TOKEN']
+dbl_token = os.environ['DBL_TOKEN']
 
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
@@ -78,6 +83,9 @@ def onlineServerLog():
 async def bot_logla():
 
     while not client.is_closed:
+
+        dblpy = dbl.Client(client, dbl_token)
+
         temelLog()
         onlineServerLog()
         
@@ -103,9 +111,12 @@ async def bot_logla():
         except:
             await client.send_message(discord.Object(id=logChannelID), log_son + "```")
         
-        #log_dosya = open("hmnBot_log.txt","a")
-        #log_dosya.write(log_son)
-        #log_dosya.close()
+        #discordbotlist.org istatistikleri gonder
+        try:
+            await dblpy.post_server_count()
+            print('server sayisi gonderildi : ({})'.format(len(client.servers)))
+        except Exception as e:
+            print('server sayisi gonderilirken hata olustu : \n{}: {}'.format(type(e).__name__, e))
 
         temel_log = "\n[TEMEL]\n"
         komut_log = "\n[KOMUT LOGLARI]\n```"
@@ -170,7 +181,7 @@ async def on_message(message):
         #++========================== GENEL============================++#
 
         #!surum,!version,!versiyon
-        if message.content.upper().startswith("!VERSION") or message.content.upper().startswith("!VERSIYON") or message.content.upper().startswith("!SÜRÜM") or message.content.upper().startswith("!SURUM"):
+        if message.content.upper() == "!VERSION"  or message.content.upper() == "!VERSIYON"  or message.content.upper() == "!SÜRÜM" or message.content.upper() == "!SURUM":
             global komut_log
 
             server_flag = False
@@ -191,7 +202,7 @@ async def on_message(message):
 
 
         #!gelistirici,!developer
-        if message.content.upper().startswith("!DEV") or message.content.upper().startswith("!GELISTIRICI") or message.content.startswith("!geliştirici"):
+        if message.content.upper() == "!DEV" or message.content.upper() == "!GELISTIRICI" or message.content == "!geliştirici":
             server_flag = False
 
             if not message.server == None: 
@@ -245,7 +256,7 @@ async def on_message(message):
             
 
         #!statu,!stats
-        if message.content.upper().startswith("!STATS") or message.content.upper().startswith("!STATÜ") or message.content.upper().startswith("!STATU"):
+        if message.content.upper() == "!STATS" or message.content.upper() == "!STATÜ" or message.content.upper() == "!STATU":
             
             server_flag = False
 
@@ -270,7 +281,7 @@ async def on_message(message):
 
         
         #!destek
-        if message.content.upper().startswith("!DESTEK"):
+        if message.content.upper() == "!DESTEK":
             server_flag = False
 
             if not message.server == None: 
@@ -440,7 +451,7 @@ async def on_message(message):
 
 
         #!cevir , ffff99
-        if message.content.upper().startswith("!CEVIR"):
+        if message.content.upper().startswith("!CEVIR") or message.content.upper().startswith("!ÇEVIR"):
             
             server_flag = True
 
@@ -1232,7 +1243,7 @@ async def on_message(message):
             await client.add_reaction(message,"🇳")
         '''
 
-token = os.environ['PP_BOT_TOKEN']
+
 client.run(token)
 
 

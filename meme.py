@@ -42,6 +42,8 @@ def memeParse(subreddit,is_top):
                     break
 
         else:
+            
+            subURL += ".json?limit=10"
 
             while memeStickied == True:
         
@@ -69,99 +71,38 @@ def memeParse(subreddit,is_top):
 
 
 def subredditAlgila(subreddit):
-
-    if subreddit == "dankmemes":
-        url = "https://www.reddit.com/r/dankmemes.json?limit=10"
-        return url
-
-    elif subreddit ==  "memeeconomy":
-        url = "https://www.reddit.com/r/MemeEconomy.json?limit=10"
-        return url
-
-    elif subreddit ==  "deepfriedmemes":
-        url = "https://www.reddit.com/r/DeepFriedMemes.json?limit=10"
-        return url
-
-    elif subreddit ==  "me_irl":
-        url = "https://www.reddit.com/r/me_irl.json?limit=10"
-        return url
-
-    elif subreddit ==  "meirl":
-        url = "https://www.reddit.com/r/meirl.json?limit=10"
-        return url
-
-    elif subreddit ==  "memes":
-        url = "https://www.reddit.com/r/memes.json?limit=10"
-        return url
-
-    elif subreddit ==  "animemes":
-        url = "https://www.reddit.com/r/Animemes.json?limit=10"
-        return url
-
-    elif subreddit ==  "okbuddyretard":
-        url = "https://www.reddit.com/r/okbuddyretard.json?limit=10"
-        return url
-
-    elif subreddit ==  "anime_irl":
-        url = "https://www.reddit.com/r/anime_irl.json?limit=10"
-        return url
     
-    elif subreddit == "ihavesex":
-        url = "https://www.reddit.com/r/ihavesex.json?limit=10"
-        return url
+    subs = {
+        "dankmemes"          : "https://www.reddit.com/r/dankmemes",
+        "memeeconomy"        : "https://www.reddit.com/r/MemeEconomy",
+        "deepfriedmemes"     : "https://www.reddit.com/r/DeepFriedMemes",
+        "me_irl"             : "https://www.reddit.com/r/me_irl",
+        "meirl"              : "https://www.reddit.com/r/meirl",
+        "memes"              : "https://www.reddit.com/r/memes",
+        "animemes"           : "https://www.reddit.com/r/Animemes",
+        "okbuddyretard"      : "https://www.reddit.com/r/okbuddyretard",
+        "anime_irl"          : "https://www.reddit.com/r/anime_irl",
+        "ihavesex"           : "https://www.reddit.com/r/ihavesex",
+        "surrealmemes"       : "https://www.reddit.com/r/surrealmemes",
+        "bikinibottomtwitter": "https://www.reddit.com/r/BikiniBottomTwitter",
+        "iamverysmart"       : "https://www.reddit.com/r/iamverysmart",
+        "bonehurtingjuice"   : "https://www.reddit.com/r/bonehurtingjuice",
+        "memes_of_the_dank"  : "https://www.reddit.com/r/memes_of_the_dank",
+        "offensivememes"     : "https://www.reddit.com/r/offensivememes",
+        "coaxedintoasnafu"   : "https://www.reddit.com/r/coaxedintoasnafu",
+        "notgayporn"         : "https://www.reddit.com/r/notgayporn",
+        "turkeyjerky"        : "https://www.reddit.com/r/turkeyjerky",
+        "blackpeopletwitter" : "https://www.reddit.com/r/BlackPeopleTwitter",
+        "2meirl4meirl"       : "https://www.reddit.com/r/2meirl4meirl",
+        "dank_meme"          : "https://www.reddit.com/r/dank_meme",
+        "edgymemes"          : "https://www.reddit.com/r/edgymemes",
+        "wholesomememes"     : "https://www.reddit.com/r/wholesomememes",
+        "historymemes"       : "https://www.reddit.com/r/HistoryMemes",
+        "ligma"              : "https://www.reddit.com/r/ligma"
+    }
 
-    elif subreddit == "surrealmemes":
-        url = "https://www.reddit.com/r/surrealmemes.json?limit=10"
-        return url
-    
-    elif subreddit == "memes_of_the_dank":
-        url = "https://www.reddit.com/r/memes_of_the_dank.json?limit=10"
-        return url
-    
-    elif subreddit == "offensivememes":
-        url = "https://www.reddit.com/r/offensivememes.json?limit=10"
-        return url
-
-    elif subreddit ==  "coaxedintoasnafu":
-        url = "https://www.reddit.com/r/coaxedintoasnafu.json?limit=10"
-        return url
-
-    elif subreddit ==  "notgayporn":
-        url = "https://www.reddit.com/r/notgayporn.json?limit=10"
-        return url
-
-    elif subreddit ==  "turkeyjerky":
-        url = "https://www.reddit.com/r/turkeyjerky.json?limit=10"
-        return url
-
-    elif subreddit ==  "blackpeopletwitter":
-        url = "https://www.reddit.com/r/BlackPeopleTwitter.json?limit=10"
-        return url
-
-    elif subreddit ==  "2meirl4meirl":
-        url = "https://www.reddit.com/r/2meirl4meirl.json?limit=10"
-        return url
-
-    elif subreddit == "dank_meme":
-        url = "https://www.reddit.com/r/dank_meme.json?limit=10"
-        return url
-
-    elif subreddit == "edgymemes":
-        url = "https://www.reddit.com/r/edgymemes.json?limit=10"
-        return url
-
-    elif subreddit == "wholesomememes":
-        url = "https://www.reddit.com/r/wholesomememes.json?limit=10"
-        return url
-    
-    elif subreddit == "historymemes":
-        url = "https://www.reddit.com/r/HistoryMemes.json?limit=10"
-        return
-
-    elif subreddit == "ligma":
-        url = "https://www.reddit.com/r/ligma.json?limit=10"
-        return url
-
-    else:
-        url = "hata"
-        return url
+    try:
+        data_url = subs[subreddit]
+        return data_url
+    except:
+        return "hata"

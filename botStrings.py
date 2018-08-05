@@ -24,6 +24,9 @@ memeSubreddits = [
     "+ blackpeopletwitter",
     "+ okbuddyretard",
     "+ coaxedintoasnafu",
+    "+ bikinibottomtwitter"
+    "+ bonehurtingjuice"
+    "+ iamverysmart"
     "+ me_irl",
     "+ meirl",
     "+ memes",
@@ -175,4 +178,5 @@ komut = {
     "4head4" : "https://puu.sh/B4Eqb/e994553846.jpg",
     "kripto-cizgi" : "-------------------------------"
 }
+
 

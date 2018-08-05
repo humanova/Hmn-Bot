@@ -1002,7 +1002,7 @@ async def on_message(message):
                 except:
                     is_top = False
 
-                memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit,is_top)
+                memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit.lower(),is_top)
 
                 if not memeURL == "hata":
 

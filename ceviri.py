@@ -1,6 +1,6 @@
 
 # 2018 Emir Erbasan (humanova)
-# MIT License, see LICENSE for more details
+# MIT License, see LICENSE for more detail
 
 from googletrans import Translator
 

@@ -25,6 +25,10 @@ def DovizParse(kur,adet):
                 kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + str(adet) + '&From=XBT&To=USD'
 
         else:
+            if kur == "osu":
+                kur = "usd"
+                adet = 4 * adet
+
             kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + kur + "&To=TRY"
         
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
@@ -40,6 +44,7 @@ def DovizParse(kur,adet):
         kur = "hata"
         kur_degeri = "hata"
         return kur,kur_degeri
+
 
 def DovizAlgila(kur):
 
@@ -122,6 +127,11 @@ def DovizAlgila(kur):
     elif kur.upper() == "KWD" or kur.upper() == "KUVEYT":
         kur = "kwd"
         return kur
+
+    elif kur.upper() == "SUPPORTER" or kur.upper() == "SUP":
+        kur = "osu"
+        return kur
+
     else:
         kur = "hata"
         return kur

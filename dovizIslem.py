@@ -26,10 +26,12 @@ def DovizParse(kur,adet):
 
         else:
             if kur == "osu":
-                kur = "usd"
-                adet = 4 * adet
-
-            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + kur + "&To=TRY"
+                adet = adet * 4
+                kur = "SUPPORTER"
+                kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + "usd" + "&To=TRY"
+            
+            else:
+                kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + kur + "&To=TRY"
         
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
@@ -37,6 +39,7 @@ def DovizParse(kur,adet):
         doviz = parse.find("span","uccResultAmount")
 
         kur_degeri = doviz.text
+
 
         return kur.upper(),kur_degeri
         

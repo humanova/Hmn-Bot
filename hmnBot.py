@@ -1,6 +1,6 @@
 ﻿
 # 2018 Emir Erbasan (humanova)
-# MIT License, see LICENSE for more detail
+# MIT License, see LICENSE for more details
 
 #	NOTLAR
 
@@ -755,6 +755,7 @@ async def on_message(message):
                         except:
                             adet = 1
 
+                        
                         kur,kur_degeri = doviz.DovizParse(kur,adet)
                         if not kur == "hata":
                             embed=discord.Embed(title=" ", color=0x2b80ff)

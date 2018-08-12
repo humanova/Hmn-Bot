@@ -1,6 +1,6 @@
 
 # 2018 Emir Erbasan (humanova)
-# MIT License, see LICENSE for more detail
+# MIT License, see LICENSE for more details
 
 import meme_test as meme
 

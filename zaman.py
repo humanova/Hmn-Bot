@@ -1,6 +1,6 @@
 
 # 2018 Emir Erbasan (humanova)
-# MIT License, see LICENSE for more detail
+# MIT License, see LICENSE for more details
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request

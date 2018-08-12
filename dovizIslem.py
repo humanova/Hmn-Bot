@@ -26,7 +26,7 @@ def DovizParse(kur,adet):
 
         else:
             if kur == "osu":
-                adet = adet * 4
+                adet = adet * 4.0
                 kur = "SUPPORTER"
                 kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + "usd" + "&To=TRY"
             

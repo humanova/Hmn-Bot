@@ -175,6 +175,7 @@ def supporterDiscount(ay,ucret):
     elif ay >= 12:
         indirimli = ucret - (ucret * 0.46)
 
+    indirimli = round(float(indirimli),3)
     return str(indirimli)
 
 

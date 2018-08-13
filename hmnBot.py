@@ -757,10 +757,13 @@ async def on_message(message):
 
                         
                         kur,kur_degeri = doviz.DovizParse(kur,adet)
+            
                         if not kur == "hata":
                             embed=discord.Embed(title=" ", color=0x2b80ff)
                             embed.set_author(name="Döviz Kurları", icon_url=client.user.avatar_url)
                             embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
+                            if kur == "SUPPORTER":
+                                embed.add_field(name="Indirimli Fiyatı", value="~" + doviz.supporterDiscount(adet,kur_degeri), inline=True)
                             embed.set_footer(text="💰 Kaynak : xe.com")
                             await client.send_message(message.channel,embed=embed)
                             # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))

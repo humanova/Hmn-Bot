@@ -24,14 +24,20 @@ def DovizParse(kur,adet):
             elif kur == "btc-usd":
                 kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + str(adet) + '&From=XBT&To=USD'
 
-        else:
-            if kur == "osu":
-                adet = float(adet) * 4.0
-                kur = "SUPPORTER"
-                kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + "usd" + "&To=TRY"
+        elif kur == "osu":
             
-            else:
-                kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + kur + "&To=TRY"
+            adet = float(adet) * 4.0
+            kur = "AYLIK SUPPORTER"
+            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + "usd" + "&To=TRY"
+            
+        elif kur == "nitro":
+
+            adet = float(adet) * 5.0
+            kur = "AYLIK NITRO"
+            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + "usd" + "&To=TRY"
+
+        else:
+            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + kur + "&To=TRY"
         
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
@@ -135,11 +141,42 @@ def DovizAlgila(kur):
         kur = "osu"
         return kur
 
+    elif kur.upper() == "NITRO":
+        kur = "nitro"
+        return kur
+
     else:
         kur = "hata"
         return kur
-
     
+
+def supporterDiscount(ay,ucret):
+    ay = float(ay)
+
+    if ay < 4.0:
+        indirimli = ucret
+
+    elif ay >= 4.0 and ay < 6:
+        indirimli = ucret - (ucret * 0.25)
+
+    elif ay >= 6 and ay < 8:
+        indirimli = ucret - (ucret * 0.33)
+    
+    elif ay >= 8 and ay < 9:
+        indirimli = ucret - (ucret * 0.38)
+    
+    elif ay >= 9 and ay < 10:
+        indirimli = ucret - (ucret * 0.39)
+    
+    elif ay >= 10 and ay < 12:
+        indirimli = ucret - (ucret * 0.40)
+    
+    elif ay >= 12:
+        indirimli = ucret - (ucret * 0.46)
+
+    return str(indirimli)
+
+
 def KriptoParse(kur,don,adet):
     kur,kisa_ad,grafik_link = KriptoAlgila(kur)
 

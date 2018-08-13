@@ -24,9 +24,9 @@ memeSubreddits = [
     "+ blackpeopletwitter",
     "+ okbuddyretard",
     "+ coaxedintoasnafu",
-    "+ bikinibottomtwitter"
-    "+ bonehurtingjuice"
-    "+ iamverysmart"
+    "+ bikinibottomtwitter",
+    "+ bonehurtingjuice",
+    "+ iamverysmart",
     "+ me_irl",
     "+ meirl",
     "+ memes",

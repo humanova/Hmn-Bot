@@ -152,6 +152,7 @@ def DovizAlgila(kur):
 
 def supporterDiscount(ay,ucret):
     ay = float(ay)
+    ucret = float(ucret)
 
     if ay < 4.0:
         indirimli = ucret

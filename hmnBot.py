@@ -772,7 +772,7 @@ async def on_message(message):
                     return
 
         #!oyun
-        if message.content.upper().startswith("!OYUN"):
+        if message.content.upper().startswith("!OYUN "):
 
             server_flag = True
 

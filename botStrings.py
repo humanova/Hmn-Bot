@@ -69,6 +69,7 @@ yardim = {
     "btc" :         "!bitcoin,!btc      :: bitcoin kurunu gösterir\n" ,
     "kripto" :      "!kripto,!crypto    :: istenilen kripto para kurunu gösterir\n",
     "doviz" :       "!döviz             :: istenilen döviz kurunu gösterir\n",
+    "oyun"  :       "!oyun              :: o sırada kimlerin x oyununu oynadığını gösterir\n",          
     "self" :        "!ben,!self         :: yazdıklarınız ile sizi över\n",
     "ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
     "oyla" :        "!oyla,!vote        :: bir oylama başlatır\n",
@@ -90,7 +91,7 @@ komutYardim = {
     "version" :     "```asciidoc\n== !sürüm komutu ==\n\nAçıklama : Bot sürümünü gösterir\n\nÖrnek : !surum | !version```",
     "statu" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
     "stats" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
-    "destek" :       "```asciidoc\n== !destek komutu ==\n\nAçıklama : Hmn-Bot hakkında önerileriniz ya da sorunlarınız için destek sunucusunun davet linkini gönderir\n\nÖrnek : !destek```",
+    "destek" :      "```asciidoc\n== !destek komutu ==\n\nAçıklama : Hmn-Bot hakkında önerileriniz ya da sorunlarınız için destek sunucusunun davet linkini gönderir\n\nÖrnek : !destek```",
     "server" :      "```asciidoc\n== !server komutu ==\n\nAçıklama : Bulunulan serverın bilgilerini gösterir\n\nÖrnek : !server```",
     "temizle":      "```asciidoc\n== !temizle komutu ==\n\nAçıklama : Belirtilen miktarda mesajı kanaldan siler. En fazla 99 mesaj silebilir.\n\nÖrnek : !temizle 10```",
     "hava" :        "```asciidoc\n== !hava komutu ==\n\nAçıklama : Belirtilen şehirdeki hava durumunu gösterir\n\nÖrnek : !hava Istanbul | !hava Berlin```",
@@ -99,9 +100,9 @@ komutYardim = {
     "gelistirici" : "```asciidoc\n== !geliştirici komutu ==\n\nAçıklama : Geliştirici bilgilerini gösterir\n\nÖrnek : !geliştirici | !dev```",
     "geliştirici" : "```asciidoc\n== !geliştirici komutu ==\n\nAçıklama : Geliştirici bilgilerini gösterir\n\nÖrnek : !geliştirici | !dev```",
     "dev" :         "```asciidoc\n== !dev komutu ==\n\nAçıklama : Geliştirici bilgilerini gösterir\n\nÖrnek : !geliştirici | !dev```",
-    "soz" :       "```asciidoc\n== !söz komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
-    "söz" :       "```asciidoc\n== !söz komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
-    "lyrics" :       "```asciidoc\n== !lyrics komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
+    "soz" :         "```asciidoc\n== !söz komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
+    "söz" :         "```asciidoc\n== !söz komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
+    "lyrics" :      "```asciidoc\n== !lyrics komutu ==\n\nAçıklama : Girilen şarkının sözlerini gösterir\n\nÖrnek : !soz Thriller | !lyrics Human - Rag'n'Bone Man```",
     "sence" :       "```asciidoc\n== !sence komutu ==\n\nAçıklama : Bir evet-hayır sorusunu cevaplar\n\nÖrnek : !sence Bugün yağmur yağar mı?```",
     "google" :      "```asciidoc\n== !google komutu ==\n\nAçıklama : Girilen kelimelerle arama linki oluşturur\n\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
     "ara" :         "```asciidoc\n== !ara komutu ==\n\nAçıklama : Girilen kelimelerle arama linki oluşturur\n\nÖrnek : !google Reverse Engineering nedir? | !ara Dennis Ritchie```",
@@ -119,6 +120,7 @@ komutYardim = {
     "ben" :         "```asciidoc\n== !ben komutu ==\n\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\n\nÖrnek : !ben Müthiş```",
     "cevir":        "```asciidoc\n== !çeviri komutu ==\n\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\n\n\nÖrnek : !cevir -fr -en J'aime mon vie (fransızcadan ingilizceye çeviri yapar)\n\nÖrnek : !cevir -en Konnichiwa (algılanan dilden(japonca) ingilizceye çeviri yapar\n\nÖrnek : !cevir Conscious (algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
     "çevir":        "```asciidoc\n== !çeviri komutu ==\n\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\n\nÖrnek : !cevir -fr -en J'aime mon vie (fransızcadan ingilizceye çeviri yapar)\n\nÖrnek : !cevir -en Konnichiwa (algılanan dilden(japonca) ingilizceye çeviri yapar\n\nÖrnek : !cevir Conscious (algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
+    "oyun":         "```asciidoc\n== !oyun komutu ==\n\nAçıklama : Bulunulan sunucuda, o sırada kimlerin x oyununu oynadığını gösterir\n\nÖrnek : !oyun osu!\n\nÖrnek : !oyun Starcraft```",
     "oyla" :        "```asciidoc\n== !oyla komutu ==\n\nAçıklama : Girilen bir durum için oylama başlatır\n\nÖrnek : !oyla Servera yeni kanal eklemeli miyim?```",
     "vote" :        "```asciidoc\n== !oyla komutu ==\n\nAçıklama : Girilen bir durum için oylama başlatır\n\nÖrnek : !oyla Servera yeni kanal eklemeli miyim?```",
     "leet" :        "```asciidoc\n== !leet komutu ==\n\nAçıklama : Yazdıklarınızı leet alfabesine uyarlar\n\nÖrnek : !leet Selam```",
@@ -129,12 +131,12 @@ komutYardim = {
     "şikayet" :     "```asciidoc\n== !şikayet komutu ==\n\nAçıklama : Server sahibine şikayet gönderir\n\nÖrnek : !sikayet Kanalda spam yapılıyor```",
     "yardim" :      "```asciidoc\n== !yardim komutu ==\n\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\n\nÖrnek : !yardim cevir```",
     "yardım" :      "```asciidoc\n== !yardim komutu ==\n\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\n\nÖrnek : !yardim cevir```",
-    "help" :      "```asciidoc\n== !help komutu ==\n\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\n\nÖrnek : !help cevir```"
+    "help" :        "```asciidoc\n== !help komutu ==\n\nAçıklama : Bu komutu kullanmayı zaten biliyorsun :D\n\nÖrnek : !help cevir```"
 }
 
 
 komut = {
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["soz"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["oyun"] +  yardim["soz"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",
@@ -160,6 +162,8 @@ komut = {
     "firlatYazi" : "Yazı geldi!",
     "firlatTura" : "Tura geldi!",
     "memeHata" : "Subreddit anlaşılamadı. **_!yardim meme_** yazarak geçerli subredditleri görebilirsiniz.",
+    "oyunHata" : "Girdiğiniz oyun ismi çok kısa. Bu nedenle arama yapamıyorum. :(",
+    "oyunHata2" : "Sunucuda kimse %s oynamıyor.",
     "temizlikHata" : "Mesaj sayısı anlaşılamadı. **_!yardim temizle_** yazarak kullanımını görebilirsiniz.",
     "omurcek" : ":spider: ::)",
     "deadserver" : "https://media.discordapp.net/attachments/406172843580063784/463424761318473729/LegitimateWrongBengaltiger.png",

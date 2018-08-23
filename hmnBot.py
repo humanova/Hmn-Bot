@@ -38,7 +38,7 @@ dbl_token = os.environ['DBL_TOKEN']
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.3.2\n03/08/18"
+version = "hmnBot v0.3.3\n23/08/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
@@ -421,8 +421,8 @@ async def on_message(message):
                 await client.send_message(message.channel,embed=embed)
 
 
-        #!soyle,!say (sadece benim id'm)
-        if message.content.upper().startswith("!SAY"):
+        #!!say (sadece benim id'm)
+        if message.content.upper().startswith("!say"):
             
             server_flag = False
 
@@ -770,6 +770,54 @@ async def on_message(message):
 
                 except:
                     return
+
+        #!oyun
+        if message.content.upper().startswith("!OYUN"):
+
+            server_flag = True
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
+
+            if not server_flag: 
+
+                server = message.server
+                members = server.members
+                oyuncu_sayisi = 0
+
+                msg = message.content.split(" ")
+                oyun = " ".join(msg[1:])
+                oyuncuListe = "```asciidoc\n== Kim '" + oyun +"' oynuyor ==\n\n"
+
+                embed=discord.Embed(title=" ", color=0x001a40)
+                embed.set_author(name="Kim Oynuyor", icon_url=client.user.avatar_url)
+
+                if len(oyun) < 4:
+                    embed=discord.Embed(title=" ",description = yazi.komut["oyunHata"], color=0xFF0000)
+                    await client.send_message(message.channel,embed=embed)
+            
+                else:
+                    for member in members:
+                        if not member.game == None:
+                            if oyun.upper() in str(member.game).upper() or oyun.upper() == str(member.game).upper():
+                                oyuncuListe += " + " + member.name + "#" + str(member.discriminator) + "  - " + str(member.game) + "\n"
+                                oyuncu_sayisi += 1
+
+                    oyuncuListe += "```"
+                    
+                    if oyuncu_sayisi > 0:
+                        embed.add_field(name="Oyun",value=oyun, inline=False)
+                        embed.add_field(name="Oyuncu Sayısı : ",value=str(oyuncu_sayisi), inline=False)
+                        await client.send_message(message.channel,embed=embed)
+                        await client.send_message(message.channel,oyuncuListe)
+                    else:
+                        embed=discord.Embed(title=" ",description = yazi.komut["oyunHata2"] % ("'" + oyun + "'"), color=0xFF0000)
+                        await client.send_message(message.channel,embed=embed)
 
 
         #!roller,!roles
@@ -1143,9 +1191,8 @@ async def on_message(message):
         
             await client.send_message(message.channel, foto)
 
-
         #oyun degisme
-        if message.content.upper().startswith("!OYUN"):
+        if message.content.upper().startswith("!oyundegis"):
             
             server_flag = False
 

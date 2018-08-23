@@ -1192,7 +1192,7 @@ async def on_message(message):
             await client.send_message(message.channel, foto)
 
         #oyun degisme
-        if message.content.upper().startswith("!oyundegis"):
+        if message.content.upper().startswith("!OYUNDEGIS"):
             
             server_flag = False
 

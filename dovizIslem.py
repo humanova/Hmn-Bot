@@ -9,8 +9,10 @@
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
-from forex_python.converter import CurrencyRates
+from forex_python.converter import CurrencyRates 
+from forex_python.bitcoin import BtcConverter
 c = CurrencyRates()
+b = BtcConverter()
 
 
 def DovizParse(kur,adet):
@@ -20,10 +22,10 @@ def DovizParse(kur,adet):
         if kur.startswith("btc"):
 
             if kur == "btc-try":
-                kur_degeri = c.get_rate('BTC', 'TRY')
+                kur_degeri = b.get_latest_price('TRY')
 
             elif kur == "btc-usd":
-                kur_degeri = c.get_rate('BTC', 'USD')
+                kur_degeri = b.get_latest_price('USD')
 
         elif kur == "osu":
             

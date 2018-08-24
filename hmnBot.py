@@ -412,7 +412,7 @@ async def on_message(message):
 
                 try:
                     davet = await client.create_invite(message.channel,max_uses=kul_sayisi)
-                except discord.errors.NotFound:
+                except:
                     await client.send_message(message.channel,"Yetkim yok!")
 
                 embed=discord.Embed(title=" ", color=0x75df00)
@@ -422,7 +422,7 @@ async def on_message(message):
 
 
         #!!say (sadece benim id'm)
-        if message.content.upper().startswith("!say"):
+        if message.content.upper().startswith("!SAY"):
             
             server_flag = False
 
@@ -764,7 +764,7 @@ async def on_message(message):
                             embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
                             if kur == "AYLIK SUPPORTER":
                                 embed.add_field(name="Indirimli", value="~" + doviz.supporterDiscount(adet,kur_degeri), inline=False)
-                            embed.set_footer(text="💰 Kaynak : xe.com")
+                            embed.set_footer(text="💰 Kaynak : ratesapi.io")
                             await client.send_message(message.channel,embed=embed)
                             # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
 

@@ -42,7 +42,7 @@ def DovizParse(kur,adet):
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
             
-        doviz = parse.find("span","uccResultAmount")
+        doviz = parse.find("span","converterresult-toAmount")
 
         kur_degeri = doviz.text
 

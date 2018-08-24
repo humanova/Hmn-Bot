@@ -9,7 +9,8 @@
 
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
-
+from forex_python.converter import CurrencyRates
+c = CurrencyRates()
 
 
 def DovizParse(kur,adet):
@@ -19,33 +20,26 @@ def DovizParse(kur,adet):
         if kur.startswith("btc"):
 
             if kur == "btc-try":
-                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + str(adet) + '&From=XBT&To=TRY'
+                kur_degeri = c.get_rate('BTC', 'TRY')
 
             elif kur == "btc-usd":
-                kurURL = 'https://www.xe.com/currencyconverter/convert/?Amount=' + str(adet) + '&From=XBT&To=USD'
+                kur_degeri = c.get_rate('BTC', 'USD')
 
         elif kur == "osu":
             
             adet = float(adet) * 4.0
             kur = "AYLIK SUPPORTER"
-            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + "usd" + "&To=TRY"
+            kur_degeri = round(c.get_rate('USD', 'TRY') * adet,3)
             
         elif kur == "nitro":
 
             adet = float(adet) * 5.0
             kur = "AYLIK NITRO"
-            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + "usd" + "&To=TRY"
+            kur_degeri = round(c.get_rate('USD', 'TRY') * adet,3)
 
         else:
-            kurURL = "https://www.xe.com/currencyconverter/convert/?Amount=" + str(adet) + "&From=" + kur + "&To=TRY"
+            kur_degeri = round(c.get_rate(kur, 'TRY') * adet,3)
         
-        data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
-        parse = BeautifulSoup(data,'html.parser')
-            
-        doviz = parse.find("span","converterresult-toAmount")
-
-        kur_degeri = doviz.text
-
 
         return kur.upper(),kur_degeri
         
@@ -196,7 +190,6 @@ def KriptoParse(kur,don,adet):
         
         kripto_degisim = k_degisim
         kripto_deger = parse.find("span","h2 text-semi-bold details-panel-item--price__value")
-        
 
         kur_degeri = kripto_deger.text
         kur_degisim = kripto_degisim.text

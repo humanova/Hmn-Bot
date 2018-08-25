@@ -36,7 +36,7 @@ def DovizParse(kur,adet):
             adet = float(adet) * 4.0
             kur = "AYLIK SUPPORTER"
             kur_url = url_base + "from=USD&to=TRY&quantity=" + str(adet) + url_api + api_key
-            r = requests.get(kur_url)
+            r = requests.get(kur_url, timeout=1.3)
             data = r.json()
             kur_degeri = data["value"]
 
@@ -45,13 +45,13 @@ def DovizParse(kur,adet):
             adet = float(adet) * 5.0
             kur = "AYLIK NITRO"
             kur_url = url_base + "from=USD&to=TRY&quantity=" + str(adet) + url_api + api_key
-            r = requests.get(kur_url)
+            r = requests.get(kur_url, timeout=1.3)
             data = r.json()
             kur_degeri = data["value"]
 
         else:
             kur_url = url_base + "from=" + kur + "&to=TRY&quantity=" + str(adet) + url_api + api_key
-            r = requests.get(kur_url)
+            r = requests.get(kur_url, timeout=1.3)
             data = r.json()
             kur_degeri = data["value"]
         

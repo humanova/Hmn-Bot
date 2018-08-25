@@ -91,6 +91,7 @@ def subredditAlgila(subreddit):
         "offensivememes"     : "https://www.reddit.com/r/offensivememes",
         "coaxedintoasnafu"   : "https://www.reddit.com/r/coaxedintoasnafu",
         "notgayporn"         : "https://www.reddit.com/r/notgayporn",
+        "suddenlygay"        : "https://www.reddit.com/r/SuddenlyGay",
         "turkeyjerky"        : "https://www.reddit.com/r/turkeyjerky",
         "blackpeopletwitter" : "https://www.reddit.com/r/BlackPeopleTwitter",
         "2meirl4meirl"       : "https://www.reddit.com/r/2meirl4meirl",

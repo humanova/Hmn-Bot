@@ -56,7 +56,7 @@ def DovizParse(kur,adet):
             kur_degeri = data["value"]
         
 
-        return kur.upper(),kur_degeri
+        return kur.upper(),str(kur_degeri)
         
     else:
         kur = "hata"

@@ -6,18 +6,22 @@
 
 #KAYNAK : www.xe.com
 
-
+import os
+import json
 from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
-from forex_python.converter import CurrencyRates 
 from forex_python.bitcoin import BtcConverter
-c = CurrencyRates()
+import requests
+
+api_key = os.environ['FOREX_TOKEN']
 b = BtcConverter()
 
+url_base = "https://forex.1forge.com/1.0.3/convert?"
+url_api = "&api_key="
 
 def DovizParse(kur,adet):
     kur = DovizAlgila(kur)
-
+    
     if not kur == "hata" and float(adet) > 0:
         if kur.startswith("btc"):
 
@@ -26,21 +30,30 @@ def DovizParse(kur,adet):
 
             elif kur == "btc-usd":
                 kur_degeri = b.get_latest_price('USD')
-
+                
         elif kur == "osu":
             
             adet = float(adet) * 4.0
             kur = "AYLIK SUPPORTER"
-            kur_degeri = round(c.get_rate('USD', 'TRY') * adet,3)
-            
+            kur_url = url_base + "from=USD&to=TRY&quantity=" + str(adet) + url_api + api_key
+            r = requests.get(kur_url)
+            data = r.json()
+            kur_degeri = data["value"]
+
         elif kur == "nitro":
 
             adet = float(adet) * 5.0
             kur = "AYLIK NITRO"
-            kur_degeri = round(c.get_rate('USD', 'TRY') * adet,3)
+            kur_url = url_base + "from=USD&to=TRY&quantity=" + str(adet) + url_api + api_key
+            r = requests.get(kur_url)
+            data = r.json()
+            kur_degeri = data["value"]
 
         else:
-            kur_degeri = round(c.get_rate(kur, 'TRY') * adet,3)
+            kur_url = url_base + "from=" + kur + "&to=TRY&quantity=" + str(adet) + url_api + api_key
+            r = requests.get(kur_url)
+            data = r.json()
+            kur_degeri = data["value"]
         
 
         return kur.upper(),kur_degeri
@@ -185,7 +198,7 @@ def KriptoParse(kur,don,adet):
         data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'html.parser')
 
-        k_degisim =parse.find("span", "h2 text-semi-bold positive_change ")
+        k_degisim = parse.find("span", "h2 text-semi-bold positive_change ")
 
         if k_degisim == None:
             k_degisim = parse.find("span", "h2 text-semi-bold negative_change")

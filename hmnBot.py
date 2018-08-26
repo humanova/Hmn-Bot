@@ -1175,7 +1175,13 @@ async def on_message(message):
 
 
         #++========================== OZEL ============================++#
+        #!excuseme
+        if message.content == "!excuseme":
+            
+            foto_url = yazi.komut["excuseme"]
         
+            await client.send_message(message.channel, foto_url)
+
         #!4head
         if message.content == "!4head":
             

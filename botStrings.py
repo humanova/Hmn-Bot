@@ -181,6 +181,7 @@ komut = {
     "4head2" : "https://puu.sh/B4Epu/f4a6fa10c4.jpg",
     "4head3" : "http://puu.sh/B4EpA/a71c4cd6f0.jpg",
     "4head4" : "https://puu.sh/B4Eqb/e994553846.jpg",
+    "excuseme" : "https://puu.sh/BkLkG/cdcea34ef6.jpg",
     "kripto-cizgi" : "-------------------------------"
 }
 

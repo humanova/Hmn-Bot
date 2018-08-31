@@ -41,6 +41,7 @@ memeSubreddits = [
     "+ wholesomememes",
     "+ historymemes",
     "+ ligma",
+    "+ softwaregore",
     "+ turkeyjerky"
 ]
 

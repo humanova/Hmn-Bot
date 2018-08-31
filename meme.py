@@ -99,6 +99,7 @@ def subredditAlgila(subreddit):
         "edgymemes"          : "https://www.reddit.com/r/edgymemes",
         "wholesomememes"     : "https://www.reddit.com/r/wholesomememes",
         "historymemes"       : "https://www.reddit.com/r/HistoryMemes",
+        "softwaregore"       : "https://www.reddit.com/r/softwaregore",
         "ligma"              : "https://www.reddit.com/r/ligma"
     }
 

@@ -6,5 +6,5 @@
 
 [Discordbots.org link](https://discordbots.org/bot/455819835486502933)
 
-[Developement channel](https://discord.gg/j65zGej)
+[Developement channel](https://discord.gg/bXPzFRg)
 

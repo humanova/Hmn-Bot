@@ -25,10 +25,12 @@ import dbl  #discordbotlist.org api bot istatistikleri icin
 import havaDurumu as hava
 import botStrings as yazi
 import dovizIslem as doviz
+import copypasta
 import zaman
 import ceviri
 import meme
-import music 
+import music
+
 
 ################################
 
@@ -1238,6 +1240,12 @@ async def on_message(message):
 
             await bot_logla()
 
+        #!sov
+        if (message.content == "!sov" or message.content == "!112") and message.author.id == myID:
+
+            pasta = copypasta.pasta_al(yazi.komut["112_pasta"])
+
+            await client.send_message(message.channel, pasta)
 
 
         '''
@@ -1271,20 +1279,6 @@ async def on_message(message):
             await client.add_reaction(message,"🇪")
             await client.add_reaction(message,"🇸")
         
-
-        #crazy cries 
-        if "crazy cries" in message.content:
-            op = random.randint(1,4)
-
-            if op == 1:
-                await client.send_message(message.channel, yazi.komut["kedi1"])
-            if op == 2:
-                await client.send_message(message.channel, yazi.komut["kedi2"])
-            if op == 3:
-                await client.send_message(message.channel, yazi.komut["kedi3"])
-            if op == 4:
-                await client.send_message(message.channel, yazi.komut["kedi4"])
-
         
         #server sahibini dogrula
         if message.author.id == message.server.owner.id:

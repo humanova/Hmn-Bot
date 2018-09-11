@@ -2,9 +2,6 @@
 # 2018 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
-import dovizIslem as doviz
-import requests
+import copypasta as cp
 
-kur,deger = doviz.DovizParse("usd","2")
-
-print("Kur : " + kur + "  ||  Deger : " + str(deger))
+print(cp.pasta_al("https://paste.ee/p/8JKSU"))

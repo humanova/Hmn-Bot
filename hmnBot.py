@@ -1252,9 +1252,16 @@ async def on_message(message):
             await bot_logla()
 
         #!sov
-        if (message.content == "!sov" or message.content == "!112") and message.author.id == myID:
+        if message.content == "!sov" and message.author.id == myID:
 
             pasta = copypasta.pasta_al(yazi.komut["112_pasta"])
+
+            await client.send_message(message.channel, pasta)
+
+        #112
+        if message.content == "!112":
+
+            pasta = copypasta.pasta_al(yazi.komut["112_pasta2"])
 
             await client.send_message(message.channel, pasta)
 

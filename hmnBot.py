@@ -1235,6 +1235,17 @@ async def on_message(message):
 
             await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + "```asciidoc\n" + onlineServer() + "```")
 
+        #!srvrs2
+        if message.content == "!srvrs2" and message.author.id == myID:
+
+            servers = list(client.servers)
+            temp_liste = ""
+
+            for i in range(len(servers)):
+                temp_liste += servers[i-1].name + " -- " + str(servers[i-1].member_count) + " kullanici\n"
+            
+            await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + "```asciidoc\n" + temp_liste + "```")
+
         #!logla
         if message.content == "!logla" and message.author.id == myID:
 

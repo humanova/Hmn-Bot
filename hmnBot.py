@@ -921,11 +921,12 @@ async def on_message(message):
             if not server_flag: 
                 serverName = message.server.name
                 serverID = message.server.id
-                serverOwner = message.server.owner.name
+                serverIconURL = message.server.icon_url
+                serverOwner = message.server.owner.name + "#" + str(message.server.owner.discriminator)
                 serverOwnerN = message.server.owner.nick
                 serverMemCount = str(message.server.member_count)
                 serverRegion = str(message.server.region)
-                serverDate = str(message.server.created_at)
+                serverDate = str(message.server.created_at)[:-10]
                 serverKanal = 0
                 serverRol = 0
                 
@@ -936,14 +937,15 @@ async def on_message(message):
                     serverRol +=1
 
                 embed=discord.Embed(title=" ", color=0xff6600)
-                embed.set_author(name="Server Bilgileri", icon_url=client.user.avatar_url)
-                embed.add_field(name="Server Adı :", value=serverName + "  (ID : " + serverID +")", inline=False)
-                embed.add_field(name="Server Sahibi :", value=serverOwner+"(" + str(serverOwnerN) + ")", inline=False)
-                embed.add_field(name="Kullanıcı Sayısı :", value=serverMemCount, inline=False)
-                embed.add_field(name="Kanal Sayısı : ",value=serverKanal, inline=False)
-                embed.add_field(name="Rol Sayısı : ",value=serverRol, inline=False)
-                embed.add_field(name="Server Bölgesi :", value=serverRegion, inline=False)
-                embed.add_field(name="Server Yaratılma Tarihi(UTC) : ", value=serverDate, inline=False)
+                embed.set_thumbnail(url=serverIconURL)
+                embed.set_author(name=serverName, url=serverIconURL)
+                embed.add_field(name="Sahibi :", value=serverOwner+"(" + str(serverOwnerN) + ")", inline=True)
+                embed.add_field(name="Server Bölgesi :", value=serverRegion, inline=True)
+                embed.add_field(name="Kullanıcı :", value=serverMemCount, inline=True)
+                embed.add_field(name="Kanal : ",value=serverKanal, inline=True)
+                embed.add_field(name="Rol : ",value=serverRol, inline=True)
+                embed.add_field(name="Yaratılma Tarihi(UTC) : ", value=serverDate, inline=True)
+                embed.set_footer(text="Server ID : " + serverID)
                 await client.send_message(message.channel,embed=embed)
 
                 #await client.send_message(message.channel, yazi.komut["server1"] % (serverName,serverID,serverOwner,serverOwnerN,serverMemCount,serverRegion,serverDate))

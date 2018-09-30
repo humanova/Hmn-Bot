@@ -73,7 +73,7 @@ yardim = {
     "doviz" :       "!döviz             :: istenilen döviz kurunu gösterir\n",
     "oyun"  :       "!oyun              :: o sırada kimlerin x oyununu oynadığını gösterir\n",          
     "self" :        "!ben,!self         :: yazdıklarınız ile sizi över\n",
-    "ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
+    #"ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
     "oyla" :        "!oyla,!vote        :: bir oylama başlatır\n",
     "soz" :         "!soz,!lyrics       :: istenilen şarkının sözlerini gösterir\n",
     "yardim" :      "!yardim,!help      :: bir komut hakkında yardımı gösterir (!yardım <komut>)\n",
@@ -138,7 +138,8 @@ komutYardim = {
 
 
 komut = {
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"] + yardim["ceviri"] + yardim["oyun"] +  yardim["soz"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    #yardim["ceviri"]
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"]  + yardim["oyun"] +  yardim["soz"] + yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",

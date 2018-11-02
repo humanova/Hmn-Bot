@@ -294,7 +294,7 @@ async def on_message(message):
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
                 komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
 
-            embed=discord.Embed(title=" ",description="**[Davet](https://discordapp.com/invite/j65zGej)**", color=0x75df00)
+            embed=discord.Embed(title=" ",description="**[Davet](https://discord.gg/XBebmFF)**", color=0x75df00)
             embed.set_author(name="Hmn-Bot Destek", icon_url=client.user.avatar_url)
             await client.send_message(message.channel,embed=embed)
         

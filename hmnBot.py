@@ -40,7 +40,7 @@ dbl_token = os.environ['DBL_TOKEN']
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.3.3\n23/08/18"
+version = "hmnBot v0.3.4\n11/11/18"
 myID = "213262071050141696"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
@@ -546,19 +546,20 @@ async def on_message(message):
                 komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
           
             searchQ = "https://google.com/search?q="
-            msg = message.content.split(" ")
+            if not '@everyone' in message.content:
+                msg = message.content.split(" ")
 
-            try:
-                if msg[1]:
-                    for word in range(1,len(msg)):
-                        if not word == len(msg) - 1:
-                            searchQ += msg[word] + "+"
-                        else:
-                            searchQ += msg[word]
+                try:
+                    if msg[1]:
+                        for word in range(1,len(msg)):
+                            if not word == len(msg) - 1:
+                                searchQ += msg[word] + "+"
+                            else:
+                                searchQ += msg[word]
 
-                    await client.send_message(message.channel, "%s" % (searchQ))
-            except:
-                return
+                        await client.send_message(message.channel, "%s" % (searchQ))
+                except:
+                    return
 
         #!lmgtfy
         if message.content.upper().startswith("!LMGTFY"):
@@ -1117,13 +1118,14 @@ async def on_message(message):
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
                 komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
             
-            msg = message.content.split(" ")
+            if not '@everyone' in message.content:
+                msg = message.content.split(" ")
 
-            try:
-                if msg[1]:
-                    await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
-            except:
-                return
+                try:
+                    if msg[1]:
+                        await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
+                except:
+                    return
 
 
         #!sence

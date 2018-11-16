@@ -42,6 +42,7 @@ client = commands.Bot(command_prefix = "!")
 
 version = "hmnBot v0.3.4\n11/11/18"
 myID = "213262071050141696"
+barisID = "190836437917237248"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
 
@@ -1269,6 +1270,13 @@ async def on_message(message):
 
             await client.send_message(message.channel, pasta)
 
+        #barismeme
+        if message.content == "!barismeme":
+
+            if message.author.id == barisID or message.author.id == myID:
+                
+                vid_link = yazi.komut["barismeme"]
+                await client.send_message(message.channel, vid_link)
 
         '''
         #buglubot

@@ -548,19 +548,20 @@ async def on_message(message):
           
             searchQ = "https://google.com/search?q="
             if not '@everyone' in message.content:
-                msg = message.content.split(" ")
+                if not '@here' in message.content:
+                    msg = message.content.split(" ")
 
-                try:
-                    if msg[1]:
-                        for word in range(1,len(msg)):
-                            if not word == len(msg) - 1:
-                                searchQ += msg[word] + "+"
-                            else:
-                                searchQ += msg[word]
+                    try:
+                        if msg[1]:
+                            for word in range(1,len(msg)):
+                                if not word == len(msg) - 1:
+                                    searchQ += msg[word] + "+"
+                                else:
+                                    searchQ += msg[word]
 
-                        await client.send_message(message.channel, "%s" % (searchQ))
-                except:
-                    return
+                            await client.send_message(message.channel, "%s" % (searchQ))
+                    except:
+                        return
 
         #!lmgtfy
         if message.content.upper().startswith("!LMGTFY"):
@@ -1120,13 +1121,14 @@ async def on_message(message):
                 komut_log += "[" + message.author.name + "#" + message.author.discriminator + "] @DM            " + message.content + "\n"
             
             if not '@everyone' in message.content:
-                msg = message.content.split(" ")
+                if not '@here' in message.content:
+                    msg = message.content.split(" ")
 
-                try:
-                    if msg[1]:
-                        await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
-                except:
-                    return
+                    try:
+                        if msg[1]:
+                            await client.send_message(message.channel, yazi.komut["self"] % (" ".join(msg[1:])))
+                    except:
+                        return
 
 
         #!sence

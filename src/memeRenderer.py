@@ -19,6 +19,11 @@ def RenderMeme(template, text):
     try:
         if mRender[template]:
             r_temp = mRender[template] 
+            
+            if template == "test":
+                p1 = subprocess.Popen('ffmpeg -version')
+                p1.wait()
+                return 'test'
 
             if template == "crabrave":
                 sep = text.index('-')
@@ -35,7 +40,7 @@ def RenderMeme(template, text):
                 
                     p1 = subprocess.Popen(ff.cmd)
                     p1.wait()
-                    
+
                 except Exception as e: print(e)
 
                 return out_name

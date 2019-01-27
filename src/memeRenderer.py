@@ -49,7 +49,7 @@ def RenderMeme(template, text):
                 
                     p1 = subprocess.Popen(ff.cmd, stdout=subprocess.PIPE)
                     stdout = p1.communicate()[0]
-                    print("STDOUT : " stdout)
+                    print("STDOUT : " + stdout)
                     p1.wait()
 
                 except Exception as e: print(e)

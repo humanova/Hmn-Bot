@@ -1186,11 +1186,17 @@ async def on_message(message):
                 msg = message.content.split(" ")
                 if len(msg) >= 3:
                     
-                    vid_template = msg[1]
-                    vid_text = msg[2: ]
+                    if msg[1] == 'rm':
+                        check = mrender.ClearOutVideos()
+                        client.send_message(message.channel, "`rm mrender/outs/*.*` Temizleme sonucu : " + check)
+                    
+                    else:
+                        vid_template = msg[1]
+                        vid_text = msg[2: ]
 
-                    out_file = mrender.RenderMeme(vid_template, vid_text)
-                    client.send_file(message.channel, out_file, content = msg[2:])
+                        out_file = mrender.RenderMeme(vid_template, vid_text)
+                        client.send_file(message.channel, out_file, content = msg[2:])
+
 
         #oyun degisme
         if message.content.upper().startswith("!OYUNDEGIS"):

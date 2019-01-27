@@ -3,9 +3,10 @@
 
 #ffmpeg -ss 00:00:00.0 -i crab-rave.mp4 -to 00:00:29.5 -vf "drawtext=fontfile=./Raleway-Medium.ttf:text='Wollay is':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile=./Raleway-Medium.ttf:text='BACK':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3" wollay_alive.mp4
 
+import os
 import subprocess
 from ffmpy import FFmpeg
-#os.chmod(mRender['crabrave'], 0o775)
+os.chdir('src')
 
 mRender = {
     "crabrave" : "../mrender/templates/crabrave.mp4"
@@ -25,7 +26,10 @@ def RenderMeme(template, text):
                     p1 = subprocess.Popen('ffmpeg -version')
                     p1.wait()
                     
+                    
                 except Exception as e: print(e)
+
+                os.chdir('..')
                 return 'test'
 
             if template == "crabrave":
@@ -46,8 +50,24 @@ def RenderMeme(template, text):
 
                 except Exception as e: print(e)
 
+                os.chdir('..')
                 return out_name
 
     except:
         return
     
+
+def ClearOutVideos():
+
+    try :
+        p1 = subprocess.Popen('rm mrender/outs/*.*')
+        p1.wait()
+        return True
+
+    except Exception as e: 
+        print(e)
+        return False
+    
+    
+
+

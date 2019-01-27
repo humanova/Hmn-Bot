@@ -1183,8 +1183,9 @@ async def on_message(message):
         #!eval 
         if message.content.startswith("!eval"):
             if message.author.id == myID:
+                msg = message.content.split(" ")
                 if len(msg) >= 2:
-                    msg = message.content.split(" ")
+                    
                     command = msg[1:]
                     ret = hmnEval.EvalHmnBot(command)
                     client.send_message(message.channel, ret)

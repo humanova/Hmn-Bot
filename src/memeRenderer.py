@@ -6,13 +6,12 @@
 import os
 import subprocess
 from ffmpy import FFmpeg
-os.chdir('src')
 
 mRender = {
-    "crabrave" : "../mrender/templates/crabrave.mp4"
+    "crabrave" : "mrender/templates/crabrave.mp4"
 }
 
-font = "../mrender/fonts/Raleway-Medium.ttf"
+font = "mrender/fonts/Raleway-Medium.ttf"
 
 def RenderMeme(template, text):
 
@@ -29,7 +28,6 @@ def RenderMeme(template, text):
                     
                 except Exception as e: print(e)
 
-                os.chdir('..')
                 return 'test'
 
             if template == "crabrave":
@@ -37,7 +35,7 @@ def RenderMeme(template, text):
                 upper_text = " ".join(text[0:sep])
                 lower_text = " ".join(text[sep + 1:])
                 
-                out_name = '../mrender/outs/crabrave_out_' + text[0] + '.mp4'
+                out_name = 'mrender/outs/crabrave_out_' + text[0] + '.mp4'
 
                 try :
                     ff =  FFmpeg(
@@ -49,8 +47,7 @@ def RenderMeme(template, text):
                     p1.wait()
 
                 except Exception as e: print(e)
-
-                os.chdir('..')
+                    
                 return out_name
 
     except:

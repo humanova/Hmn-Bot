@@ -1203,7 +1203,7 @@ async def on_message(message):
                     
                     if msg[1] == 'rm':
                         check = mrender.ClearOutVideos()
-                        await client.send_message(message.channel, "`rm mrender/outs/*.*` Temizleme sonucu : " + check)
+                        await client.send_message(message.channel, "`rm mrender/outs/*.*` Temizleme sonucu : " + str(check))
                     
                     else:
                         vid_template = msg[1]
@@ -1211,7 +1211,7 @@ async def on_message(message):
 
                         try:
                             out_file = mrender.RenderMeme(vid_template, vid_text)
-                            await client.send_file(message.channel, str(out_file), content = msg[2:])
+                            await client.send_file(message.channel, str(out_file), content = " ".join(msg[2:]))
                         except Exception as e: print(e)
 
         #oyun degisme

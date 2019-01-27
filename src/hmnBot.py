@@ -30,6 +30,7 @@ import zaman
 import ceviri
 import meme
 import music
+import botEval as hmnEval
 import memeRenderer as mrender
 
 
@@ -1178,6 +1179,15 @@ async def on_message(message):
 
 
         #++========================== OZEL ============================++#
+
+        #!eval 
+        if message.content.startswith("!eval"):
+            if message.author.id == myID:
+                if len(msg) >= 2:
+                    msg = message.content.split(" ")
+                    command = msg[1:]
+                    ret = hmnEval.EvalHmnBot(command)
+                    client.send_message(message.channel, ret)
 
         #!mrender
         if message.content.startswith("!mrender"):

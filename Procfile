@@ -1,1 +1,1 @@
-worker: python hmnBot.py
+worker: python src/hmnBot.py

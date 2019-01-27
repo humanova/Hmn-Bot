@@ -3,7 +3,7 @@ anaconda-client==1.2.2
 anaconda-project==0.8.2
 beautifulsoup4==4.6.0
 discord.py==0.16.12
-urllib3==1.23
+urllib3==1.22
 websockets==3.4
 googletrans==2.3.0
 lxml==4.2.1
@@ -12,3 +12,5 @@ lyricsgenius==0.7.0
 praw==6.0.0
 dblpy==0.1.6
 forex-python==1.1
+requests==2.18.1
+ffmpy==0.2.2

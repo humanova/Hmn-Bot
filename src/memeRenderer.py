@@ -11,6 +11,7 @@ mRender = {
     "crabrave" : "mrender/templates/crabrave.mp4"
 }
 cwd = os.getcwd()
+dir_path = os.path.dirname(os.path.realpath(__file__))
 font = "mrender/fonts/Raleway-Medium.ttf"
 
 def RenderMeme(template, text):
@@ -27,7 +28,6 @@ def RenderMeme(template, text):
                     p1.wait()
 
                     
-                    
                 except Exception as e: print(e)
 
                 return 'test'
@@ -40,7 +40,8 @@ def RenderMeme(template, text):
                 out_name = 'mrender/outs/crabrave_out_' + text[0] + '.mp4'
 
                 try :
-                    print(cwd)
+                    print("current working dir : " + cwd)
+                    print("file dir : " + dir_path)
                     ff =  FFmpeg(
                         inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
                         outputs = {out_name: '-vf "drawtext=fontfile=' + font + ':text=' + upper_text +':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile=' + font + ':text=' + lower_text + ':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}

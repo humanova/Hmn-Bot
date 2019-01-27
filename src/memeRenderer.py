@@ -38,6 +38,7 @@ def RenderMeme(template, text):
                 lower_text = " ".join(text[sep + 1:])
                 
                 out_name = 'mrender/outs/crabrave_out_' + text[0] + '.mp4'
+                t_out_name = out_name
 
                 try :
                     print("current working dir : " + cwd)
@@ -55,7 +56,7 @@ def RenderMeme(template, text):
 
                 except Exception as e: print(e)
                     
-                return out_name
+                return t_out_name
 
     except:
         return

@@ -1209,7 +1209,7 @@ async def on_message(message):
 
                         try:
                             out_file = mrender.RenderMeme(vid_template, vid_text)
-                            client.send_file(message.channel, out_file, content = msg[2:])
+                            client.send_file(message.channel, str(out_file), content = msg[2:])
                         except Exception as e: print(e)
 
         #oyun degisme

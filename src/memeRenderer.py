@@ -8,11 +8,11 @@ import subprocess
 from ffmpy import FFmpeg
 
 mRender = {
-    "crabrave" : "./mrender/templates/crabrave.mp4"
+    "crabrave" : "/mrender/templates/crabrave.mp4"
 }
 cwd = os.getcwd()
 dir_path = os.path.dirname(os.path.realpath(__file__))
-font = "./mrender/fonts/Raleway-Medium.ttf"
+font = "/mrender/fonts/Raleway-Medium.ttf"
 
 def RenderMeme(template, text):
 
@@ -37,7 +37,7 @@ def RenderMeme(template, text):
                 upper_text = " ".join(text[0:sep])
                 lower_text = " ".join(text[sep + 1:])
                 
-                out_name = './mrender/outs/crabrave_out_' + text[0] + '.mp4'
+                out_name = '/mrender/outs/crabrave_out_' + text[0] + '.mp4'
 
                 try :
                     print("current working dir : " + cwd)
@@ -47,7 +47,7 @@ def RenderMeme(template, text):
                         outputs = {out_name: '-vf "drawtext=fontfile=' + font + ':text=' + upper_text +':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile=' + font + ':text=' + lower_text + ':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
                     )
                 
-                    p1 = subprocess.Popen(ff.cmd, stdout=subprocess.PIPE)
+                    p1 = subprocess.Popen('/vendor/ffmpeg/' + ff.cmd, stdout=subprocess.PIPE)
                     stdout = p1.communicate()[0]
                     print("STDOUT : " + stdout)
                     p1.wait()

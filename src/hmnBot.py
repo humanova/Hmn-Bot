@@ -1187,15 +1187,17 @@ async def on_message(message):
                 if len(msg) >= 2:
                     
                     command = msg[1:]
-                    ret, out = hmnEval.EvalHmnBot(command)
-                    client.send_message(message.channel, out)
+                    try:
+                        ret, out = hmnEval.EvalHmnBot(command)
+                        client.send_message(message.channel, out)
+                    except Exception as e: print(e)
 
         #!mrender
         if message.content.startswith("!mrender"):
             if message.author.id == myID:
 
                 msg = message.content.split(" ")
-                if len(msg) >= 3:
+                if len(msg) >= 2:
                     
                     if msg[1] == 'rm':
                         check = mrender.ClearOutVideos()
@@ -1205,9 +1207,10 @@ async def on_message(message):
                         vid_template = msg[1]
                         vid_text = msg[2: ]
 
-                        out_file = mrender.RenderMeme(vid_template, vid_text)
-                        client.send_file(message.channel, out_file, content = msg[2:])
-
+                        try:
+                            out_file = mrender.RenderMeme(vid_template, vid_text)
+                            client.send_file(message.channel, out_file, content = msg[2:])
+                        except Exception as e: print(e)
 
         #oyun degisme
         if message.content.upper().startswith("!OYUNDEGIS"):

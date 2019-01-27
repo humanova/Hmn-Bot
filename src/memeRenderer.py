@@ -10,8 +10,7 @@ from ffmpy import FFmpeg
 mRender = {
     "crabrave" : "mrender/templates/crabrave.mp4"
 }
-cwd = os.getcwd()
-dir_path = os.path.dirname(os.path.realpath(__file__))
+
 font = "mrender/fonts/Raleway-Medium.ttf"
 
 def RenderMeme(template, text):
@@ -23,8 +22,7 @@ def RenderMeme(template, text):
 
             if template == "test":
                 try :
-                    print(cwd)
-                    p1 = subprocess.Popen('ffmpeg -version')
+                    p1 = subprocess.Popen(['ffmpeg', '-version'])
                     p1.wait()
 
                     
@@ -41,8 +39,7 @@ def RenderMeme(template, text):
                 t_out_name = out_name
 
                 try :
-                    print("current working dir : " + cwd)
-                    print("file dir : " + dir_path)
+
                     ff =  FFmpeg(
                         inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
                         outputs = {out_name: '-vf "drawtext=fontfile=' + font + ':text=' + upper_text +':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile=' + font + ':text=' + lower_text + ':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
@@ -50,8 +47,6 @@ def RenderMeme(template, text):
                     
                     commands = ff.cmd.split(' ')
                     p1 = subprocess.Popen(commands, stdout=subprocess.PIPE)
-                    stdout = p1.communicate()[0]
-                    print("STDOUT : " + stdout)
                     p1.wait()
 
                 except Exception as e: print(e)

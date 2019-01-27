@@ -9,7 +9,7 @@ def EvalHmnBot(commands):
     
     out = ""
     for line in p.stdout.readlines():
-        out += str(line, 'utf-8', 'ignore')
+        out += line.decode('utf-8')
         print(line)
 
     return_val = p.wait()

@@ -26,14 +26,18 @@ def RenderMeme(template, text):
                 lower_text = " ".join(text[sep + 1:])
                 
                 out_name = '../mrender/outs/crabrave_out_' + text[0] + '.mp4'
-               
-                ff =  FFmpeg(
-                    inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
-                    outputs = {out_name: '-vf "drawtext=fontfile=' + font + ':text=' + upper_text +':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile=' + font + ':text=' + lower_text + ':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
-                )
+
+                try :
+                    ff =  FFmpeg(
+                        inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
+                        outputs = {out_name: '-vf "drawtext=fontfile=' + font + ':text=' + upper_text +':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile=' + font + ':text=' + lower_text + ':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
+                    )
                 
-                p1 = subprocess.Popen(ff.cmd)
-                p1.wait()
+                    p1 = subprocess.Popen(ff.cmd)
+                    p1.wait()
+                    
+                except Exception as e: print(e)
+
                 return out_name
 
     except:

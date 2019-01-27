@@ -8,11 +8,11 @@ import subprocess
 from ffmpy import FFmpeg
 
 mRender = {
-    "crabrave" : "mrender/templates/crabrave.mp4"
+    "crabrave" : "./mrender/templates/crabrave.mp4"
 }
 cwd = os.getcwd()
 dir_path = os.path.dirname(os.path.realpath(__file__))
-font = "mrender/fonts/Raleway-Medium.ttf"
+font = "./mrender/fonts/Raleway-Medium.ttf"
 
 def RenderMeme(template, text):
 
@@ -37,7 +37,7 @@ def RenderMeme(template, text):
                 upper_text = " ".join(text[0:sep])
                 lower_text = " ".join(text[sep + 1:])
                 
-                out_name = 'mrender/outs/crabrave_out_' + text[0] + '.mp4'
+                out_name = './mrender/outs/crabrave_out_' + text[0] + '.mp4'
 
                 try :
                     print("current working dir : " + cwd)

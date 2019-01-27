@@ -46,8 +46,9 @@ def RenderMeme(template, text):
                         inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
                         outputs = {out_name: '-vf "drawtext=fontfile=' + font + ':text=' + upper_text +':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile=' + font + ':text=' + lower_text + ':fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
                     )
-                
-                    p1 = subprocess.Popen('/vendor/ffmpeg/' + ff.cmd, stdout=subprocess.PIPE)
+                    
+                    commands = ff.cmd.split(' ')
+                    p1 = subprocess.Popen(commands, stdout=subprocess.PIPE)
                     stdout = p1.communicate()[0]
                     print("STDOUT : " + stdout)
                     p1.wait()

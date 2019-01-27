@@ -1187,8 +1187,8 @@ async def on_message(message):
                 if len(msg) >= 2:
                     
                     command = msg[1:]
-                    ret = hmnEval.EvalHmnBot(command)
-                    client.send_message(message.channel, str(ret))
+                    ret, out = hmnEval.EvalHmnBot(command)
+                    client.send_message(message.channel, out)
 
         #!mrender
         if message.content.startswith("!mrender"):

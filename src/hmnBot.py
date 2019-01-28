@@ -1234,6 +1234,7 @@ async def on_message(message):
                                 font_size = '96'
                                 vid_template = msg[1]
                                 text_start = 2
+                                vid_text = []
 
                                 #!mrender template -f 10 ...
                                 if '-f' in msg:

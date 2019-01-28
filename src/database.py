@@ -4,6 +4,7 @@
 
 import os
 import datetime
+from psycopg2 import *
 from peewee import * 
 
 DATABASE_NAME = os.environ['DATABASE_NAME']
@@ -69,6 +70,6 @@ class DB:
         try:
             video = Video.select().where(Video.command == cmd).get()
         except:
-            print(f"[DB] Couldn't found any video attached to this command : {cmd}")
+            print(f"[DB] Couldn't find any video attached to this command : {cmd}")
             return None
         return video

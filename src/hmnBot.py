@@ -1214,12 +1214,15 @@ async def on_message(message):
                     else:
                         msg = message.content.split(" ")
                         if len(msg) >= 2:
+                            shortcut_flag = False
                             
                             if msg[1] == 'giveperm' and message.author.id == myID:
                                 user = message.mentions[0]
                                 user_nick = str(user.name) + "#" + str(user.discriminator)
                                 try:
                                     b_database.AddPermUser(str(user.id), user_nick, str(message.server.id))
+                                    await client.send_message(message.channel, f"`{user.id}` VideoPermUser'a eklendi")
+
                                 except:
                                     await client.send_message(message.channel, f"`{user.id}` VideoPermUser'a eklenemedi...")
 
@@ -1230,10 +1233,17 @@ async def on_message(message):
                             else:
                                 font_size = '96'
                                 vid_template = msg[1]
+
+                                #!mrender template -f ...
                                 if '-f' in msg:
                                     font_size_index = msg.index('-f') + 1
                                     font_size = msg[font_size_index]
                                     vid_text = msg[font_size_index + 1:]
+                                #!mrender template .... -s shortcut (en son)
+                                if '-s'in msg and message.author.id == myID:
+                                    shortcut_flag = True
+                                    shortcut_index = msg.index('-f') + 1
+                                    shortcut = msg[shortcut_index]
 
                                 else:
                                     vid_text = msg[2:]
@@ -1246,7 +1256,10 @@ async def on_message(message):
                                         vid_url = str(snd_msg.attachments[0]['url'])
                                         user_name = str(message.author.name) + "#" + str(message.author.discriminator)
                                         #print(f"new vid row : :  {str(message.content)} | {vid_url} | {user_name}")
-                                        b_database.AddVideo(str(message.content), vid_url, user_name)
+                                        if not shortcut_flag:
+                                            b_database.AddVideo(str(message.content), vid_url, user_name)
+                                        else:
+                                            b_database.AddVideo('!mrender ' + str(shortcut), vid_url, user_name)
                                     else:
                                         await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
 

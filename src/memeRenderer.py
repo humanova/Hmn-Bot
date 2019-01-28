@@ -5,6 +5,7 @@
 
 import os
 import subprocess
+import time
 from ffmpy import FFmpeg
 
 mRender = {
@@ -17,18 +18,14 @@ font = {
 
 def FixArgs(template, text):
 
-    print(text)
     if template == "crabrave":
         sep = text.index('-')
         upper_text = str(" ".join(text[0:sep]))
         lower_text = str(" ".join(text[sep + 1:]))
-
-
-        print(upper_text)
-        print(lower_text)
         
-        out_name = str('mrender/outs/crabrave_out_'+ upper_text + lower_text + '.mp4')
-        out_name = out_name.replace(" ", "_")
+        #out_name = str('mrender/outs/crabrave_out_'+ upper_text + lower_text + '.mp4')
+        #out_name = out_name.replace(" ", "_")
+        out_name = upper_text[0:5] + str(time.time())
         upper_text = "'" + upper_text + "'"
         lower_text = "'" + lower_text + "'"
 
@@ -44,12 +41,13 @@ def RenderMeme(template, font_size, text):
             
             crab_args = FixArgs(template, text)
             out_name = crab_args[3]
-
+            
+            '''
             # if the file already exits, return its name directly
             out_files = os.listdir('mrender/outs/')
             for name in out_files:
                 if name == out_name:
-                    return out_name
+                    return out_name'''
 
             ff =  FFmpeg(
                 inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
@@ -86,7 +84,7 @@ def RenderMeme(template, font_size, text):
 def ClearOutVideos():
 
     try :
-        p1 = subprocess.Popen(['rm',  '-rf mrender/outs/*'])
+        p1 = subprocess.Popen(['rm', '--', 'mrender/outs/*'])
         p1.wait()
         return True
 

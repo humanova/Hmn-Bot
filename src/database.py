@@ -74,7 +74,7 @@ class DB:
 
     def GetPermUser(self, user_id):
         try:
-            perm_user = VideoPermUser.select().where(Video.user_id == user_id).get()
+            perm_user = VideoPermUser.select().where(VideoPermUser.user_id == user_id).get()
         except:
             print(f"[DB] Couldn't find any VideoPermUser attached to this user_id : {user_id}")
             return None

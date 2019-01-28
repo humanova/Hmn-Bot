@@ -74,7 +74,7 @@ def RenderMeme(template, font_size, text):
                 for line in p1.stderr.readlines():
                     err_msg += line.decode('utf-8')
                     print(line)
-                err_msg = '```' + err_msg + '```'
+                err_msg = '```\n' + err_msg + '```'
                 print(f"py exception : {e}")
 
             return out_name, err_msg

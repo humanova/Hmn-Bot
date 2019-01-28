@@ -1235,13 +1235,13 @@ async def on_message(message):
                                 vid_template = msg[1]
                                 text_start = 2
 
-                                #!mrender template -f ...
+                                #!mrender template -f 10 ...
                                 if '-f' in msg:
                                     font_size_index = msg.index('-f') + 1
                                     font_size = msg[font_size_index]
                                     text_start += 2
-                                #!mrender template .... -s shortcut (en son)
-                                if '-s'in msg and message.author.id == myID:
+                                #!mrender template -s short ...
+                                if '-s' in msg and message.author.id == myID:
                                     shortcut_flag = True
                                     shortcut_index = msg.index('-f') + 1
                                     shortcut = msg[shortcut_index]

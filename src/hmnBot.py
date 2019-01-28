@@ -1234,7 +1234,6 @@ async def on_message(message):
                                 font_size = '96'
                                 vid_template = msg[1]
                                 text_start = 2
-                                vid_text = []
 
                                 #!mrender template -f 10 ...
                                 if '-f' in msg:
@@ -1248,7 +1247,6 @@ async def on_message(message):
                                     shortcut = msg[shortcut_index]
                                     text_start += 2
 
-                                else:
                                     vid_text = msg[text_start:]
 
                                 try:

@@ -1234,7 +1234,7 @@ async def on_message(message):
                                 out_file, err_msg = mrender.RenderMeme(vid_template, font_size, vid_text)
                                 if err_msg == None:    
                                     snd_msg = await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
-                                    vid_url = snd_msg.attachments[0].url
+                                    vid_url = snd_msg.attachments[0]['url']
                                     user_name = message.author.name + str(message.author.discriminator)
                                     b_database.AddVideo(message.content, vid_url, user_name)
                                 else:

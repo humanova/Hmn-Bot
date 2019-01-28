@@ -1204,7 +1204,7 @@ async def on_message(message):
 
         #!mrender
         if message.content.startswith("!mrender"):
-            if message.author.id == myID:
+            if message.author.id == myID or message.author.id == barisID:
                 
                 video = b_database.GetVideo(message.content)
                 if not video == None:

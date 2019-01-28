@@ -1208,7 +1208,7 @@ async def on_message(message):
                 
                 video = b_database.GetVideo(message.content)
                 if not video == None:
-                    await client.send_mesage(message.channel, str(video.url))
+                    await client.send_message(message.channel, str(video.url))
                 
                 else:
                     msg = message.content.split(" ")
@@ -1239,7 +1239,7 @@ async def on_message(message):
                                     print(f"new vid row : :  {str(message.content)} | {vid_url} | {user_name}")
                                     b_database.AddVideo(message.content, vid_url, user_name)
                                 else:
-                                    await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
+                                    await client.send_message(str(message.channel), f"Video olusturulurken hata meydana geldi : {err_msg}")
 
                             except Exception as e: 
                                 print(e)

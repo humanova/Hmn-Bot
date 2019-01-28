@@ -58,7 +58,7 @@ class DB:
                     command= command,
                     url= url,
                     nick= nick,
-                    date= datetime.datetime.now,
+                    date= datetime.datetime.now(),
                 )
                 print(f"[DB] Added a new video -> command : {command}")
                 return video

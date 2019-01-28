@@ -1233,20 +1233,22 @@ async def on_message(message):
                             else:
                                 font_size = '96'
                                 vid_template = msg[1]
+                                text_start = 2
 
                                 #!mrender template -f ...
                                 if '-f' in msg:
                                     font_size_index = msg.index('-f') + 1
                                     font_size = msg[font_size_index]
-                                    vid_text = msg[font_size_index + 1:]
+                                    text_start += 2
                                 #!mrender template .... -s shortcut (en son)
                                 if '-s'in msg and message.author.id == myID:
                                     shortcut_flag = True
                                     shortcut_index = msg.index('-f') + 1
                                     shortcut = msg[shortcut_index]
+                                    text_start += 2
 
                                 else:
-                                    vid_text = msg[2:]
+                                    vid_text = msg[text_start:]
 
                                 try:
                                     await client.send_typing(message.channel)

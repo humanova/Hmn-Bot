@@ -62,8 +62,8 @@ class DB:
                 )
                 print(f"[DB] Added a new video -> command : {command}")
                 return video
-        except IntegrityError:
-            print('This video already exists on the database : ')
+        except Exception as e:
+            print(f'Error while creating video arow : {e}')
         
 
     def GetVideo(self, cmd):

@@ -25,7 +25,7 @@ def FixArgs(template, text):
         
         #out_name = str('mrender/outs/crabrave_out_'+ upper_text + lower_text + '.mp4')
         #out_name = out_name.replace(" ", "_")
-        out_name = upper_text[0:5] + str(time.time())
+        out_name = str(int(time.time()))
         upper_text = "'" + upper_text + "'"
         lower_text = "'" + lower_text + "'"
 

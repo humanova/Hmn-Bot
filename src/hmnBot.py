@@ -1237,9 +1237,9 @@ async def on_message(message):
                                     vid_url = str(snd_msg.attachments[0]['url'])
                                     user_name = str(message.author.name)
                                     print(f"new vid row : :  {str(message.content)} | {vid_url} | {user_name}")
-                                    b_database.AddVideo(message.content, vid_url, user_name)
+                                    b_database.AddVideo(str(message.content), vid_url, user_name)
                                 else:
-                                    await client.send_message(str(message.channel), f"Video olusturulurken hata meydana geldi : {err_msg}")
+                                    await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
 
                             except Exception as e: 
                                 print(e)

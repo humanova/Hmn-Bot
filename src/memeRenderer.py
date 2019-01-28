@@ -17,7 +17,6 @@ font = {
 
 def FixArgs(template, text):
 
-    text = text.split(" ")
     print(text)
     if template == "crabrave":
         sep = text.index('-')
@@ -39,6 +38,7 @@ def RenderMeme(template, font_size, text):
 
     if mRender[template]:
         r_temp = mRender[template] 
+        err_msg = None
 
         if template == "crabrave":
             
@@ -56,6 +56,7 @@ def RenderMeme(template, font_size, text):
                 outputs = {out_name: '-vf "drawtext=fontfile={font}:text={upper_text}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile={font}:text={lower_text}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
             )                          
 
+            print(f"commands :{ff.cmd}")
             commands = ff.cmd.split(' ')
             
             commands = [arg.replace('{upper_text}', str(crab_args[0])) for arg in commands]
@@ -64,14 +65,14 @@ def RenderMeme(template, font_size, text):
             commands = [arg.replace('{font_size}', font_size) for arg in commands]
 
             print(f"preparing video : {out_name}")
-            print("commands : " + " ".join(ff.cmd))
+            
 
             try :
                 p1 = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 p1.wait()
 
             except Exception as e: 
-                err_msg = None
+                
                 for line in p1.stderr.readlines():
                     err_msg += line.decode('utf-8')
                     print(line)

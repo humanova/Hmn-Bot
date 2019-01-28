@@ -1,7 +1,12 @@
 import memeRenderer as mrender 
 
-text1 = ['barisuraz', 'is' , '-', 'A',  'BIG' , 'GAY']
+text1 = "testing some - stuff lmao"
+
+text1.split(" ")
+
+
+a = mrender.RenderMeme('crabrave', '15', text1)
 
 
 
-a = mrender.RenderMeme('crabrave', text1)
+

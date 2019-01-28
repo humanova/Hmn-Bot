@@ -1189,7 +1189,6 @@ async def on_message(message):
                     command = msg[1:]
                     try:
                         ret, out = hmnEval.EvalHmnBot(command)
-                        print(out)
                         await client.send_message(message.channel, out)
 
                     except Exception as e: print(e)
@@ -1203,7 +1202,7 @@ async def on_message(message):
                     
                     if msg[1] == 'rm':
                         check = mrender.ClearOutVideos()
-                        await client.send_message(message.channel, "`rm mrender/outs/*.*` Temizleme sonucu : " + str(check))
+                        await client.send_message(message.channel, "`rm mrender/outs/*`\n Temizleme sonucu : " + str(check))
                     
                     else:
                         font_size = '96'

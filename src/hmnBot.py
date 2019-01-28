@@ -1206,13 +1206,26 @@ async def on_message(message):
                         await client.send_message(message.channel, "`rm mrender/outs/*.*` Temizleme sonucu : " + str(check))
                     
                     else:
+                        font_size = '96'
                         vid_template = msg[1]
-                        vid_text = msg[2: ]
+                        if '-f' in msg:
+                            font_size_index = msg.index('-f') + 1
+                            font_size = msg[font_size_index]
+                            vid_text = msg[font_size_index + 1:]
+
+                        else:
+                            vid_text = msg[2:]
 
                         try:
-                            out_file = mrender.RenderMeme(vid_template, vid_text)
-                            await client.send_file(message.channel, str(out_file), content = " ".join(msg[2:]))
-                        except Exception as e: print(e)
+                            await client.send_typing(message.channel)
+                            out_file, err_msg = mrender.RenderMeme(vid_template, font_size, vid_text)
+                            if err_msg == None:    
+                                await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
+                            else:
+                                await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
+
+                        except Exception as e: 
+                            print(e)
 
         #oyun degisme
         if message.content.upper().startswith("!OYUNDEGIS"):

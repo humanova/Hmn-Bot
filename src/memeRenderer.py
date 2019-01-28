@@ -11,58 +11,81 @@ mRender = {
     "crabrave" : "mrender/templates/crabrave.mp4"
 }
 
-font = "mrender/fonts/Raleway-Medium.ttf"
+font = {
+    "crabrave" : "mrender/fonts/Raleway-Medium.ttf"
+}
 
-def RenderMeme(template, text):
+def FixArgs(template, text):
 
-    out_name = ""
-    try:
-        if mRender[template]:
-            r_temp = mRender[template] 
+    text = text.split(" ")
+    print(text)
+    if template == "crabrave":
+        sep = text.index('-')
+        upper_text = str(" ".join(text[0:sep]))
+        lower_text = str(" ".join(text[sep + 1:]))
 
-            if template == "test":
-                try :
-                    p1 = subprocess.Popen(['ffmpeg', '-version'])
-                    p1.wait()
 
-                    
-                except Exception as e: print(e)
+        print(upper_text)
+        print(lower_text)
+        
+        out_name = str('mrender/outs/crabrave_out_'+ upper_text + lower_text + '.mp4')
+        out_name = out_name.replace(" ", "_")
+        upper_text = "'" + upper_text + "'"
+        lower_text = "'" + lower_text + "'"
 
-                return 'test'
+        return [upper_text, lower_text, font['crabrave'], out_name]
 
-            if template == "crabrave":
-                sep = text.index('-')
-                upper_text = str(" ".join(text[0:sep]))
-                lower_text = str(" ".join(text[sep + 1:]))
+def RenderMeme(template, font_size, text):
 
-                upper_text = "'" + upper_text + "'"
-                lower_text = "'" + lower_text + "'"
-                out_name = 'mrender/outs/crabrave_out_' + text[0] + '.mp4'
-                t_out_name = out_name
+    if mRender[template]:
+        r_temp = mRender[template] 
 
-                try :
+        if template == "crabrave":
+            
+            crab_args = FixArgs(template, text)
+            out_name = crab_args[3]
 
-                    ff =  FFmpeg(
-                        inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
-                        outputs = {out_name: f'-vf "drawtext=fontfile={font}:text={upper_text}:fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile={font}:text={lower_text}:fontcolor=white:fontsize=96:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
-                    )
-                    
-                    commands = ff.cmd.split(' ')
-                    p1 = subprocess.Popen(commands, stdout=subprocess.PIPE)
-                    p1.wait()
+            # if the file already exits, return its name directly
+            out_files = os.listdir('mrender/outs/')
+            for name in out_files:
+                if name == out_name:
+                    return out_name
 
-                except Exception as e: print(e)
-                    
-                return t_out_name
+            ff =  FFmpeg(
+                inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
+                outputs = {out_name: '-vf "drawtext=fontfile={font}:text={upper_text}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile={font}:text={lower_text}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
+            )                          
 
-    except:
-        return
+            commands = ff.cmd.split(' ')
+            
+            commands = [arg.replace('{upper_text}', str(crab_args[0])) for arg in commands]
+            commands = [arg.replace('{lower_text}', str(crab_args[1])) for arg in commands]
+            commands = [arg.replace('{font}', str(crab_args[2])) for arg in commands]
+            commands = [arg.replace('{font_size}', font_size) for arg in commands]
+
+            print(f"preparing video : {out_name}")
+            print("commands : " + " ".join(ff.cmd))
+
+            try :
+                p1 = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                p1.wait()
+
+            except Exception as e: 
+                err_msg = None
+                for line in p1.stderr.readlines():
+                    err_msg += line.decode('utf-8')
+                    print(line)
+                err_msg = '```' + err_msg + '```'
+                print(f"py exception : {e}")
+
+            return out_name, err_msg
+
     
 
 def ClearOutVideos():
 
     try :
-        p1 = subprocess.Popen(['rm',  'mrender/outs/*.*'])
+        p1 = subprocess.Popen(['rm',  '-rf mrender/outs/*'])
         p1.wait()
         return True
 
@@ -70,6 +93,3 @@ def ClearOutVideos():
         print(e)
         return False
     
-    
-
-

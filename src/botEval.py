@@ -13,6 +13,6 @@ def EvalHmnBot(commands):
         print(line)
 
     return_val = p.wait()
-
+    out = "```" + out + "```"
     return return_val, out
 

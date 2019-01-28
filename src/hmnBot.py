@@ -1243,7 +1243,7 @@ async def on_message(message):
                                 #!mrender template -s short ...
                                 if '-s' in msg and message.author.id == myID:
                                     shortcut_flag = True
-                                    shortcut_index = msg.index('-f') + 1
+                                    shortcut_index = msg.index('-s') + 1
                                     shortcut = msg[shortcut_index]
                                     text_start += 2
 

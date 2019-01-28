@@ -22,6 +22,7 @@ from datetime import datetime
 import dbl  #discordbotlist.org api bot istatistikleri icin
 
 #kendi importlarim
+import database as db
 import havaDurumu as hava
 import botStrings as yazi
 import dovizIslem as doviz
@@ -39,6 +40,7 @@ import memeRenderer as mrender
 token = os.environ['PP_BOT_TOKEN']
 dbl_token = os.environ['DBL_TOKEN']
 
+b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
@@ -166,6 +168,13 @@ def is_float(string):
 
 @client.event
 async def on_ready():
+    b_database.Connect()
+    if b_database.is_connected:
+        try:
+            b_database.InitDatabase()
+        except:
+            print("Error while initializing the database, it may be initialized already...")
+
     print("Bot hazir!\n")
     print("%s adiyla giris yapildi" % (client.user.name))
     await bot_logla()
@@ -1196,35 +1205,43 @@ async def on_message(message):
         #!mrender
         if message.content.startswith("!mrender"):
             if message.author.id == myID:
-
-                msg = message.content.split(" ")
-                if len(msg) >= 2:
-                    
-                    if msg[1] == 'rm':
-                        check = mrender.ClearOutVideos()
-                        await client.send_message(message.channel, "`rm mrender/outs/*`\n Temizleme sonucu : " + str(check))
-                    
-                    else:
-                        font_size = '96'
-                        vid_template = msg[1]
-                        if '-f' in msg:
-                            font_size_index = msg.index('-f') + 1
-                            font_size = msg[font_size_index]
-                            vid_text = msg[font_size_index + 1:]
-
+                
+                video = b_database.GetVideo(message.content)
+                if not video == None:
+                    await client.send_mesage(message.channel, str(video.url))
+                
+                else:
+                    msg = message.content.split(" ")
+                    if len(msg) >= 2:
+                        
+                        if msg[1] == 'rm':
+                            check = mrender.ClearOutVideos()
+                            await client.send_message(message.channel, "`rm mrender/outs/*`\n Temizleme sonucu : " + str(check))
+                        
                         else:
-                            vid_text = msg[2:]
+                            font_size = '96'
+                            vid_template = msg[1]
+                            if '-f' in msg:
+                                font_size_index = msg.index('-f') + 1
+                                font_size = msg[font_size_index]
+                                vid_text = msg[font_size_index + 1:]
 
-                        try:
-                            await client.send_typing(message.channel)
-                            out_file, err_msg = mrender.RenderMeme(vid_template, font_size, vid_text)
-                            if err_msg == None:    
-                                await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
                             else:
-                                await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
+                                vid_text = msg[2:]
 
-                        except Exception as e: 
-                            print(e)
+                            try:
+                                await client.send_typing(message.channel)
+                                out_file, err_msg = mrender.RenderMeme(vid_template, font_size, vid_text)
+                                if err_msg == None:    
+                                    snd_msg = await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
+                                    vid_url = snd_msg.attachments[0].url
+                                    user_name = message.author.name + str(message.author.discriminator)
+                                    b_database.AddVideo(message.content, vid_url, user_name)
+                                else:
+                                    await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
+
+                            except Exception as e: 
+                                print(e)
 
         #oyun degisme
         if message.content.upper().startswith("!OYUNDEGIS"):

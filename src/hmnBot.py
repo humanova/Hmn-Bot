@@ -1234,9 +1234,9 @@ async def on_message(message):
                                 out_file, err_msg = mrender.RenderMeme(vid_template, font_size, vid_text)
                                 if err_msg == None:    
                                     snd_msg = await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
-                                    vid_url = snd_msg.attachments[0]['url']
-                                    user_name = message.author.name
-                                    print(f"debug :  {message.content} | {vid_url} | {user_name}")
+                                    vid_url = str(snd_msg.attachments[0]['url'])
+                                    user_name = str(message.author.name)
+                                    print(f"new vid row : :  {str(message.content)} | {vid_url} | {user_name}")
                                     b_database.AddVideo(message.content, vid_url, user_name)
                                 else:
                                     await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")

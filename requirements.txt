@@ -15,3 +15,4 @@ forex-python==1.1
 requests==2.18.1
 ffmpy==0.2.2
 peewee==3.8.2
+psycopg2-binary==2.7.7

@@ -29,6 +29,12 @@ class Video(BaseModel):
     nick = CharField()
     date = DateTimeField()
 
+class VideoPermUser(BaseModel):
+    user_id = CharField(unique=True)
+    nick = CharField()
+    server_id = CharField()
+    date = DateTimeField()
+
 class DB:
 
     def __init__(self):
@@ -37,7 +43,7 @@ class DB:
     
     def InitDatabase(self):
         try:
-            db.create_tables([Video])
+            db.create_tables([Video, VideoPermUser])
         except Exception as e:
             print("Couldn't create the tables, it may already exist on the database...")
             print(e)
@@ -51,6 +57,29 @@ class DB:
             print(f"couldn't connect to database")
             self.is_connected = False
 
+    def AddPermUser(self, user_id, nick, server_id):
+        try:
+            with db.atomic():
+                vid_perm = VideoPermUser.create(
+                    user_id= user_id,
+                    nick= nick,
+                    server_id= server_id,
+                    date= datetime.datetime.now(),
+                )
+                print(f"[DB] Added a new VideoPermUser -> user_id : {user_id}")
+                return vid_perm
+
+        except Exception as e:
+            print(f'Error while adding perm user : {e}')
+
+    def GetPermUser(self, user_id):
+        try:
+            perm_user = VideoPermUser.select().where(Video.user_id == user_id).get()
+        except:
+            print(f"[DB] Couldn't find any VideoPermUser attached to this user_id : {user_id}")
+            return None
+        return perm_user
+
     def AddVideo(self, command, url, nick):
         try:
             with db.atomic():
@@ -63,7 +92,7 @@ class DB:
                 print(f"[DB] Added a new video -> command : {command}")
                 return video
         except Exception as e:
-            print(f'Error while creating video arow : {e}')
+            print(f'Error while creating video row : {e}')
         
 
     def GetVideo(self, cmd):

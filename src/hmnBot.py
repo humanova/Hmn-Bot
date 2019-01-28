@@ -44,7 +44,7 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.3.4\n11/11/18"
+version = "hmnBot v0.4.0\n28/01/19"
 myID = "213262071050141696"
 barisID = "190836437917237248"
 botID = "455819835486502933"
@@ -1204,45 +1204,54 @@ async def on_message(message):
 
         #!mrender
         if message.content.startswith("!mrender"):
-            if message.author.id == myID or message.author.id == barisID:
-                
-                video = b_database.GetVideo(message.content)
-                if not video == None:
-                    await client.send_message(message.channel, str(video.url))
-                
-                else:
-                    msg = message.content.split(" ")
-                    if len(msg) >= 2:
-                        
-                        if msg[1] == 'rm':
-                            check = mrender.ClearOutVideos()
-                            await client.send_message(message.channel, "`rm mrender/outs/*`\n Temizleme sonucu : " + str(check))
-                        
-                        else:
-                            font_size = '96'
-                            vid_template = msg[1]
-                            if '-f' in msg:
-                                font_size_index = msg.index('-f') + 1
-                                font_size = msg[font_size_index]
-                                vid_text = msg[font_size_index + 1:]
+            perm_user = b_database.GetPermUser(message.author.id)
+            if not perm_user == None:
 
+                    video = b_database.GetVideo(message.content)
+                    if not video == None:
+                        await client.send_message(message.channel, str(video.url))
+                    
+                    else:
+                        msg = message.content.split(" ")
+                        if len(msg) >= 2:
+                            
+                            if msg[1] == 'giveperm' and message.author.id == myID:
+                                user = message.mentions[0]
+                                user_nick = str(user.name) + "#" + str(user.discriminator)
+                                try:
+                                    b_database.AddPermUser(str(user.id), user_nick, str(message.server.id))
+                                except:
+                                    await client.send_message(message.channel, f"`{user.id}` VideoPermUser'a eklenemedi...")
+
+                            if msg[1] == 'rm' and message.author.id == myID:
+                                check = mrender.ClearOutVideos()
+                                await client.send_message(message.channel, "`rm mrender/outs/*`\n Temizleme sonucu : " + str(check))
+                            
                             else:
-                                vid_text = msg[2:]
+                                font_size = '96'
+                                vid_template = msg[1]
+                                if '-f' in msg:
+                                    font_size_index = msg.index('-f') + 1
+                                    font_size = msg[font_size_index]
+                                    vid_text = msg[font_size_index + 1:]
 
-                            try:
-                                await client.send_typing(message.channel)
-                                out_file, err_msg = mrender.RenderMeme(vid_template, font_size, vid_text)
-                                if err_msg == None:    
-                                    snd_msg = await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
-                                    vid_url = str(snd_msg.attachments[0]['url'])
-                                    user_name = str(message.author.name)
-                                    print(f"new vid row : :  {str(message.content)} | {vid_url} | {user_name}")
-                                    b_database.AddVideo(str(message.content), vid_url, user_name)
                                 else:
-                                    await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
+                                    vid_text = msg[2:]
 
-                            except Exception as e: 
-                                print(e)
+                                try:
+                                    await client.send_typing(message.channel)
+                                    out_file, err_msg = mrender.RenderMeme(vid_template, font_size, vid_text)
+                                    if err_msg == None:    
+                                        snd_msg = await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
+                                        vid_url = str(snd_msg.attachments[0]['url'])
+                                        user_name = str(message.author.name) + "#" + str(message.author.discriminator)
+                                        #print(f"new vid row : :  {str(message.content)} | {vid_url} | {user_name}")
+                                        b_database.AddVideo(str(message.content), vid_url, user_name)
+                                    else:
+                                        await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")
+
+                                except Exception as e: 
+                                    print(e)
 
         #oyun degisme
         if message.content.upper().startswith("!OYUNDEGIS"):

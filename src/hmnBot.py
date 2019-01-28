@@ -1235,7 +1235,8 @@ async def on_message(message):
                                 if err_msg == None:    
                                     snd_msg = await client.send_file(message.channel, str(out_file), content = " ".join(vid_text))
                                     vid_url = snd_msg.attachments[0]['url']
-                                    user_name = message.author.name + str(message.author.discriminator)
+                                    user_name = message.author.name
+                                    print(f"debug :  {message.content} | {vid_url} | {user_name}")
                                     b_database.AddVideo(message.content, vid_url, user_name)
                                 else:
                                     await client.send_message(message.channel, f"Video olusturulurken hata meydana geldi : {err_msg}")

@@ -1191,22 +1191,23 @@ async def on_message(message):
 
         #!sp
         if message.content.startswith("!sp"):
-            msg = message.content.split(" ")
-            if len(msg) > 2:
-                msg = msg[1:]
-                for word in msg:
-                    for letter in word:
+            if message.author.id == myID:
+                msg = message.content.split(" ")
+                if len(msg) > 2:
+                    msg = msg[1:]
+                    for word in msg:
+                        for letter in word:
+                            try:
+                                await client.send_message(message.channel, letter)
+                            except Exception as e:
+                                print(f'error while using !sp command : {e}')
+                                break
+                            time.sleep(0.2)
                         try:
-                            await client.send_message(message.channel, letter)
+                            await client.send_message(message.channel, '_ _')
                         except Exception as e:
                             print(f'error while using !sp command : {e}')
                             break
-                        time.sleep(0.05)
-                    try:
-                        await client.send_message(message.channel, '_ _')
-                    except Exception as e:
-                        print(f'error while using !sp command : {e}')
-                        break
                 
         #!eval 
         if message.content.startswith("!eval"):

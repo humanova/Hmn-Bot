@@ -1197,13 +1197,13 @@ async def on_message(message):
                     for letter in word:
                         try:
                             await client.send_message(message.channel, letter)
-                        except:
-                            print('error while using !sp command')
+                        except Exception as e:
+                            print(f'error while using !sp command : {e}')
                             break
                     try:
                         await client.send_message(message.channel, '\n')
-                    except:
-                        print('error while using !sp command')
+                    except Exception as e:
+                        print(f'error while using !sp command : {e}')
                         break
                 
         #!eval 

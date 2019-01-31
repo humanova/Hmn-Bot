@@ -49,6 +49,7 @@ myID = "213262071050141696"
 barisID = "190836437917237248"
 botID = "455819835486502933"
 logChannelID = "470853011233570817"
+hideoutID = "405492399595323393"
 
 uyari_disi = [botID,myID]
 kizginKaraliste = ["460563755772936212"]
@@ -1188,12 +1189,17 @@ async def on_message(message):
 
 
         #++========================== OZEL ============================++#
-
+        #n word check (hideout server)
+        if message.server.id == hideoutID:
+            msg = message.content.split(" ")
+            for word in msg:
+                if word in yazi.n_word_list:
+                    await client.add_reaction(message, "🛡️")
         #!sp
         if message.content.startswith("!sp"):
             if message.author.id == myID:
                 msg = message.content.split(" ")
-                if len(msg) > 2:
+                if len(msg) >= 2:
                     msg = msg[1:]
                     for word in msg:
                         for letter in word:

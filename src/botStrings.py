@@ -48,6 +48,16 @@ memeSubreddits = [
 
 memeSubs = "\n".join(memeSubreddits[:])
 
+n_word_list = [
+    'NIGGER',
+    'NIGGA',
+    'NIGG',
+    'NIG',
+    'NIGGAS',
+    'NIGGERS',
+    'NIGS',
+    'NIGGS'
+]
 
 yardim = {
     "komutlar" :    "```asciidoc\n== Hmn-Bot Komutları ==\n\n",

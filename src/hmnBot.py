@@ -1,4 +1,4 @@
-
+﻿
 # 2018 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
@@ -44,7 +44,7 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.4.0\n28/01/19"
+version = "hmnBot v0.4.0\n31/01/19"
 myID = "213262071050141696"
 barisID = "190836437917237248"
 botID = "455819835486502933"
@@ -1189,6 +1189,23 @@ async def on_message(message):
 
         #++========================== OZEL ============================++#
 
+        #!sp
+        if message.content.startswith("!sp"):
+            msg = message.content.split(" ")
+            if len(msg) > 2:
+                for word in msg:
+                    for letter in word:
+                        try:
+                            await client.send_message(message.channel, letter)
+                        except:
+                            print('error while using !sp command')
+                            break
+                    try:
+                        await client.send_message(message.channel, '\n')
+                    except:
+                        print('error while using !sp command')
+                        break
+                
         #!eval 
         if message.content.startswith("!eval"):
             if message.author.id == myID:
@@ -1247,7 +1264,7 @@ async def on_message(message):
                                     shortcut = msg[shortcut_index]
                                     text_start += 2
 
-                                vid_text = msg[text_start:]
+                                    vid_text = msg[text_start:]
 
                                 try:
                                     await client.send_typing(message.channel)

@@ -1193,6 +1193,7 @@ async def on_message(message):
         if message.content.startswith("!sp"):
             msg = message.content.split(" ")
             if len(msg) > 2:
+                msg = msg[1:]
                 for word in msg:
                     for letter in word:
                         try:
@@ -1201,7 +1202,7 @@ async def on_message(message):
                             print(f'error while using !sp command : {e}')
                             break
                     try:
-                        await client.send_message(message.channel, '\n')
+                        await client.send_message(message.channel, ' \n')
                     except Exception as e:
                         print(f'error while using !sp command : {e}')
                         break

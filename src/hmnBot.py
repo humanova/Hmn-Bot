@@ -1201,6 +1201,7 @@ async def on_message(message):
                         except Exception as e:
                             print(f'error while using !sp command : {e}')
                             break
+                        time.sleep(0.05)
                     try:
                         await client.send_message(message.channel, '_ _')
                     except Exception as e:

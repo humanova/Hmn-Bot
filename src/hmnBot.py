@@ -1193,7 +1193,7 @@ async def on_message(message):
         if message.server.id == hideoutID:
             msg = message.content.split(" ")
             for word in msg:
-                if word in yazi.n_word_list:
+                if word.upper() in yazi.n_word_list:
                     await client.add_reaction(message, "🛡️")
         #!sp
         if message.content.startswith("!sp"):

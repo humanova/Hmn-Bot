@@ -1192,7 +1192,7 @@ async def on_message(message):
 
         #++========================== OZEL ============================++#
         #n word check (hideout server)
-        if 'n' in message.content and message.server.id == hideoutID:
+        if 'n' in message.content.lower() and message.server.id == hideoutID:
             n_word = yazi.n_word_list[0]
             n_what_msg = ''
             if message.content == '!n':

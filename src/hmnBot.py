@@ -1192,7 +1192,7 @@ async def on_message(message):
 
         #++========================== OZEL ============================++#
         #n word check (hideout server)
-        if 'n' in message.content.lower() and message.server.id == hideoutID:
+        if 'N' in message.content.upper() and message.server.id == hideoutID:
             n_word = yazi.n_word_list[0]
             n_what_msg = ''
             if message.content == '!n':
@@ -1205,7 +1205,7 @@ async def on_message(message):
                 last_message = b_database.GetWord(n_word).last_msg
                 await client.send_message(message.channel, f'{last_message}')
 
-            msg = message.content.lower()
+            msg = message.content.upper()
 
             for c_word in yazi.n_word_list:
                 if c_word in msg:

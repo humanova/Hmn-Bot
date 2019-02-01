@@ -35,6 +35,11 @@ class VideoPermUser(BaseModel):
     server_id = CharField()
     date = DateTimeField()
 
+class Word(BaseModel):
+    word = CharField()
+    word_count = IntegerField()
+
+
 class DB:
 
     def __init__(self):
@@ -43,7 +48,7 @@ class DB:
     
     def InitDatabase(self):
         try:
-            db.create_tables([Video, VideoPermUser])
+            db.create_tables([Video, VideoPermUser, Word])
         except Exception as e:
             print("Couldn't create the tables, it may already exist on the database...")
             print(e)
@@ -56,6 +61,37 @@ class DB:
         except:
             print(f"couldn't connect to database")
             self.is_connected = False
+
+    def AddWord(self, word):
+        try:
+            with db.atomic():
+                word = Word.create(
+                    word = word,
+                    word_count = 1,
+                )
+                print(f"[DB] Added a new word -> word : {word}")
+                return word
+        except Exception as e:
+            print(f'Error while adding word : {e}')
+
+    def GetWord(self, q_word):
+        try:
+            word = Word.select().where(Word.word == q_word).get()
+        except:
+            print(f"[DB] Couldn't find any word : {word}")
+            return None
+        return word
+
+    def CountWord(self, word):
+        try:
+            word_record = self.GetWord(word)
+            word_record.word_count += 1
+            word_record.save()
+            
+        except:
+            print(f"[DB] Couldn't find any word : {word}")
+            print(f"[DB] Creating a new row on the Word table...")
+            self.AddWord(word)
 
     def AddPermUser(self, user_id, nick, server_id):
         try:
@@ -102,3 +138,5 @@ class DB:
             print(f"[DB] Couldn't find any video attached to this command : {cmd}")
             return None
         return video
+
+    

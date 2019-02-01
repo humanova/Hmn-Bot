@@ -1191,16 +1191,22 @@ async def on_message(message):
         #++========================== OZEL ============================++#
         #n word check (hideout server)
         if 'n' in message.content and message.server.id == hideoutID:
+            n_word = yazi.n_word_list[0]
+            if message.content == '!n':
+                await client.send_message(message.channel, f'`Toplamda {b_database.GetWord(n_word).word_count} kez n word kullanildi`')
+            
             msgs = message.content.split(" ")
             for word in msgs:
                 if word.upper() in yazi.n_word_list:
                     try:
+                        
+                        b_database.CountWord(n_word)
                         await client.add_reaction(message, "\U0001F6E1")
-                        await client.send_message(discord.Object(id=469130513697734686), f'n word detected : {message.author.name} -> {message}')
+                        await client.send_message(discord.Object(id=540828135583645718), f'```n word detected : {message.author.name} -> {message.content} @ {message.channel.name}```')
+                        await client.send_message(discord.Object(id=540828135583645718), f'`total count : {b_database.GetWord(n_word).word_count}`')
                     except Exception as e:
                         print(f'error while checking n word(detected) - > {e}')
                     break
-            await client.send_message(discord.Object(id=469130513697734686), f'no n word :) : {message.author.name} -> {message}')
 
         #!sp
         if message.content.startswith("!sp"):

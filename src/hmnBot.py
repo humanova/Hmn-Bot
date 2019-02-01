@@ -1191,10 +1191,14 @@ async def on_message(message):
         #++========================== OZEL ============================++#
         #n word check (hideout server)
         if message.server.id == hideoutID:
-            msg = message.content.split(" ")
-            for word in msg:
+            msgs = message.content.split(" ")
+            for word in msgs:
                 if word.upper() in yazi.n_word_list:
                     await client.add_reaction(message, "🛡️")
+                    await client.send_message(discord.Object(id=470853011233570817), f'n word detected : {message.author.name} -> {message}')
+                    break
+            await client.send_message(discord.Object(id=470853011233570817), f'no n word :) : {message.author.name} -> {message}')
+
         #!sp
         if message.content.startswith("!sp"):
             if message.author.id == myID:

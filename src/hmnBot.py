@@ -1205,7 +1205,7 @@ async def on_message(message):
                 last_message = b_database.GetWord(n_word).last_msg
                 await client.send_message(message.channel, f'{last_message}')
 
-            msg = message.content.upper()
+            msg = message.content.lower()
 
             for c_word in yazi.n_word_list:
                 if c_word in msg:

@@ -49,14 +49,14 @@ memeSubreddits = [
 memeSubs = "\n".join(memeSubreddits[:])
 
 n_word_list = [
-    'NIGGER',
-    'NIGGA',
-    'NIGG',
-    'NIGS',
-    'NIGGS',
-    'N WORD',
-    'N-WORD',
-    'N_WORD'
+    'nigger',
+    'nigga',
+    'nigg',
+    'nigs',
+    'niggs',
+    'n word',
+    'n-word',
+    'n_word'
 ]
 
 yardim = {

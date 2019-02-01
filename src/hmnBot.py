@@ -1190,12 +1190,15 @@ async def on_message(message):
 
         #++========================== OZEL ============================++#
         #n word check (hideout server)
-        if message.server.id == hideoutID:
+        if 'n' in message.content and message.server.id == hideoutID:
             msgs = message.content.split(" ")
             for word in msgs:
                 if word.upper() in yazi.n_word_list:
-                    await client.add_reaction(message, "🛡️")
-                    await client.send_message(discord.Object(id=470853011233570817), f'n word detected : {message.author.name} -> {message}')
+                    try:
+                        await client.add_reaction(message, "🛡️")
+                        await client.send_message(discord.Object(id=470853011233570817), f'n word detected : {message.author.name} -> {message}')
+                    except Exception as e:
+                        print(f'error while checking n word(detected) - > {e}')
                     break
             await client.send_message(discord.Object(id=470853011233570817), f'no n word :) : {message.author.name} -> {message}')
 

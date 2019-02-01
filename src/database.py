@@ -69,6 +69,8 @@ class DB:
                 word = Word.create(
                     word = word,
                     word_count = 1,
+                    last_msg = 'init_msg',
+                    user_name = 'init_usrname',
                 )
                 print(f"[DB] Added a new word -> word : {word}")
                 return word

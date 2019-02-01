@@ -1195,18 +1195,17 @@ async def on_message(message):
             if message.content == '!n':
                 await client.send_message(message.channel, f'`Toplamda {b_database.GetWord(n_word).word_count} kez n word kullanildi`')
             
-            msgs = message.content.split(" ")
+            msgs = message.content.upper().split(" ")
             for word in msgs:
-                if word.upper() in yazi.n_word_list:
-                    try:
-                        
-                        b_database.CountWord(n_word)
-                        await client.add_reaction(message, "\U0001F6E1")
-                        await client.send_message(discord.Object(id=540828135583645718), f'```n word detected : {message.author.name} -> {message.content} @ {message.channel.name}```')
-                        await client.send_message(discord.Object(id=540828135583645718), f'`total count : {b_database.GetWord(n_word).word_count}`')
-                    except Exception as e:
-                        print(f'error while checking n word(detected) - > {e}')
-                    break
+                for c_word in yazi.n_word_list:
+                    if c_word in word:
+                        try:
+                            b_database.CountWord(n_word)
+                            await client.add_reaction(message, "\U0001F6E1")
+                            await client.send_message(discord.Object(id=540828135583645718), f'```n word detected : {message.author.name} -> {message.content} @ {message.channel.name}```\n`total count : {b_database.GetWord(n_word).word_count}`')
+                        except Exception as e:
+                            print(f'error while checking n word(detected) - > {e}')
+                        break
 
         #!sp
         if message.content.startswith("!sp"):

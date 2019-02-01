@@ -56,7 +56,10 @@ n_word_list = [
     'NIGGAS',
     'NIGGERS',
     'NIGS',
-    'NIGGS'
+    'NIGGS',
+    'N WORD',
+    'N-WORD',
+    'N_WORD'
 ]
 
 yardim = {

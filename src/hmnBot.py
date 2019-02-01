@@ -1215,7 +1215,7 @@ async def on_message(message):
                         n_what_word = c_word
                         a = re.search(r'({})'.format(n_what_word), msg)
                         n_what_msg = message.content[:a.start()] + '||' + message.content[a.start(): a.end()] + '||' + message.content[a.end():]
-                        b_database.CountWord(n_word, n_what_msg, getUserName(message.user))
+                        b_database.CountWord(n_word, n_what_msg, getUserName(message.author))
                     except Exception as e:
                         print(f'error while checking n word(detected) - > {e}')
                     break

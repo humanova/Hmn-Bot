@@ -18,6 +18,7 @@ import threading
 import asyncio
 import time
 from datetime import datetime
+import re
 
 import dbl  #discordbotlist.org api bot istatistikleri icin
 
@@ -1192,20 +1193,27 @@ async def on_message(message):
         #n word check (hideout server)
         if 'n' in message.content and message.server.id == hideoutID:
             n_word = yazi.n_word_list[0]
+            n_what_word = ''
+            n_what_msg = ''
             if message.content == '!n':
                 await client.send_message(message.channel, f'`Toplamda {b_database.GetWord(n_word).word_count} kez n word kullanildi`')
-            
-            msgs = message.content.upper().split(" ")
-            for word in msgs:
-                for c_word in yazi.n_word_list:
-                    if c_word in word:
-                        try:
-                            b_database.CountWord(n_word)
-                            await client.add_reaction(message, "\U0001F6E1")
-                            await client.send_message(discord.Object(id=540828135583645718), f'```n word detected : {message.author.name} -> {message.content} @ {message.channel.name}```\n`total count : {b_database.GetWord(n_word).word_count}`')
-                        except Exception as e:
-                            print(f'error while checking n word(detected) - > {e}')
-                        break
+            if message.content == '!nwhat':
+                await client.send_message(message.channel, f'{n_what_msg}')
+
+            msg = message.content.upper()
+
+            for c_word in yazi.n_word_list:
+                if c_word in msg:
+                    try:
+                        b_database.CountWord(n_word)
+                        await client.add_reaction(message, "\U0001F6E1")
+                        await client.send_message(discord.Object(id=540828135583645718), f'```n word detected : {message.author.name} -> {message.content} @ {message.channel.name}```\n`total count : {b_database.GetWord(n_word).word_count}`')
+                        n_what_word = c_word
+                        a = re.search(r'({})'.format(n_what_word), msg)
+                        n_what_msg = message.content[:a.start()] + '||' + message.content[a.start(): a.end()] + '||' + message.content[a.end():]
+                    except Exception as e:
+                        print(f'error while checking n word(detected) - > {e}')
+                    break
 
         #!sp
         if message.content.startswith("!sp"):

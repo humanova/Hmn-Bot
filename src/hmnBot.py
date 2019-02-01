@@ -205,11 +205,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             embed=discord.Embed(title=" ", color=0x75df00)
             embed.set_author(name=client.user.name + " Versiyonu", icon_url=client.user.avatar_url)
@@ -224,11 +224,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             userID = message.author.id
             embed=discord.Embed(title=" ", color=0x75df00)
@@ -247,11 +247,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             msg = message.content.split(" ")
 
@@ -272,11 +272,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             servers = serverSayisi()
             users = kullaniciSayisi()
@@ -296,11 +296,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             embed=discord.Embed(title=" ",description="**[Davet](https://discord.gg/XBebmFF)**", color=0x75df00)
             embed.set_author(name="Hmn-Bot Destek", icon_url=client.user.avatar_url)
@@ -313,11 +313,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:
 
@@ -378,11 +378,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:            
                 contents = message.content.split(" ")
@@ -406,11 +406,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:    
 
@@ -438,11 +438,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
            
             if message.author.id == myID:
                 args = message.content.split(" ")
@@ -467,11 +467,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:   
 
@@ -520,11 +520,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:   
 
@@ -547,11 +547,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
           
             searchQ = "https://google.com/search?q="
             if not '@everyone' in message.content:
@@ -577,11 +577,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
            
             searchQ = "http://lmgtfy.com/?q="
             msg = message.content.split(" ")
@@ -605,11 +605,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:   
 
@@ -648,11 +648,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:               
                 a,btc_tl = doviz.DovizParse("BTC-TRY",1)
@@ -672,11 +672,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:               
                 msg = message.content.split(" ")
@@ -739,11 +739,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:          
                 msg = message.content.split(" ")
@@ -790,11 +790,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag: 
 
@@ -839,11 +839,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag: 
 
@@ -881,11 +881,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:             
                 sikayet = message.content.split(" ")
@@ -893,7 +893,7 @@ async def on_message(message):
                 try:
                     if sikayet[1]:
                         owner = message.server.owner
-                        sikayetci = getUserName(message.user)
+                        sikayetci = getUserName(message.author)
                         sikayetci_nick = message.author.display_name
                         serverAdi = message.server.name
                         kanalAdi = message.channel.name
@@ -922,11 +922,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag: 
                 serverName = message.server.name
@@ -969,11 +969,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
         
             ilk_msg = await client.send_message(message.channel, "Şarkı aranıyor...") 
 
@@ -1046,11 +1046,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:
 
@@ -1091,11 +1091,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
         
             msg = message.content
 
@@ -1121,11 +1121,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
             
             if not '@everyone' in message.content:
                 if not '@here' in message.content:
@@ -1145,11 +1145,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
 
             option = random.randint(1,4)
@@ -1170,11 +1170,11 @@ async def on_message(message):
 
             if not message.server == None: 
                 server_flag = False
-                komut_log += "[" + getUserName(message.user) + "] @" + message.server.name + "            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
             else:
                 if server_flag == True:
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-                komut_log += "[" + getUserName(message.user) + "] @DM            " + message.content + "\n"
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
 
             gelen = random.randint(1,100)

@@ -38,7 +38,8 @@ class VideoPermUser(BaseModel):
 class Word(BaseModel):
     word = CharField()
     word_count = IntegerField()
-
+    last_msg = CharField()
+    user_name = CharField()
 
 class DB:
 
@@ -82,10 +83,12 @@ class DB:
             return None
         return word
 
-    def CountWord(self, word):
+    def CountWord(self, word, last_msg, user_name):
         try:
             word_record = self.GetWord(word)
             word_record.word_count += 1
+            word_record.last_msg = last_msg
+            word_record.user_name = user_name
             word_record.save()
             
         except:

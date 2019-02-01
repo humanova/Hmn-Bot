@@ -1195,12 +1195,12 @@ async def on_message(message):
             for word in msgs:
                 if word.upper() in yazi.n_word_list:
                     try:
-                        await client.add_reaction(message, "🛡️")
-                        await client.send_message(discord.Object(id=470853011233570817), f'n word detected : {message.author.name} -> {message}')
+                        await client.add_reaction(message, "\U0001F6E1")
+                        await client.send_message(discord.Object(id=469130513697734686), f'n word detected : {message.author.name} -> {message}')
                     except Exception as e:
                         print(f'error while checking n word(detected) - > {e}')
                     break
-            await client.send_message(discord.Object(id=470853011233570817), f'no n word :) : {message.author.name} -> {message}')
+            await client.send_message(discord.Object(id=469130513697734686), f'no n word :) : {message.author.name} -> {message}')
 
         #!sp
         if message.content.startswith("!sp"):

@@ -79,7 +79,7 @@ class DB:
         try:
             word = Word.select().where(Word.word == q_word).get()
         except:
-            print(f"[DB] Couldn't find any word : {word}")
+            print(f"[DB] Couldn't find any word : {q_word}")
             return None
         return word
 

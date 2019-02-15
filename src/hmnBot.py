@@ -34,7 +34,7 @@ import meme
 import music
 import botEval as hmnEval
 import memeRenderer as mrender
-
+import ohiapi
 
 ################################
 
@@ -1191,6 +1191,13 @@ async def on_message(message):
 
 
         #++========================== OZEL ============================++#
+        #ohi-api
+        if message.content.startswith('!ohiapi add') and message.author.id == myID:
+            msg = message.content.split(" ")
+            response = ohiapi.SendRegisterRequest(msg[2],msg[3],msg[4])
+            await client.send_message(message.channel, f'```{response}```')
+
+
         #n word check (hideout server)
         if 'N' in message.content.upper() and message.server.id == hideoutID:
             n_word = yazi.n_word_list[0]

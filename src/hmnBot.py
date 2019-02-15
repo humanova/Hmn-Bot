@@ -1,4 +1,4 @@
-
+﻿
 # 2018 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
@@ -1305,7 +1305,7 @@ async def on_message(message):
                                     shortcut = msg[shortcut_index]
                                     text_start += 2
 
-                                vid_text = msg[text_start:]
+                                    vid_text = msg[text_start:]
 
                                 try:
                                     await client.send_typing(message.channel)

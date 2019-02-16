@@ -1,4 +1,4 @@
-
+﻿
 # 2018 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
@@ -40,6 +40,7 @@ import ohiapi
 
 token = os.environ['PP_BOT_TOKEN']
 dbl_token = os.environ['DBL_TOKEN']
+
 
 b_database = db.DB()
 Client = discord.Client()
@@ -1192,9 +1193,15 @@ async def on_message(message):
 
         #++========================== OZEL ============================++#
         #ohi-api
-        if message.content.startswith('!ohiapi add') and message.author.id == myID:
+        if message.content.startswith('!ohiapi') and message.author.id == myID:
             msg = message.content.split(" ")
-            response = ohiapi.SendRegisterRequest(msg[2],msg[3],msg[4])
+            response = ''
+            if msg[1] == 'add':
+                response = ohiapi.SendRegisterRequest(msg[2],msg[3],msg[4])
+            elif msg[1] == 'login':
+                response = ohiapi.SendLoginRequest(msg[2],msg[3])
+            elif msg[1] == 'users':
+                response = ohiapi.SendGetUsersRequest()
             await client.send_message(message.channel, f'```{response}```')
 
 

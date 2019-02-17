@@ -1196,33 +1196,13 @@ async def on_message(message):
         if message.content.startswith('!ohiapi') and message.author.id == myID:
             msg = message.content.split(" ")
             response = ''
-            if msg[1] == 'register':
-                response = ohiapi.RegisterRequest(msg[2],msg[3],msg[4])
-                await client.send_message(message.channel, f'```{response}```')
-            
+            if msg[1] == 'add':
+                response = ohiapi.SendRegisterRequest(msg[2],msg[3],msg[4])
             elif msg[1] == 'login':
-                response = ohiapi.LoginRequest(msg[2],msg[3])
-                await client.send_message(message.channel, f'```{response}```')
-
-            elif msg[1] == 'xusers':
-                response = ohiapi.GetXUsersRequest()
-                a = 0
-                for chunk in [string[i:i+1990] for i in range(0, len(string), 1990)]: #2000 dc char limit, 6 tanesi kod tagleri (```)
-                    if a == 0 : await client.send_message(message.channel, "```" + chunk + "```")
-                    else : await client.send_message(message.channel, "```" + chunk + "```")
-                    a += 1
-                
+                response = ohiapi.SendLoginRequest(msg[2],msg[3])
             elif msg[1] == 'users':
-                table = ohiapi.GetUsersRequest()
-                await client.send_message(message.channel, f'```{table}```')
-            
-            elif msg[1] == 'addtime':
-                username = msg[2]
-                time = msg[3]
-                response = ohiapi.ChangeUserSubTimeRequest(username, time)
-                await client.send_message(message.channel, f'```{response}```')
-
-
+                response = ohiapi.SendGetUsersRequest()
+            await client.send_message(message.channel, f'```{response}```')
 
 
         #n word check (hideout server)

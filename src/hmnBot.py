@@ -1207,7 +1207,7 @@ async def on_message(message):
             elif msg[1] == 'xusers':
                 response = ohiapi.GetXUsersRequest()
                 a = 0
-                for chunk in [string[i:i+1990] for i in range(0, len(string), 1990)]: #2000 dc char limit, 6 tanesi kod tagleri (```)
+                for chunk in [string[i:i+1990] for i in range(0, len(response), 1990)]: #2000 dc char limit, 6 tanesi kod tagleri (```)
                     if a == 0 : await client.send_message(message.channel, "```" + chunk + "```")
                     else : await client.send_message(message.channel, "```" + chunk + "```")
                     a += 1

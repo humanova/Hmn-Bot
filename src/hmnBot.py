@@ -1400,9 +1400,37 @@ async def on_message(message):
 
             await client.send_message(message.channel, pasta)
 
+@client.event
+async def on_message_edit(message):
+    if not message.author.bot == 1:
+        #n word check (hideout server)
+        if 'N' in message.content.upper() and message.server.id == hideoutID:
+            n_word = yazi.n_word_list[0]
+            n_what_msg = ''
+            if message.content == '!n':
+                word_c = b_database.GetWord(n_word).word_count
+                last_user = b_database.GetWord(n_word).user_name
+                last_message = b_database.GetWord(n_word).last_msg
 
+                await client.send_message(message.channel, f'`Toplamda {word_c} kez n word kullanildi`\nEn son ({last_user}) -> "{last_message}"')
+            if message.content == '!nwhat':
+                last_message = b_database.GetWord(n_word).last_msg
+                await client.send_message(message.channel, f'{last_message}')
 
+            msg = message.content.upper()
 
+            for c_word in yazi.n_word_list:
+                if c_word in msg:
+                    try:
+                        await client.add_reaction(message, "\U0001F6E1")
+                        await client.send_message(discord.Object(id=540828135583645718), f'```n word detected : {message.author.name} -> {message.content} @ {message.channel.name}```\n`total count : {b_database.GetWord(n_word).word_count}`')
+                        n_what_word = c_word
+                        a = re.search(r'({})'.format(n_what_word), msg)
+                        n_what_msg = message.content[:a.start()] + '||' + message.content[a.start(): a.end()] + '||' + message.content[a.end():]
+                        b_database.CountWord(n_word, n_what_msg, getUserName(message.author))
+                    except Exception as e:
+                        print(f'error while checking n word(detected) - > {e}')
+                    break
 
 client.run(token)
 

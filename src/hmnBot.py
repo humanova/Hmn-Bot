@@ -1401,7 +1401,7 @@ async def on_message(message):
             await client.send_message(message.channel, pasta)
 
 @client.event
-async def on_message_edit(message):
+async def on_message_edit(old_msg, message):
     if not message.author.bot == 1:
         #n word check (hideout server)
         if 'N' in message.content.upper() and message.server.id == hideoutID:

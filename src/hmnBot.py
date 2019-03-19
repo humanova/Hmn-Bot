@@ -1139,7 +1139,7 @@ async def on_message(message):
                         return
 
         #!avatar
-        if message.content.upper().startswith("!SENCE"):
+        if message.content.upper().startswith("!AVATAR"):
             
             server_flag = False
 

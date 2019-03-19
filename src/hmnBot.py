@@ -46,7 +46,7 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.4.0\n31/01/19"
+version = "hmnBot v0.4.1\n19/03/19"
 myID = "213262071050141696"
 barisID = "190836437917237248"
 botID = "455819835486502933"
@@ -1138,6 +1138,31 @@ async def on_message(message):
                     except:
                         return
 
+        #!avatar
+        if message.content.upper().startswith("!SENCE"):
+            
+            server_flag = False
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
+            
+            try:
+                user = message.mentions[0]
+            except:
+                try:
+                    msg = message.content.split(" ")
+                    user = message.server.get_member_named(msg[1])
+                except:
+                    user = None
+
+            if not user == None:
+                await client.send_message(message.channel, str(user.avatar_url))
+            
 
         #!sence
         if message.content.upper().startswith("!SENCE"):

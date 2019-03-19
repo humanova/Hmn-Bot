@@ -85,6 +85,7 @@ yardim = {
     "oyun"  :       "!oyun              :: o sırada kimlerin x oyununu oynadığını gösterir\n",          
     "self" :        "!ben,!self         :: yazdıklarınız ile sizi över\n",
     "ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
+    "avatar":       "!avatar            :: etiketlenen ya da ismi geçen kullanıcının avatarını gösterir\n",
     "oyla" :        "!oyla,!vote        :: bir oylama başlatır\n",
     "soz" :         "!soz,!lyrics       :: istenilen şarkının sözlerini gösterir\n",
     "yardim" :      "!yardim,!help      :: bir komut hakkında yardımı gösterir (!yardım <komut>)\n",
@@ -133,6 +134,7 @@ komutYardim = {
     "ben" :         "```asciidoc\n== !ben komutu ==\n\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\n\nÖrnek : !ben Müthiş```",
     "cevir":        "```asciidoc\n== !çeviri komutu ==\n\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\n\n\nÖrnek : !cevir -fr -en J'aime mon vie (fransızcadan ingilizceye çeviri yapar)\n\nÖrnek : !cevir -en Konnichiwa (algılanan dilden(japonca) ingilizceye çeviri yapar\n\nÖrnek : !cevir Conscious (algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
     "çevir":        "```asciidoc\n== !çeviri komutu ==\n\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\n\nÖrnek : !cevir -fr -en J'aime mon vie (fransızcadan ingilizceye çeviri yapar)\n\nÖrnek : !cevir -en Konnichiwa (algılanan dilden(japonca) ingilizceye çeviri yapar\n\nÖrnek : !cevir Conscious (algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
+    "avatar":       "```asciidoc\n== !avatar komutu ==\n\nAçıklama : Kullanıcı avatarını gösterir\n\nÖrnek : !avatar @Kullanici Sunucudaki etkietlenen kullanıcının avatarını gösterir\n\nÖrnek : !avatar KullanıcıAdı Sunucudaki kullanıcının avatarını gösterir```",
     "oyun":         "```asciidoc\n== !oyun komutu ==\n\nAçıklama : Bulunulan sunucuda, o sırada kimlerin x oyununu oynadığını gösterir\n\nÖrnek : !oyun osu!\n\nÖrnek : !oyun Starcraft```",
     "oyla" :        "```asciidoc\n== !oyla komutu ==\n\nAçıklama : Girilen bir durum için oylama başlatır\n\nÖrnek : !oyla Servera yeni kanal eklemeli miyim?```",
     "vote" :        "```asciidoc\n== !oyla komutu ==\n\nAçıklama : Girilen bir durum için oylama başlatır\n\nÖrnek : !oyla Servera yeni kanal eklemeli miyim?```",
@@ -150,7 +152,7 @@ komutYardim = {
 
 komut = {
     #yardim["ceviri"]
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["oyla"]  + yardim["oyun"] +  yardim["soz"] + yardim["ceviri"] +yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["avatar"] + yardim["oyla"]  + yardim["oyun"] +  yardim["soz"] + yardim["ceviri"] +yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",

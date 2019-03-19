@@ -84,7 +84,7 @@ yardim = {
     "doviz" :       "!döviz             :: istenilen döviz kurunu gösterir\n",
     "oyun"  :       "!oyun              :: o sırada kimlerin x oyununu oynadığını gösterir\n",          
     "self" :        "!ben,!self         :: yazdıklarınız ile sizi över\n",
-    #"ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
+    "ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
     "oyla" :        "!oyla,!vote        :: bir oylama başlatır\n",
     "soz" :         "!soz,!lyrics       :: istenilen şarkının sözlerini gösterir\n",
     "yardim" :      "!yardim,!help      :: bir komut hakkında yardımı gösterir (!yardım <komut>)\n",

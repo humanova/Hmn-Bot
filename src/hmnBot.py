@@ -460,7 +460,7 @@ async def on_message(message):
             else:
                 await client.send_message(message.channel,"**Buna yetkin yok!**")
 
-        '''
+        
         #!cevir , ffff99
         if message.content.upper().startswith("!CEVIR") or message.content.upper().startswith("!ÇEVIR"):
             
@@ -512,7 +512,7 @@ async def on_message(message):
 
                 except:
                     return
-        '''
+        
 
         #!oyla,!vote
         if message.content.upper().startswith("!VOTE") or message.content.upper().startswith("!OYLA"):

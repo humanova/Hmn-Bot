@@ -7,16 +7,15 @@ import requests
 from datetime import datetime,timedelta
 from tabulate import tabulate
 
-ohi_api_key = os.environ['OHI_TOKEN']
+ohi_api_key = os.environ['OHI_TOKEN'] 
 
 def time_diff_to_timestamp(timestamp):
     now = datetime.now()
     end_date = datetime.fromtimestamp(int(timestamp))
-    if not isexpired(now, end_date):
-        diff = days_hours_minutes(end_date - now)
-        return diff
-    else:
-        return None
+
+    diff = days_hours_minutes(end_date - now)
+    return diff
+
 
 def days_hours_minutes(td):
     return td.days, td.seconds//3600, (td.seconds//60)%60
@@ -96,6 +95,21 @@ def ChangeUserSubTimeRequest(username, hour_addition):
             diff = time_diff_to_timestamp(new_timestamp)
             new_remaining_time = f"{diff[0]}g {diff[1]}s {diff[2]}dk"
             result += f"yeni bitis tarihi : {datetime.fromtimestamp(int(new_timestamp))} , kalan sure : {new_remaining_time}"  
+                
+        return result
+    except Exception as e:
+        return e
+
+def ChangeAllSubTimeRequest(hour_addition):
+    content = {"api_key": ohi_api_key, "hour_addition": hour_addition}
+    try:
+        r = requests.post("https://ohi-api.herokuapp.com/api/v1/change_sub_time_all", timeout=4.0, json=content)
+        data = r.json() 
+        result = ""
+        if data['success'] == True:
+            result = "Sure eklendi : "
+            user_count = data['user_count']
+            result += f"*{user_count}* oyuncuya {hour_addition} saat eklendi."  
                 
         return result
     except Exception as e:

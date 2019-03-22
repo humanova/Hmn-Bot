@@ -1247,6 +1247,11 @@ async def on_message(message):
                 response = ohiapi.ChangeUserSubTimeRequest(username, time)
                 await client.send_message(message.channel, f'```{response}```')
 
+            elif msg[1] == 'addtimeall':
+                time = msg[2]
+                response = ohiapi.ChangeAllSubTimeRequest(time)
+                await client.send_message(message.channel, f'```{response}```')
+
 
 
 

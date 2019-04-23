@@ -3,7 +3,7 @@ anaconda-client==1.2.2
 anaconda-project==0.8.2
 beautifulsoup4==4.6.0
 discord.py==0.16.12
-urllib3==1.23
+urllib3==1.25
 websockets==3.4
 googletrans==2.4.0
 lxml==4.2.1

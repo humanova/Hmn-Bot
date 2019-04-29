@@ -60,7 +60,6 @@ USDLogID = "572432834581626902"
 
 ######
 
-last_img_url = ""
 # ======================== LOGLAMA ========================= #
 
 log_num = 0
@@ -1290,24 +1289,6 @@ async def on_message(message):
                     except Exception as e:
                         print(f'error while checking n word(detected) - > {e}')
                     break
-	'''
-        #check all messages to refresh 'latest_img_url'
-        if message.server.id == hideoutID:
-            if len(message.attachments) > 0:
-                if ricardo.is_image(message.attachments[0]['url']):
-                    latest_img_url = message.attachments[0]['url']
-
-            
-        #ricardo detector (tensorflow classifier)
-        if message.content == "!isr" and message.server.id == hideoutID:
-            global last_img_url
-            prob = ricardo.Detect(latest_img_url)
-            if not prob == None:
-                if prob >= 0.75:
-                    await client.send_message(message.channel, 'ricardo detected ?')
-                else:
-                    await client.send_message(message.channel, 'ricardo false positive')
-        '''
 
         #!sp
         if message.content.startswith("!sp"):

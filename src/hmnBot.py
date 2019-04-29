@@ -143,7 +143,7 @@ async def bot_logla():
         
         #usd saatlik log
         embed = logUSDEmbed()
-        await client.send_message(USDLogID ,embed=embed)
+        await client.send_message(discord.Object(id=USDLogID), embed=embed)
         temel_log = "\n[TEMEL]\n"
         komut_log = "\n[KOMUT LOGLARI]\n```"
         online_server_log = "\n[ONLINE SERVERLAR]\n```"

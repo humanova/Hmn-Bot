@@ -98,7 +98,7 @@ def logUSDEmbed():
 
     embed=discord.Embed(title=" ", color=0x2b80ff)
     embed.set_author(name="Saatlik USD/TL", icon_url=client.user.avatar_url)
-    embed.add_field(name="Tarih", value=zaman.tamTarih(), inline=True)
+    embed.add_field(name="Tarih", value=zaman.GetTime(), inline=True)
     embed.add_field(name="Kur", value=kur_degeri, inline=True)
     embed.set_footer(text="💰 Kaynak : 1forge.com")
     return embed

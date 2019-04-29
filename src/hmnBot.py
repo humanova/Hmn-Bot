@@ -46,16 +46,21 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.4.1\n19/03/19"
+version = "hmnBot v0.4.2\n29/04/19"
+
 myID = "213262071050141696"
-barisID = "190836437917237248"
 botID = "455819835486502933"
+
 logChannelID = "470853011233570817"
 hideoutID = "405492399595323393"
 
 uyari_disi = [botID,myID]
 kizginKaraliste = ["460563755772936212"]
+USDLogID = "572432834581626902"
 
+######
+
+last_img_url = ""
 # ======================== LOGLAMA ========================= #
 
 log_num = 0
@@ -89,7 +94,16 @@ def onlineServerLog():
     for i in range(len(servers)):
         online_server_log += servers[i-1].name + "\n"
 
-    
+def logUSDEmbed():
+    kur,kur_degeri = doviz.DovizParse("USD", 1)
+
+    embed=discord.Embed(title=" ", color=0x2b80ff)
+    embed.set_author(name="Saatlik USD/TL", icon_url=client.user.avatar_url)
+    embed.add_field(name="Tarih", value=zaman.tamTarih(), inline=True)
+    embed.add_field(name="Kur", value=kur_degeri, inline=True)
+    embed.set_footer(text="💰 Kaynak : 1forge.com")
+    return embed
+
 async def bot_logla():
 
     while not client.is_closed:
@@ -127,12 +141,15 @@ async def bot_logla():
             print('server sayisi gonderildi : ({})'.format(len(client.servers)))
         except Exception as e:
             print('server sayisi gonderilirken hata olustu : \n{}: {}'.format(type(e).__name__, e))
-
+        
+        #usd saatlik log
+        embed = logUSDEmbed()
+        await client.send_message(USDLogID ,embed=embed)
         temel_log = "\n[TEMEL]\n"
         komut_log = "\n[KOMUT LOGLARI]\n```"
         online_server_log = "\n[ONLINE SERVERLAR]\n```"
 
-        await asyncio.sleep(1800) 
+        await asyncio.sleep(3600) 
 
 
 def serverSayisi():
@@ -1209,13 +1226,6 @@ async def on_message(message):
             if gelen % 2 == 0:
                 await client.send_message(message.channel, yazi.komut["firlatTura"])
 
-
-        #herkesi etiketleyenlere kizgin
-        if message.mention_everyone:
-            if not message.server.id in kizginKaraliste: 
-                await client.add_reaction(message,"😡")
-
-
         #++========================== OZEL ============================++#
         #ohi-api
         if message.content.startswith('!ohiapi') and message.author.id == myID:
@@ -1252,9 +1262,6 @@ async def on_message(message):
                 response = ohiapi.ChangeAllSubTimeRequest(time)
                 await client.send_message(message.channel, f'```{response}```')
 
-
-
-
         #n word check (hideout server)
         if 'N' in message.content.upper() and message.server.id == hideoutID:
             n_word = yazi.n_word_list[0]
@@ -1283,6 +1290,24 @@ async def on_message(message):
                     except Exception as e:
                         print(f'error while checking n word(detected) - > {e}')
                     break
+	'''
+        #check all messages to refresh 'latest_img_url'
+        if message.server.id == hideoutID:
+            if len(message.attachments) > 0:
+                if ricardo.is_image(message.attachments[0]['url']):
+                    latest_img_url = message.attachments[0]['url']
+
+            
+        #ricardo detector (tensorflow classifier)
+        if message.content == "!isr" and message.server.id == hideoutID:
+            global last_img_url
+            prob = ricardo.Detect(latest_img_url)
+            if not prob == None:
+                if prob >= 0.75:
+                    await client.send_message(message.channel, 'ricardo detected ?')
+                else:
+                    await client.send_message(message.channel, 'ricardo false positive')
+        '''
 
         #!sp
         if message.content.startswith("!sp"):

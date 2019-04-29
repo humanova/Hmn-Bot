@@ -42,7 +42,7 @@ def DovizParse(kur,adet):
 
         elif kur == "nitro":
 
-            adet = float(adet) * 5.0
+            adet = float(adet) * 10.0
             kur = "AYLIK NITRO"
             kur_url = url_base + "from=USD&to=TRY&quantity=" + str(adet) + url_api + api_key
             r = requests.get(kur_url, timeout=1.3)

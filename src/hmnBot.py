@@ -70,9 +70,9 @@ online_server_log = "\n[ONLINE SERVERLAR]\n```"
 
 def temelLog():
     global temel_log
-    temel_log += "Online Server Sayisi : " + str(serverSayisi()) + "\n"
-    temel_log += "Online Kullanici Sayisi : " + str(kullaniciSayisi()) + "\n"
-    temel_log += "Online Kanal Sayisi : " + str(channelSayisi()) + "\n"
+    temel_log += "Online Server Sayisi : " + str(getServerCount()) + "\n"
+    temel_log += "Online Kullanici Sayisi : " + str(getUserCount()) + "\n"
+    temel_log += "Online Kanal Sayisi : " + str(getChannelCount()) + "\n"
 
     
 def onlineServer():
@@ -151,12 +151,12 @@ async def bot_logla():
         await asyncio.sleep(3600) 
 
 
-def serverSayisi():
+def getServerCount():
 
     servers = list(client.servers)
     return len(servers)
 
-def channelSayisi():
+def getChannelCount():
 
     i = 0
     for server in client.servers:
@@ -165,13 +165,15 @@ def channelSayisi():
             
     return i
 
-def kullaniciSayisi():
+def getUserCount():
 
     i = 0
+    users = []
     for server in client.servers:
         for member in server.members:
-            i = i + 1     
-    return i
+            if not member.id in users: 
+                users.append(member.id)     
+    return len(users)
 
 def getUserName(user):
     return str(user.name) + "#" + str(user.discriminator)
@@ -295,9 +297,9 @@ async def on_message(message):
                     await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
                 komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
-            servers = serverSayisi()
-            users = kullaniciSayisi()
-            channels = channelSayisi()
+            servers = getServerCount()
+            users = getUserCount()
+            channels = getChannelCount()
             embed=discord.Embed(title=" ", color=0x75df00)
             embed.set_author(name=client.user.name + " Istatistikleri", icon_url=client.user.avatar_url)
             embed.add_field(name="Server Sayısı : ", value=servers, inline=False)
@@ -1224,7 +1226,20 @@ async def on_message(message):
                 await client.send_message(message.channel, yazi.komut["firlatYazi"])
             if gelen % 2 == 0:
                 await client.send_message(message.channel, yazi.komut["firlatTura"])
+        
+        #!ocr
+        if message.content.upper() == "!OCR":
+            server_flag = False
 
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
+            
+            
         #++========================== OZEL ============================++#
         #ohi-api
         if message.content.startswith('!ohiapi') and message.author.id == myID:
@@ -1411,7 +1426,7 @@ async def on_message(message):
         #!srvrs
         if message.content == "!srvrs" and message.author.id == myID:
 
-            await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + "```asciidoc\n" + onlineServer() + "```")
+            await client.send_message(message.channel,"Server sayisi : " + str(getServerCount()) + "\n" + "```asciidoc\n" + onlineServer() + "```")
 
         #!srvrs2
         if message.content == "!srvrs2" and message.author.id == myID:
@@ -1422,7 +1437,7 @@ async def on_message(message):
             for i in range(len(servers)):
                 temp_liste += servers[i-1].name + " -- " + str(servers[i-1].member_count) + " kullanici\n"
             
-            await client.send_message(message.channel,"Server sayisi : " + str(serverSayisi()) + "\n" + "```asciidoc\n" + temp_liste + "```")
+            await client.send_message(message.channel,"Server sayisi : " + str(getServerCount()) + "\n" + "```asciidoc\n" + temp_liste + "```")
 
         #!logla
         if message.content == "!logla" and message.author.id == myID:

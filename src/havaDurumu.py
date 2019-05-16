@@ -1,9 +1,11 @@
 
-# 2018 Emir Erbasan (humanova)
+# 2019 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
 #hmnBot hava
-
+# KAYNAK :
+#           openweathermap.com
+#           mgm.gov.tr
 
 import os
 from bs4 import BeautifulSoup

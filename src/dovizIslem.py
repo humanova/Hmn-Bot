@@ -1,10 +1,13 @@
 
-# 2018 Emir Erbasan (humanova)
+# 2019 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
 #hmnBot Doviz islemleri
 
-#KAYNAK : www.xe.com
+#KAYNAK :
+#          !btc : coindesk.com 
+#          !doviz : canlidoviz.com
+#          !kripto : coinmarketcap.com
 
 import os
 import json

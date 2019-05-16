@@ -1,8 +1,8 @@
 
-# 2018 Emir Erbasan (humanova)
+# 2019 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
-#hmnBot muzik ve sarki sozu* 
+#hmnBot sarki sozu
 
 import os
 import lyricsgenius as genius

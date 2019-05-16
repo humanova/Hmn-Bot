@@ -1,5 +1,5 @@
 
-# 2018 Emir Erbasan (humanova)
+# 2019 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
 #  hmnBot Yazilari
@@ -41,17 +41,6 @@ memeSubreddits = [
 ]
 
 memeSubs = "\n".join(memeSubreddits[:])
-
-n_word_list = [
-    'NIGGER',
-    'NIGGA',
-    'NIGG',
-    'NIGS',
-    'NIGGS',
-    'N WORD',
-    'N-WORD',
-    'N_WORD'
-]
 
 yardim = {
     "komutlar" :    "```asciidoc\n== Hmn-Bot Komutları ==\n\n",
@@ -197,4 +186,13 @@ komut = {
     "kripto-cizgi" : "-------------------------------"
 }
 
-
+n_word_list = [
+    'NIGGER',
+    'NIGGA',
+    'NIGG',
+    'NIGS',
+    'NIGGS',
+    'N WORD',
+    'N-WORD',
+    'N_WORD'
+]

@@ -1,12 +1,11 @@
 ﻿
-# 2018 Emir Erbasan (humanova)
+# 2019 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
 #	NOTLAR
 
 #  Fikir sunanlar ve gelistirirken emegi gecenler :
 #  112'nin Yaz Turnuvasi Sunucusu, 112servis, barisuraz, selindesu ve digerleri!
-
 
 import asyncio
 import os

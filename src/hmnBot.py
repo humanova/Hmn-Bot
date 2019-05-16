@@ -213,7 +213,7 @@ async def on_ready():
 
     print("Bot hazir!\n")
     print("%s adiyla giris yapildi" % (client.user.name))
-    #await bot_logla()
+    await bot_logla()
 
 @client.event
 async def on_server_join(server):

@@ -747,7 +747,7 @@ async def on_message(message):
 
 
         #!doviz kur
-        if message.content.upper()("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
+        if message.content.upper().startswith("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
             
             server_flag = True
 

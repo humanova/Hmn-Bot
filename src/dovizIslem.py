@@ -13,150 +13,182 @@ from urllib.request import urlopen, Request
 from forex_python.bitcoin import BtcConverter
 import requests
 
-api_key = os.environ['FOREX_TOKEN']
 b = BtcConverter()
 
-url_base = "https://forex.1forge.com/1.0.3/convert?"
-url_api = "&api_key="
+doviz_api_url = "https://api.canlidoviz.com/web/items?marketId=1&type=0"
+altin_api_url = "https://api.canlidoviz.com/web/items?marketId=1&type=1"
 
-def DovizParse(kur,adet):
+def DovizParse(kur, adet = 1, is_detailed = False):
     kur = DovizAlgila(kur)
-    
-    if not kur == "hata" and float(adet) > 0:
-        if kur.startswith("btc"):
+    if not kur == None and float(adet) > 0:
 
-            if kur == "btc-try":
-                kur_degeri = b.get_latest_price('TRY')
+        if kur == "BTC":
+            kur_sonuc = {"kur_adi" : "BTC",
+                        "kur_buy_tl" : b.get_latest_price('TRY'),
+                        "kur_buy_usd" : b.get_latest_price('USD')}
 
-            elif kur == "btc-usd":
-                kur_degeri = b.get_latest_price('USD')
-                
+        elif kur == "ALTIN":
+            kur_sonuc = GetAltin()
+
         elif kur == "osu":
-            
+            ay = adet
             adet = float(adet) * 4.0
-            kur = "AYLIK SUPPORTER"
-            kur_url = url_base + "from=USD&to=TRY&quantity=" + str(adet) + url_api + api_key
-            r = requests.get(kur_url, timeout=1.3)
-            data = r.json()
-            kur_degeri = data["value"]
+            kur_adi = "AYLIK SUPPORTER"
+            res = GetKur("USD", adet)
+            kur_sonuc = {"kur_adi" : kur_adi,
+                        "kur_buy" : res['kur_buy'],
+                        "discount" : supporterDiscount(ay, res['kur_buy'])}  
 
         elif kur == "nitro":
-
             adet = float(adet) * 10.0
-            kur = "AYLIK NITRO"
-            kur_url = url_base + "from=USD&to=TRY&quantity=" + str(adet) + url_api + api_key
-            r = requests.get(kur_url, timeout=1.3)
-            data = r.json()
-            kur_degeri = data["value"]
-
+            kur_adi = "AYLIK NITRO"
+            res = GetKur("USD", adet)
+            kur_sonuc = {"kur_adi" : kur_adi,
+                        "kur_buy" : res['kur_buy']}  
+            
         else:
-            kur_url = url_base + "from=" + kur + "&to=TRY&quantity=" + str(adet) + url_api + api_key
-            r = requests.get(kur_url, timeout=1.3)
-            data = r.json()
-            kur_degeri = data["value"]
-        
+            kur_adi = kur
+            if(is_detailed):
+                kur_sonuc = GetKurX(kur)
+            else:
+                kur_sonuc = GetKur(kur, adet)
 
-        return kur.upper(),str(kur_degeri)
+        return kur_sonuc
         
     else:
-        kur = "hata"
-        kur_degeri = "hata"
-        return kur,kur_degeri
+        return None
 
+def GetKurX(kur):
+    r = requests.get(doviz_api_url, timeout=1.3)
+    if r.status_code == 200:
+        data = r.json()
+        for i in data:
+            if i['code'] == kur:
+                kur_min = float(i['todayLowestBuyPrice'])
+                kur_max = float(i['todayHighestBuyPrice'])
+                kur_buy = float(i['buyPrice'])
+                kur_sell = float(i['sellPrice'])
+                kur_change = float(i['dailyChange'])
+                kur_change_percentage = float(i['dailyChangePercentage'])
+                kur_time = i['lastUpdateDate']
+
+                return {"kur_adi" : kur,
+                        "kur_min" : kur_min, "kur_max" : kur_max, 
+                        "kur_buy" : kur_buy, "kur_sell" : kur_sell, 
+                        "kur_change" : kur_change, "kur_change_percentage" : kur_change_percentage,
+                        "kur_time" : kur_time}
+
+            else:
+                continue
+    return None
+    
+
+def GetKur(kur, adet):
+    r = requests.get(doviz_api_url, timeout=1.3)
+    if r.status_code == 200:
+        data = r.json()
+        for i in data:
+            if i['code'] == kur:
+                kur_buy = float(round(i['buyPrice'],5))
+                kur_change = float(round(i['dailyChange'], 5))
+                kur_change_percentage = float(round(i['dailyChangePercentage'],5))
+                kur_time = i['lastUpdateDate']
+                return {"kur_adi" : kur,
+                        "kur_buy" : kur_buy * adet, 
+                        "kur_change" : kur_change, "kur_change_percentage" : kur_change_percentage, 
+                        "kur_time" : kur_time}
+            else:
+                continue
+    return None    
+
+def GetAltin():
+    altin = {}
+    altin['kur_adi'] = "ALTIN"
+    r = requests.get(altin_api_url, timeout=1.3, headers={"User-Agent": "curl/7.61.0"})
+    
+    if r.status_code == 200:
+        data = r.json()
+        altin['kur_time'] = data[0]['lastUpdateDate']
+        for i in range(len(data)):
+            if i < 5 or (i > 10 and i < 13):
+                altin[data[i]['name']] = float(round(data[i]['buyPrice'], 5))
+        if not len(altin) == 0:
+            return altin
+        else:
+            return None
+
+    return None
 
 def DovizAlgila(kur):
 
-    if kur.upper() == "BTC-TRY":  
-        kur = "btc-try"
-        return kur
-        
-    elif kur.upper() == "BTC-USD":
-        kur = "btc-usd"
-        return kur
+    if kur.upper() == "BTC":  
+        return "BTC"
 
-    elif kur.upper() == "USD" or kur.upper() == "DOLAR" or kur.upper() == "DOLLAR":
-        kur = "usd"
-        return kur
+    elif kur.upper() == "ALTIN" or kur.upper() == "GOLD":
+        return "ALTIN"
+
+    elif kur.upper() == "USD" or kur.upper() == "DOLAR" or kur.upper() == "DOLLAR": 
+        return "USD"
 
     elif kur.upper() == "EUR" or kur.upper() == "EURO" or kur.upper() == "AVRO":
-        kur = "eur"
-        return kur
+        return "EUR"
 
     elif kur.upper() == "GBP" or kur.upper() == "POUND" or kur.upper() == "STERLIN":
-        kur = "gbp"
-        return kur
+        return "GBP"
 
     elif kur.upper() == "RUB" or kur.upper() == "RUBLE" or kur.upper() == "RUS" or kur.upper() == "RUSYA":
-        kur = "rub"
-        return kur
+        return "RUB"
 
     elif kur.upper() == "JPY" or kur.upper() == "JAPONYA" or kur.upper() == "YEN":
-        kur = "jpy"
-        return kur
+        return "JPY"
 
     elif kur.upper() == "CAD" or kur.upper() == "KANADA": 
-        kur = "cad"
-        return kur
+        return "CAD"
 
     elif kur.upper() == "AUD" or kur.upper() == "AVUSTRALYA":
-        kur = "aud"
-        return kur
+        return "AUD"
 
     elif kur.upper() == "CNY" or kur.upper() == "ÇIN" or kur.upper() == "RENMINBI":
-        kur = "cny"
-        return kur
+        return "CNY"
 
     elif kur.upper() == "SEK" or kur.upper() == "SWE" or kur.upper() == "ISVEÇ":
-        kur = "sek"
-        return kur
+        return "SEK"
 
     elif kur.upper() == "CHF" or kur.upper() == "SWI" or kur.upper() == "ISVIÇRE":
-        kur = "sek"
-        return kur
+        return "CHF"
 
     elif kur.upper() == "DKK" or kur.upper() == "DANIMARKA" or kur.upper() == "DAN":
-        kur = "dkk"
-        return kur
+        return "DKK"
 
     elif kur.upper() == "SAR" or kur.upper() == "SAUDI" or kur.upper() == "ARABISTAN":
-        kur = "sar"
-        return kur
+        return "SAR"
 
     elif kur.upper() == "RON" or kur.upper() == "ROMANYA" or kur.upper() == "RUMEN":
-        kur = "ron"
-        return kur
+        return "RON"
 
     elif kur.upper() == "NOK" or kur.upper() == "NORVEÇ":
-        kur = "nok"
-        return kur
+        return "NOK"
 
     elif kur.upper() == "BGN" or kur.upper() == "BULGARISTAN":
-        kur = "bgn"
-        return kur
+        return "BGN"
 
     elif kur.upper() == "IRR" or kur.upper() == "IRAN":
-        kur = "irr"
-        return kur
+        return "IRR"
 
     elif kur.upper() == "PKR" or kur.upper() == "PAKISTAN":
-        kur = "pkr"
-        return kur
+        return "PKR"
     
     elif kur.upper() == "KWD" or kur.upper() == "KUVEYT":
-        kur = "kwd"
-        return kur
+        return "KWD"
 
     elif kur.upper() == "SUPPORTER" or kur.upper() == "SUP":
-        kur = "osu"
-        return kur
+        return "osu"
 
     elif kur.upper() == "NITRO":
-        kur = "nitro"
-        return kur
+        return "nitro"
 
     else:
-        kur = "hata"
-        return kur
+        return None
     
 
 def supporterDiscount(ay,ucret):

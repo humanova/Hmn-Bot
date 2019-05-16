@@ -7,34 +7,35 @@
 #  Fikir sunanlar ve gelistirirken emegi gecenler :
 #  112'nin Yaz Turnuvasi Sunucusu, 112servis, barisuraz, selindesu ve digerleri!
 
-
-import os,sys
-import random
-import discord
-import aiohttp
-from discord.ext.commands import Bot
-from discord.ext import commands
-import threading
 import asyncio
+import os
+import random
+import re
+import sys
+import threading
 import time
 from datetime import datetime
-import re
 
-import dbl  #discordbotlist.org api bot istatistikleri icin
-
-#kendi importlarim
-import database as db
-import havaDurumu as hava
-import botStrings as yazi
-import dovizIslem as doviz
-import copypasta
-import zaman
-import ceviri
-import meme
-import music
+import aiohttp
 import botEval as hmnEval
+import botStrings as yazi
+import ceviri
+import copypasta
+
+import database as db
+# discordbotlist.org api bot istatistikleri icin
+import dbl  
+import discord
+import dovizIslem as doviz
+import havaDurumu as hava
+import meme
 import memeRenderer as mrender
+import music
 import ohiapi
+import zaman
+
+from discord.ext import commands
+from discord.ext.commands import Bot
 
 ################################
 
@@ -46,7 +47,7 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.4.2\n29/04/19"
+version = "hmnBot v0.4.3\n16/05/19"
 
 myID = "213262071050141696"
 botID = "455819835486502933"
@@ -94,13 +95,14 @@ def onlineServerLog():
         online_server_log += servers[i-1].name + "\n"
 
 def logUSDEmbed():
-    kur,kur_degeri = doviz.DovizParse("USD", 1)
-
+    res = doviz.DovizParse("USD")
+    kur = "USD"
+    kur_degeri = res['kur_buy']
     embed=discord.Embed(title=" ", color=0x2b80ff)
     embed.set_author(name="Saatlik USD/TL", icon_url=client.user.avatar_url)
-    embed.add_field(name="Tarih", value=zaman.GetTime(), inline=True)
     embed.add_field(name="Kur", value=kur_degeri, inline=True)
-    embed.set_footer(text="💰 Kaynak : 1forge.com")
+    embed.add_field(name="Günlük Değişim", value=f"{res['kur_change']} (%{res['kur_change_percentage']})", inline=True)
+    embed.set_footer(text=f"💰 Kaynak : canlidoviz.com | {res['kur_time']}")
     return embed
 
 async def bot_logla():
@@ -672,13 +674,12 @@ async def on_message(message):
                 komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
 
             if not server_flag:               
-                a,btc_tl = doviz.DovizParse("BTC-TRY",1)
-                a,btc_usd = doviz.DovizParse("BTC-USD",1)
+                res = doviz.DovizParse("BTC")
                 
                 embed=discord.Embed(title=" ", color=0x2079ff)
                 embed.set_author(name="Bitcoin Kuru", icon_url=client.user.avatar_url)
-                embed.add_field(name="1 BTC" + "/USD", value=btc_usd, inline=True)
-                embed.add_field(name="1 BTC" + "/TL" , value=btc_tl, inline=True)
+                embed.add_field(name="1 BTC" + "/USD", value=res['kur_buy_usd'], inline=True)
+                embed.add_field(name="1 BTC" + "/TL" , value=res['kur_buy_tl'], inline=True)
                 await client.send_message(message.channel,embed=embed)
                 #await client.send_message(message.channel, yazi.komut["bitcoin"] % (btc_usd,btc_tl))
             
@@ -700,10 +701,6 @@ async def on_message(message):
 
                 try:
                     if msg[1]:
-                        
-                        if msg[1].upper().startswith("FETOCU") or msg[1].upper().startswith("FETÖCÜ"):
-                            await client.send_message(message.channel,"https://media.giphy.com/media/RYjnzPS8u0jAs/giphy.gif")
-
                         try:
                             if msg[2]:
                                 if not msg[2] == "0":
@@ -721,15 +718,15 @@ async def on_message(message):
 
                         kur = msg[1]
                         kurUSD,deger_USD,kur_degisim,grafik_link = doviz.KriptoParse(kur,"usd",adet)
-                        a,dolar_degeri = doviz.DovizParse("USD",1)
-                        kurTL,deger_TL = kurUSD,(float(deger_USD) * float(dolar_degeri))
+                        res = doviz.DovizParse("USD")
+                        kurTL,deger_TL = kurUSD,(float(deger_USD) * float(res['kur_buy']))
 
                         deger_USD = round(float(deger_USD) * float(adet),2)
                         deger_TL = round(float(deger_TL) * float(adet),2)
                         kur_degisim = round(float(kur_degisim),2)
 
 
-                        if not kurUSD == "hata":
+                        if not kurUSD == None:
                             embed=discord.Embed(title=" ", color=0x2079ff)
                             embed.set_author(name="Kripto Kurları [" + kur.upper() +"]", icon_url=client.user.avatar_url)
                             embed.add_field(name=str(adet) + " " + kurUSD + "/USD", value= str(deger_USD), inline=True)
@@ -785,18 +782,74 @@ async def on_message(message):
                             adet = 1
 
                         
-                        kur,kur_degeri = doviz.DovizParse(kur,adet)
+                        res = doviz.DovizParse(kur,adet)
             
-                        if not kur == "hata":
+                        if not res == None:
                             embed=discord.Embed(title=" ", color=0x2b80ff)
                             embed.set_author(name="Döviz Kurları", icon_url=client.user.avatar_url)
-                            embed.add_field(name=str(adet) + " " + kur + "/TL", value=kur_degeri, inline=True)
-                            if kur == "AYLIK SUPPORTER":
-                                embed.add_field(name="Indirimli", value="~" + doviz.supporterDiscount(adet,kur_degeri), inline=False)
-                            embed.set_footer(text="💰 Kaynak : 1forge.com")
+                            embed.add_field(name=f"{str(adet)} {res['kur_adi']}/TL", value=res['kur_buy'], inline=True)
+                            if res['kur_adi'] == "AYLIK SUPPORTER":
+                                embed.add_field(name="Indirimli", value=f"~{res['discount']}", inline=False)
+                                embed.set_footer(text=f"💰 Kaynak : canlidoviz.com | {res['kur_time']}")
+                                
+                                await client.send_message(message.channel,embed=embed)
+                            if res['kur_adi'] == "ALTIN":
+                                for i in range(len(res) - 2):
+                                    altin_adi = list(res)[i+2]
+                                    altin_degeri = res[list(res)[i+2]]
+                                    embed.add_field(name=altin_adi, value=f"{altin_degeri}", inline=False)
+                                    embed.set_footer(text=f"💰 Kaynak : canlidoviz.com | {res['kur_time']}")
+                                    
+                                    await client.send_message(message.channel,embed=embed)
+ 
+                            embed.add_field(name="Günlük Değişim", value=f"{res['kur_change']} (%{res['kur_change_percentage']})", inline=True)
+                            embed.set_footer(text=f"💰 Kaynak : canlidoviz.com | {res['kur_time']}")
+                            
                             await client.send_message(message.channel,embed=embed)
-                            # await client.send_message(message.channel, yazi.komut["doviz"] % (kur,kur_degeri))
 
+                except:
+                    return
+
+        #!dovizx
+        if message.content.upper().startswith("!DÖVIZX") or message.content.upper().startswith("!DOVIZX"):
+            
+            server_flag = True
+
+            if not message.server == None: 
+                server_flag = False
+                komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
+            else:
+                if server_flag == True:
+                    await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
+                komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
+
+            if not server_flag:          
+                msg = message.content.split(" ")
+
+                try:
+                    if msg[1]:
+                        kur = msg[1]
+                        try:
+                            if msg[2]:
+                                if not msg[2] == "0":
+                                    if is_float(msg[2]):
+                                        adet = float(msg[2])
+
+                                    elif msg[2].isnumeric():
+                                        adet = msg[2]
+
+                                    else:
+                                        adet = 1
+                                else:
+                                    adet = 1
+                        except:
+                            adet = 1
+
+                        
+                        res = doviz.DovizParse(kur,adet)
+                        
+                        if not res == None:
+                            await client.send_message(message.channel, f"```json\n{json.dumps(res, indent = 4)}```")
                 except:
                     return
 
@@ -1469,6 +1522,3 @@ async def on_message_edit(old_msg, message):
                     break
 
 client.run(token)
-
-
-

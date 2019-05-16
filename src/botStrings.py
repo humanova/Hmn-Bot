@@ -6,14 +6,8 @@
 
 
 bot_game = {
-    "meme" : "lookin' at r/dankmemes",
     "knack" : "Knack 2 Baby",
-    "mario" : "Super Mario Bros. 2",
-    "despacito" : "Despacito 2",
-    "sotarks" : "Sotarks Map",
-    "respect" : "Pressing F Simulator 2018"
 }
-
 
 memeSubreddits = [
     "+ dankmemes",
@@ -128,8 +122,10 @@ komutYardim = {
     "bitcoin" :     "```asciidoc\n== !bitcoin komutu ==\n\nAçıklama : Bitcoin kurunu gösterir\n\nÖrnek : !bitcoin | !btc```",
     "kripto" :      "```asciidoc\n== !kripto komutu ==\n\nAçıklama : Girilen kripto para kurunu gösterir\n\nÖrnek : !kripto monero | !kripto xmr```",
     "crypto" :      "```asciidoc\n== !kripto komutu ==\n\nAçıklama : Girilen kripto para kurunu gösterir\n\nÖrnek : !kripto monero | !kripto xmr```",
-    "doviz" :       "```asciidoc\n== !döviz komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !döviz dolar 20 | !döviz euro```",
-    "döviz" :       "```asciidoc\n== !döviz komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !döviz dolar 20 | !döviz usd```",
+    "doviz" :       "```asciidoc\n== !döviz komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !döviz dolar 20 | !döviz euro\n!döviz altın | !doviz ruble```",
+    "döviz" :       "```asciidoc\n== !döviz komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !döviz dolar 20 | !döviz euro\n!döviz altın | !doviz ruble```",
+    "dovizx" :      "```asciidoc\n== !dövizx komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !dövizx dolar 20 | !dövizx EUR\n!dövizx altın | !doviz ruble```",
+    "dövizx" :      "```asciidoc\n== !dövizx komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !dövizx dolar 20 | !dövizx EUR\n!dövizx altın | !doviz ruble```",
     "self" :        "```asciidoc\n== !self komutu ==\n\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\n\nÖrnek : !ben Müthiş```",
     "ben" :         "```asciidoc\n== !ben komutu ==\n\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\n\nÖrnek : !ben Müthiş```",
     "cevir":        "```asciidoc\n== !çeviri komutu ==\n\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\n\n\nÖrnek : !cevir -fr -en J'aime mon vie (fransızcadan ingilizceye çeviri yapar)\n\nÖrnek : !cevir -en Konnichiwa (algılanan dilden(japonca) ingilizceye çeviri yapar\n\nÖrnek : !cevir Conscious (algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",

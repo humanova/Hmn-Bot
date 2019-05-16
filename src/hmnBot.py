@@ -51,7 +51,7 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.4.3\n16/05/19"
+version = "hmnBot v0.4.4\n16/05/19"
 
 myID = "213262071050141696"
 botID = "455819835486502933"
@@ -245,13 +245,11 @@ async def on_message(message):
 
             userID = message.author.id
             embed=discord.Embed(title=" ", color=0x75df00)
-            embed.set_author(name=client.user.name + " Geliştirici", icon_url=client.user.avatar_url)
-            embed.add_field(name='------------------------------------------------------------------------------', value="Merhaba <@%s>, <@%s> tarafından geliştiriliyorum!" % (userID,myID), inline=False)
+            embed.set_author(name=client.user.name, icon_url=client.user.avatar_url)
+            embed.add_field(name="Geliştirici", value=f"<@{myID}>", inline=False)
             embed.add_field(name="GitHub", value = "https://github.com/humanova", inline=False)
-            embed.add_field(name="Steam", value = "http://steamcommunity.com/id/humanovan", inline=False)
             await client.send_message(message.channel,embed=embed)
             #await client.send_message(message.channel, yazi.komut["gelistirici"] % (userID,myID))
-
 
         #!help,!yardim
         if message.content.upper().startswith("!HELP") or message.content.upper().startswith("!YARDIM") or message.content.startswith("!yardim"):
@@ -269,8 +267,8 @@ async def on_message(message):
                 await client.send_message(message.channel, yazi.komut["yardim"])
             
 
-        #!statu,!stats
-        if message.content.upper() == "!STATS" or message.content.upper() == "!STATÜ" or message.content.upper() == "!STATU":
+        #!stats
+        if message.content.upper() == "!STATS":
             await checkServer(message, False)
 
             servers = serverSayisi()
@@ -349,27 +347,6 @@ async def on_message(message):
                 else:
                     await client.send_message(message.channel,"Buna yetkiniz yok!")
 
-
-        #!durt,!ping
-        if message.content.upper().startswith('!PING') or message.content.upper().startswith("!DÜRT") or message.content.upper().startswith("!DURT"):
-            
-            server_flag = await checkServer(message, True)
-
-            if not server_flag:            
-                contents = message.content.split(" ")
-
-                try:
-                    if contents[1]: 
-                        userID = message.author.id
-                        member = message.server.get_member_named(contents[1])
-                        if not userID == member.id:
-                            await client.send_message(message.channel, yazi.komut["durt"] % (member.id,userID))
-                        else:
-                            await client.send_message(message.channel, yazi.komut["durt2"] % (userID))
-                except:
-                    pass    
-
-
         #!davet,invite
         if message.content.upper() == "!DAVET" or message.content.upper() == "!INVITE":
             
@@ -394,7 +371,7 @@ async def on_message(message):
                 await client.send_message(message.channel,embed=embed)
 
 
-        #!!say (sadece benim id'm)
+        #!say
         if message.content.upper().startswith("!SAY"):
             
             server_flag = await checkServer(message, False)
@@ -415,7 +392,7 @@ async def on_message(message):
                 await client.send_message(message.channel,"**Buna yetkin yok!**")
 
         
-        #!cevir , ffff99
+        #!cevir 
         if message.content.upper().startswith("!CEVIR") or message.content.upper().startswith("!ÇEVIR"):
             
             server_flag = await checkServer(message, True)
@@ -850,23 +827,6 @@ async def on_message(message):
             flag = True
             msg = message.content.split(" ")
             msg = " ".join(msg[1:])
-
-            '''
-            try:
-                if msg[0:]:
-                    if "-" in msg:
-                        sarki = msg[0:msg.find('-')]
-                        artist = msg[msg.find('-') + 1:]
-
-                    else:
-                        sarki = msg[0:]
-                        artist = ""
-                else:
-                    flag = False
-            except:
-                flag = False
-                return
-            '''
 
             try:
                 if msg[0:]:

@@ -73,7 +73,6 @@ yardim = {
     "soz" :         "!soz,!lyrics       :: istenilen şarkının sözlerini gösterir\n",
     "yardim" :      "!yardim,!help      :: bir komut hakkında yardımı gösterir (!yardım <komut>)\n",
     "leet" :        "!leet,!l33t        :: yazılarınızı h4v4l1 yapar\n",
-    "durt" :        "!dürt,!ping        :: tam ismi girilen birini dürter\n",
     "firlat" :      "!fırlat,!flip      :: bozuk para fırlatır\n",
     "sikayet" :     "!şikayet           :: server sahibine şikayet yollar\n",
     "karakter" :    "\nNot: Türkçe komutları türkçe karakter kullanmadan da çalıştırabilirsiniz.\n(!sürüm == !surum, !döviz usd == !doviz usd)"
@@ -81,13 +80,9 @@ yardim = {
 
 
 komutYardim = {
-    "durt" :        "```asciidoc\n== !dürt komutu ==\n\nAçıklama : Tam ismini yazdığın birini dürter\n\nÖrnek : !durt Hmn-Bot | !ping Hmn-Bot```",
-    "dürt" :        "```asciidoc\n== !dürt komutu ==\n\nAçıklama : Tam ismini yazdığın birini dürter\n\nÖrnek : !durt Hmn-Bot | !ping Hmn-Bot```",
-    "ping" :        "```asciidoc\n== !ping komutu ==\n\nAçıklama : Tam ismini yazdığın birini dürter\n\nÖrnek : !ping Hmn-Bot | !durt Hmn-Bot```",
     "surum" :       "```asciidoc\n== !sürüm komutu ==\n\nAçıklama : Bot sürümünü gösterir\n\nÖrnek : !surum | !version```",
     "version" :     "```asciidoc\n== !sürüm komutu ==\n\nAçıklama : Bot sürümünü gösterir\n\nÖrnek : !surum | !version```",
-    "statu" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
-    "stats" :       "```asciidoc\n== !statu komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu | !stats```",
+    "stats" :       "```asciidoc\n== !stats komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu```",
     "destek" :      "```asciidoc\n== !destek komutu ==\n\nAçıklama : Hmn-Bot hakkında önerileriniz ya da sorunlarınız için destek sunucusunun davet linkini gönderir\n\nÖrnek : !destek```",
     "server" :      "```asciidoc\n== !server komutu ==\n\nAçıklama : Bulunulan serverın bilgilerini gösterir\n\nÖrnek : !server```",
     "temizle":      "```asciidoc\n== !temizle komutu ==\n\nAçıklama : Belirtilen miktarda mesajı kanaldan siler. En fazla 99 mesaj silebilir.\n\nÖrnek : !temizle 10```",
@@ -135,7 +130,7 @@ komutYardim = {
 
 komut = {
     #yardim["ceviri"]
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["avatar"] + yardim["oyla"]  + yardim["oyun"] +  yardim["soz"] + yardim["ceviri"] +yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["xdoviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["avatar"] + yardim["oyla"]  + yardim["oyun"] +  yardim["soz"] + yardim["ceviri"] +yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["xdoviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",

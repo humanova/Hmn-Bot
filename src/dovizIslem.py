@@ -20,7 +20,7 @@ altin_api_url = "https://api.canlidoviz.com/web/items?marketId=1&type=1"
 
 def DovizParse(kur, adet = 1, is_detailed = False):
     kur = DovizAlgila(kur)
-    if not kur == None and float(adet) > 0:
+    if not kur == None and float(adet) > 0 and not adet == None:
 
         if kur == "BTC":
             kur_sonuc = {"kur_adi" : "BTC",
@@ -37,14 +37,16 @@ def DovizParse(kur, adet = 1, is_detailed = False):
             res = GetKur("USD", adet)
             kur_sonuc = {"kur_adi" : kur_adi,
                         "kur_buy" : res['kur_buy'],
-                        "discount" : supporterDiscount(ay, res['kur_buy'])}  
+                        "discount" : supporterDiscount(ay, res['kur_buy']),
+                        "kur_time" : res['kur_time']}
 
         elif kur == "nitro":
             adet = float(adet) * 10.0
             kur_adi = "AYLIK NITRO"
             res = GetKur("USD", adet)
             kur_sonuc = {"kur_adi" : kur_adi,
-                        "kur_buy" : res['kur_buy']}  
+                        "kur_buy" : res['kur_buy'],
+                        "kur_time" : res['kur_time']}  
             
         else:
             kur_adi = kur
@@ -120,6 +122,8 @@ def GetAltin():
     return None
 
 def DovizAlgila(kur):
+    if kur == None:
+        return None
 
     if kur.upper() == "BTC":  
         return "BTC"
@@ -221,34 +225,35 @@ def supporterDiscount(ay,ucret):
 
 
 def KriptoParse(kur,don,adet):
-    kur,kisa_ad,grafik_link = KriptoAlgila(kur)
+    if not kur == None and not adet == None:
+        kur,kisa_ad,grafik_link = KriptoAlgila(kur)
 
-    if not kur == "hata" and float(adet) > 0:
+        if not kur == "hata" and float(adet) > 0:
 
-        kurURL = 'https://coinmarketcap.com/currencies/' + kur
-    
-        data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
-        parse = BeautifulSoup(data,'html.parser')
-
-        k_degisim = parse.find("span", "h2 text-semi-bold positive_change ")
-
-        if k_degisim == None:
-            k_degisim = parse.find("span", "h2 text-semi-bold negative_change")
+            kurURL = 'https://coinmarketcap.com/currencies/' + kur
         
-        kripto_degisim = k_degisim
-        kripto_deger = parse.find("span","h2 text-semi-bold details-panel-item--price__value")
+            data = urlopen(Request(kurURL, headers={'User-Agent': 'Mozilla'})).read()
+            parse = BeautifulSoup(data,'html.parser')
 
-        kur_degeri = kripto_deger.text
-        kur_degisim = kripto_degisim.text
+            k_degisim = parse.find("span", "h2 text-semi-bold positive_change ")
 
-        return kur.upper(),kur_degeri,kur_degisim[2:-3],grafik_link
+            if k_degisim == None:
+                k_degisim = parse.find("span", "h2 text-semi-bold negative_change")
+            
+            kripto_degisim = k_degisim
+            kripto_deger = parse.find("span","h2 text-semi-bold details-panel-item--price__value")
+
+            kur_degeri = kripto_deger.text
+            kur_degisim = kripto_degisim.text
+
+            return (kur.upper(),kur_degeri,kur_degisim[2:-3],grafik_link)
 
     else :
-        kur = "hata"
-        kisa_ad = "hata"
-        kur_degisim = "hata"
-        grafik_link = "hata"
-        return kur,kisa_ad,kur_degisim,grafik_link
+        kur = None
+        kisa_ad = None
+        kur_degisim = None
+        grafik_link = None
+        return (kur,kisa_ad,kur_degisim,grafik_link)
 
 
 def KriptoAlgila(kur):
@@ -362,4 +367,12 @@ def KriptoAlgila(kur):
         grafik_link = "hata"
         return kur,kisa_ad,grafik_link
 
-    
+def getEmbedColor(kur):
+    if kur == "AYLIK SUPPORTER":
+        return 0xef6ca6
+    elif kur == "AYLIK NITRO":
+        return 0x80a7ff
+    elif kur == "ALTIN":
+        return 0xefed3a
+    else:
+        return 0x73b5ff

@@ -747,7 +747,7 @@ async def on_message(message):
 
 
         #!doviz kur
-        if message.content.upper().startswith("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
+        if message.content.upper()("!DÖVIZ") or message.content.upper().startswith("!DOVIZ"):
             
             server_flag = True
 
@@ -782,7 +782,7 @@ async def on_message(message):
                             adet = 1
 
                         
-                        res = doviz.DovizParse(kur,adet)
+                        res = doviz.DovizParse(kur, adet)
             
                         if not res == None:
                             embed=discord.Embed(title=" ", color=0x2b80ff)
@@ -810,8 +810,8 @@ async def on_message(message):
                 except:
                     return
 
-        #!dovizx
-        if message.content.upper().startswith("!DÖVIZX") or message.content.upper().startswith("!DOVIZX"):
+        #!xdoviz
+        if message.content.upper().startswith("!XDÖVIZ") or message.content.upper().startswith("!XDOVIZX"):
             
             server_flag = True
 
@@ -846,7 +846,7 @@ async def on_message(message):
                             adet = 1
 
                         
-                        res = doviz.DovizParse(kur,adet)
+                        res = doviz.DovizParse(kur, is_detailed =True)
                         
                         if not res == None:
                             await client.send_message(message.channel, f"```json\n{json.dumps(res, indent = 4)}```")

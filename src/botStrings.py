@@ -76,6 +76,7 @@ yardim = {
     "btc" :         "!bitcoin,!btc      :: bitcoin kurunu gösterir\n" ,
     "kripto" :      "!kripto,!crypto    :: istenilen kripto para kurunu gösterir\n",
     "doviz" :       "!döviz             :: istenilen döviz kurunu gösterir\n",
+    "xdoviz" :      "!xdöviz            :: istenilen döviz kuru hakkinda detayli bilgi gosterir\n",
     "oyun"  :       "!oyun              :: o sırada kimlerin x oyununu oynadığını gösterir\n",          
     "self" :        "!ben,!self         :: yazdıklarınız ile sizi över\n",
     "ceviri":       "!cevir             :: dilden dile çeviri yapar\n",
@@ -124,8 +125,8 @@ komutYardim = {
     "crypto" :      "```asciidoc\n== !kripto komutu ==\n\nAçıklama : Girilen kripto para kurunu gösterir\n\nÖrnek : !kripto monero | !kripto xmr```",
     "doviz" :       "```asciidoc\n== !döviz komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !döviz dolar 20 | !döviz euro\n!döviz altın | !doviz ruble```",
     "döviz" :       "```asciidoc\n== !döviz komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !döviz dolar 20 | !döviz euro\n!döviz altın | !doviz ruble```",
-    "dovizx" :      "```asciidoc\n== !dövizx komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !dövizx dolar 20 | !dövizx EUR\n!dövizx altın | !doviz ruble```",
-    "dövizx" :      "```asciidoc\n== !dövizx komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !dövizx dolar 20 | !dövizx EUR\n!dövizx altın | !doviz ruble```",
+    "xdoviz" :      "```asciidoc\n== !dövizx komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !dövizx dolar 20 | !xdöviz EUR\n!xdöviz altın | !xdoviz ruble```",
+    "xdöviz" :      "```asciidoc\n== !dövizx komutu ==\n\nAçıklama : Girilen döviz kurunu gösterir\n\nÖrnek : !dövizx dolar 20 | !xdöviz EUR\n!xdöviz altın | !xdoviz ruble```",
     "self" :        "```asciidoc\n== !self komutu ==\n\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\n\nÖrnek : !ben Müthiş```",
     "ben" :         "```asciidoc\n== !ben komutu ==\n\nAçıklama : Yazdıklarınla seni över(biraz gereksiz sanki :D)\n\nÖrnek : !ben Müthiş```",
     "cevir":        "```asciidoc\n== !çeviri komutu ==\n\nAçıklama : İstenilen dilden istenilen dile çeviri yapar\n\n\nÖrnek : !cevir -fr -en J'aime mon vie (fransızcadan ingilizceye çeviri yapar)\n\nÖrnek : !cevir -en Konnichiwa (algılanan dilden(japonca) ingilizceye çeviri yapar\n\nÖrnek : !cevir Conscious (algılanan dilden (ingilizce) türkçe'ye çeviri yapar```",
@@ -148,7 +149,7 @@ komutYardim = {
 
 komut = {
     #yardim["ceviri"]
-    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["avatar"] + yardim["oyla"]  + yardim["oyun"] +  yardim["soz"] + yardim["ceviri"] +yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
+    "yardim" : yardim["komutlar"] + yardim["yonetim"] + yardim["sikayet"] + yardim["rolver"] + yardim["temizle"]+ yardim["genel"] + yardim["yardim"] + yardim["durt"] + yardim["avatar"] + yardim["oyla"]  + yardim["oyun"] +  yardim["soz"] + yardim["ceviri"] +yardim["google"] + yardim["lmgtfy"] + yardim["doviz"] + yardim["xdoviz"] + yardim["kripto"] + yardim["btc"] + yardim["davet"] + yardim["server"] + yardim["roller"] +  yardim["gelistirici"]  +yardim["statu"] + yardim["surum"] + yardim["destek"] + yardim["eglence"] + yardim["meme"] + yardim["sence"] + yardim["leet"] + yardim["self"] + yardim["bitis"] + yardim["karakter"],
     "join_sahip" : "Merhaba %s!\nSana ve Serverdaki **%d** kullanıcıya yardımcı olmaya hazırım! Tek yapman gereken !yardım yazarak komutlarımı öğrenmek.",
     "gelistirici" : "Merhaba <@%s>, <@%s> tarafından geliştiriliyorum.\n\n **GitHub** : https://github.com/humanova\n **Steam** : http://steamcommunity.com/id/humanovan",
     "statu" : "%d Serverda,\n%d Kullaniciya,\n%d Kanala hizmet veriyorum!",

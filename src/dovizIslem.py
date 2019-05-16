@@ -59,7 +59,7 @@ def DovizParse(kur, adet = 1, is_detailed = False):
         return None
 
 def GetKurX(kur):
-    r = requests.get(doviz_api_url, timeout=1.3)
+    r = requests.get(doviz_api_url, timeout=2)
     if r.status_code == 200:
         data = r.json()
         for i in data:
@@ -84,7 +84,7 @@ def GetKurX(kur):
     
 
 def GetKur(kur, adet):
-    r = requests.get(doviz_api_url, timeout=1.3)
+    r = requests.get(doviz_api_url, timeout=2)
     if r.status_code == 200:
         data = r.json()
         for i in data:
@@ -104,7 +104,7 @@ def GetKur(kur, adet):
 def GetAltin():
     altin = {}
     altin['kur_adi'] = "ALTIN"
-    r = requests.get(altin_api_url, timeout=1.3, headers={"User-Agent": "curl/7.61.0"})
+    r = requests.get(altin_api_url, timeout=2, headers={"User-Agent": "curl/7.61.0"})
     
     if r.status_code == 200:
         data = r.json()

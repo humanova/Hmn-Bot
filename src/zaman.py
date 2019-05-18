@@ -10,10 +10,21 @@ def GetTime():
     tr_time = now + timedelta(hours=tr_timezone)
     return f"{tr_time.hour}:{tr_time.minute}"
 
+'''
 def GetDate():
     now = datetime.now()
     tr_timezone = 3
     tr_time = now + timedelta(hours=tr_timezone)
     return f"{tr_time.hour}:{tr_time.minute}"
+'''
 
+def IsWeekDay():
+    now = datetime.now()
+    tr_timezone = 3
+    tr_time = now + timedelta(hours=tr_timezone)
+    weekno = tr_time.today().weekday()
 
+    if weekno<5:
+        return True
+    else:
+        return False

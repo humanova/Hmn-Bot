@@ -156,9 +156,10 @@ async def bot_logla():
         except Exception as e:
             print('server sayisi gonderilirken hata olustu : \n{}: {}'.format(type(e).__name__, e))
         
-        #usd saatlik log
-        embed = logUSDEmbed()
-        await client.send_message(discord.Object(id=USDLogID), embed=embed)
+        if zaman.IsWeekDay():
+            embed = logUSDEmbed()
+            await client.send_message(discord.Object(id=USDLogID), embed=embed)
+        
         temel_log = "\n[TEMEL]\n"
         komut_log = "\n[KOMUT LOGLARI]\n```"
         online_server_log = "\n[ONLINE SERVERLAR]\n```"
@@ -761,7 +762,7 @@ async def on_message(message):
                         sikayetci_nick = message.author.display_name
                         serverAdi = message.server.name
                         kanalAdi = message.channel.name
-                        tarih = zaman.tamTarih() + " (UTC+3)"
+                        tarih = zaman.GetTime() + " (UTC+3)"
                         
                         try:
                             client.start_private_message(owner)

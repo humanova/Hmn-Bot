@@ -16,6 +16,7 @@ import threading
 import time
 from datetime import datetime
 import json
+import io
 
 #import env_set
 #env_set.setEnv()
@@ -37,6 +38,7 @@ import memeRenderer as mrender
 import music
 import ohiapi
 import zaman
+import faceDet
 
 from discord.ext import commands
 from discord.ext.commands import Bot
@@ -51,7 +53,7 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.4.4\n16/05/19"
+version = "hmnBot v0.4.5\n21/06/19"
 
 myID = "213262071050141696"
 botID = "455819835486502933"
@@ -971,6 +973,47 @@ async def on_message(message):
             if gelen % 2 == 0:
                 await client.send_message(message.channel, yazi.komut["firlatTura"])
 
+        #!censor
+        if message.content.upper().startswith("!CENSOR"):
+            msg = message.content.split(" ")
+            print(message.embeds)
+
+            if len(msg) == 2:
+                url = msg[1]
+                threshold = 0.5
+
+                success, blur_img, img_bytearr = faceDet.blurFaces(url, threshold, is_url=True)
+                if success:
+                    await client.send_file(message.channel, fp=img_bytearr, filename = "blurred_img.png")
+
+            elif len(msg) == 3:
+                url = msg[1]
+                threshold = float(msg[2])
+
+                success, blur_img, img_bytearr = faceDet.blurFaces(url, threshold, is_url=True)
+                if success:
+                    await client.send_file(message.channel, fp=img_bytearr, filename = "blurred_img.png")
+        #!faces
+        if message.content.upper().startswith("!FACES"):
+            msg = message.content.split(" ")
+
+            if len(msg) == 2:
+                url = msg[1]
+                threshold = 0.5
+
+                faces, bboxes, img = faceDet.cropFaces(url, threshold, is_url=True)
+                if len(faces) > 0:
+                    for face in faces:
+                        await client.send_file(message.channel, fp=face[1], filename = "face.png")
+
+            if len(msg) == 3:
+                url = msg[1]
+                threshold = float(msg[2])
+
+                faces, bboxes, img = faceDet.cropFaces(url, threshold, is_url=True)
+                if len(faces) > 0:
+                    for face in faces:
+                        await client.send_file(message.channel, fp=face[1], filename = "face.png")
         #++========================== OZEL ============================++#
         #ohi-api
         if message.content.startswith('!ohiapi') and message.author.id == myID:

@@ -3,6 +3,7 @@
 
 import io
 import json
+import os
 import requests
 import cv2
 from PIL import Image
@@ -51,8 +52,9 @@ def detectionURLRequest(img_url, threshold):
 def isImgURL(url):
 
     suffix_list = ['jpg', 'gif', 'png', 'tif', 'svg']
-    file_name = url[url.rfind("/")+1:]
-    file_suffix = file_name.split('.')[1]
+    path = urlparse(url)
+    p, file_suffix = os.path.splitext(path.path)
+    file_name = os.path.basename(p)
 
     if file_suffix in suffix_list:
         return True
@@ -67,13 +69,7 @@ def decodeb64img(encoded_string, readFlag=cv2.IMREAD_COLOR):
 
 def url2img(url, readFlag=cv2.IMREAD_COLOR):
     
-    suffix_list = ['.jpg', '.gif', '.png', '.tif', '.svg']
-
-    path = urlparse(url)
-    p, file_suffix = os.path.splitext(path.path)
-    file_name = os.path.basename(p)
-
-    if file_suffix in suffix_list:
+    if isImgURL(url):
         try:
             resp = urlopen(url)
             image = np.asarray(bytearray(resp.read()), dtype="uint8")

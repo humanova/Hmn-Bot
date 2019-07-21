@@ -1,6 +1,7 @@
 # 2019 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
+import os
 import io
 import json
 import os
@@ -9,7 +10,7 @@ import cv2
 from PIL import Image
 import numpy as np
 import time
-from urllib.request import urlopen
+from urllib.request import urlopen, urlparse
 import base64
 
 API_URL = "https://hmnv-face-det.herokuapp.com/api/v1"
@@ -54,6 +55,7 @@ def isImgURL(url):
     suffix_list = ['jpg', 'gif', 'png', 'tif', 'svg']
     path = urlparse(url)
     p, file_suffix = os.path.splitext(path.path)
+    file_suffix = file_suffix[1:]
     file_name = os.path.basename(p)
 
     if file_suffix in suffix_list:

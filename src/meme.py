@@ -35,18 +35,18 @@ def memeParse(subreddit,is_top):
                 if not post.stickied:
                     imgURL = post.url
                     memeAuthor = post.author.name
-                    memeTitle = post.title 
+                    memeTitle = post.title
                     permaLink = "https://reddit.com" + post.permalink
                     memeUpvote = post.ups
                     memeStickied = post.stickied
                     break
 
         else:
-            
+
             subURL += ".json?limit=10"
 
             while memeStickied == True:
-        
+
                 data = urlopen(Request(subURL, headers={'User-Agent': 'Mozilla'})).read()
                 page = json.loads(data.decode('utf-8'))
 
@@ -71,7 +71,7 @@ def memeParse(subreddit,is_top):
 
 
 def subredditAlgila(subreddit):
-    
+
     subs = {
         "dankmemes"          : "https://www.reddit.com/r/dankmemes",
         "memeeconomy"        : "https://www.reddit.com/r/MemeEconomy",

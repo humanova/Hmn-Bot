@@ -20,15 +20,14 @@ def FixArgs(template, text):
 
     if template == "crabrave":
         sep = text.index('-')
-        upper_text = str(" ".join(text[0:sep]))
-        lower_text = str(" ".join(text[sep + 1:]))
-        
+        upper_text = text[0:sep]
+        lower_text = text[sep + 1:]
         #out_name = str('mrender/outs/crabrave_out_'+ upper_text + lower_text + '.mp4')
         #out_name = out_name.replace(" ", "_")
         out_name = 'mrender/outs/crabrave_out_' + str(int(time.time())) + '.mp4'
-        upper_text = "'" + upper_text + "'"
-        lower_text = "'" + lower_text + "'"
-
+        upper_text = f"'{upper_text}'"
+        lower_text = f"'{lower_text}'"
+        
         return [upper_text, lower_text, font['crabrave'], out_name]
 
 def RenderMeme(template, font_size, text):
@@ -51,23 +50,14 @@ def RenderMeme(template, font_size, text):
 
             ff =  FFmpeg(
                 inputs = {r_temp : '-ss 00:00:00.0 -to 00:00:29.5'},
-                outputs = {out_name: '-vf "drawtext=fontfile={font}:text={upper_text}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile={font}:text={lower_text}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
+                outputs = {out_name: f'-vf "drawtext=fontfile={crab_args[2]}:text={crab_args[0]}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4,drawtext=fontfile={crab_args[2]}:text={crab_args[1]}:fontcolor=white:fontsize={font_size}:box=0:x=(w-text_w)/2:y=(h-text_h)/4*3"'}
             )                          
 
-            print(f"commands :{ff.cmd}")
-            commands = ff.cmd.split(' ')
-            
-            commands = [arg.replace('{upper_text}', str(crab_args[0])) for arg in commands]
-            commands = [arg.replace('{lower_text}', str(crab_args[1])) for arg in commands]
-            commands = [arg.replace('{font}', str(crab_args[2])) for arg in commands]
-            commands = [arg.replace('{font_size}', font_size) for arg in commands]
-
+            #print(f"commands :{ff.cmd}")
             print(f"preparing video : {out_name}")
-            
-
+        
             try :
-                p1 = subprocess.Popen(commands, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-                p1.wait()
+                ff.run()
 
             except Exception as e: 
                 

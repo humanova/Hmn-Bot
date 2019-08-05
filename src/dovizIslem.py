@@ -69,13 +69,13 @@ def GetKurX(kur):
         data = r.json()
         for i in data:
             if i['code'] == kur:
-                kur_min = float(i['todayLowestBuyPrice'])
-                kur_max = float(i['todayHighestBuyPrice'])
-                kur_buy = float(i['buyPrice'])
-                kur_sell = float(i['sellPrice'])
-                kur_change = float(i['dailyChange'])
-                kur_change_percentage = float(i['dailyChangePercentage'])
-                kur_time = i['lastUpdateDate']
+                kur_min = float(i['data']['todayLowestSellPrice'])
+                kur_max = float(i['data']['todayHighestSellPrice'])
+                kur_buy = float(i['data']['lastBuyPrice'])
+                kur_sell = float(i['data']['lastSellPrice'])
+                kur_change = float(i['data']['dailyChange'])
+                kur_change_percentage = float(i['data']['dailyChangePercentage'])
+                kur_time = i['data']['lastUpdateDate']
 
                 return {"kur_adi" : kur,
                         "kur_min" : kur_min, "kur_max" : kur_max, 
@@ -94,10 +94,10 @@ def GetKur(kur, adet):
         data = r.json()
         for i in data:
             if i['code'] == kur:
-                kur_buy = float(round(i['buyPrice'],5))
-                kur_change = float(round(i['dailyChange'], 5))
-                kur_change_percentage = float(round(i['dailyChangePercentage'],5))
-                kur_time = i['lastUpdateDate']
+                kur_buy = float(round(i['data']['lastBuyPrice'],5))
+                kur_change = float(round(i['data']['dailyChange'], 5))
+                kur_change_percentage = float(round(i['data']['dailyChangePercentage'],5))
+                kur_time = i['data']['lastUpdateDate']
                 return {"kur_adi" : kur,
                         "kur_buy" : kur_buy * adet, 
                         "kur_change" : kur_change, "kur_change_percentage" : kur_change_percentage, 
@@ -113,10 +113,10 @@ def GetAltin():
     
     if r.status_code == 200:
         data = r.json()
-        altin['kur_time'] = data[0]['lastUpdateDate']
+        altin['kur_time'] = data[0]['data']['lastUpdateDate']
         for i in range(len(data)):
             if i < 5 or (i > 10 and i < 13):
-                altin[data[i]['name']] = float(round(data[i]['buyPrice'], 5))
+                altin[data[i]['name']] = float(round(data[i]['data']['lastBuyPrice'], 5))
         if not len(altin) == 0:
             return altin
         else:

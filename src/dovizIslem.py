@@ -18,8 +18,8 @@ import requests
 
 b = BtcConverter()
 
-doviz_api_url = "https://api.canlidoviz.com/web/items?marketId=1&type=0"
-altin_api_url = "https://api.canlidoviz.com/web/items?marketId=1&type=1"
+doviz_api_url = "https://api.canlidoviz.com/items/latest-data?marketId=0&type=CURRENCY"
+altin_api_url = "https://api.canlidoviz.com/items/latest-data?marketId=0&type=GOLD"
 
 def DovizParse(kur, adet = 1, is_detailed = False):
     kur = DovizAlgila(kur)

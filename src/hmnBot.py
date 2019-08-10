@@ -53,16 +53,13 @@ b_database = db.DB()
 Client = discord.Client()
 client = commands.Bot(command_prefix = "!")
 
-version = "hmnBot v0.4.5\n21/06/19"
+version = "hmnBot v0.4.6\n10/08/19"
 
 myID = "213262071050141696"
 botID = "455819835486502933"
 
 logChannelID = "470853011233570817"
 hideoutID = "405492399595323393"
-
-uyari_disi = [botID,myID]
-kizginKaraliste = ["460563755772936212"]
 USDLogID = "572432834581626902"
 
 ######
@@ -72,17 +69,19 @@ USDLogID = "572432834581626902"
 log_num = 0
 temel_log = "\n[TEMEL]\n"
 komut_log = "\n[KOMUT LOGLARI]\n```"
-online_server_log = "\n[ONLINE SERVERLAR]\n```"
 
 async def checkServer(message, server_flag):
     global komut_log
     if not message.server == None: 
-        server_flag = False
         komut_log += "[" + getUserName(message.author) + "] @" + message.server.name + "            " + message.content + "\n"
-    elif server_flag == True:
-        await client.send_message(message.channel, "Bu komut sadece bir serverda kullanılabilir")
-    komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
-    return server_flag
+        return False
+    elif message.server == None and server_flag == True:
+        await client.send_message(message.channel, "Bu komut sadece bir sunucuda kullanılabilir.")
+        komut_log += "[SERVER COMMAND][" + getUserName(message.author) + "] @DM            " + message.content + "\n"
+        return True
+    else: 
+        komut_log += "[" + getUserName(message.author) + "] @DM            " + message.content + "\n"
+        return False
 
 def temelLog():
     global temel_log
@@ -100,14 +99,6 @@ def onlineServer():
         temp_liste += servers[i-1].name + "\n"
 
     return temp_liste
-
-
-def onlineServerLog():
-    global online_server_log
-    servers = list(client.servers)
-
-    for i in range(len(servers)):
-        online_server_log += servers[i-1].name + "\n"
 
 def logUSDEmbed():
     res = doviz.DovizParse("USD")
@@ -127,29 +118,33 @@ async def bot_logla():
         dblpy = dbl.Client(client, dbl_token)
 
         temelLog()
-        onlineServerLog()
         
         global log_num
         global temel_log
         global komut_log
-        global online_server_log 
 
         log_num += 1
         
         tarih = str(datetime.now())
         log_baslangic = "\nLOG[" + str(log_num) + "] : " + tarih + "\n"
-        log_son = str(log_baslangic) + str(temel_log) + str(online_server_log) + "```" +str(komut_log)
-
-        try:
+        if not len(komut_log) == 20:
+            log_son = str(log_baslangic) + str(temel_log) + str(komut_log)
+        else:
+            log_son = str(log_baslangic) + str(temel_log)
+        
+        if len(log_son) > 2000:
             a = 0
             string = log_son
             for chunk in [string[i:i+1982] for i in range(0, len(string), 1982)]:
                 if a == 0 : await client.send_message(discord.Object(id=logChannelID), chunk + "```")
                 else : await client.send_message(discord.Object(id=logChannelID), "```" + chunk + "```")
                 a += 1
-
-        except:
-            await client.send_message(discord.Object(id=logChannelID), log_son + "```")
+                
+        else:
+            if not len(komut_log) == 20:
+                await client.send_message(discord.Object(id=logChannelID), log_son + "```")
+            else:
+                await client.send_message(discord.Object(id=logChannelID), log_son)
         
         #discordbotlist.org istatistikleri gonder
         try:
@@ -164,7 +159,6 @@ async def bot_logla():
         
         temel_log = "\n[TEMEL]\n"
         komut_log = "\n[KOMUT LOGLARI]\n```"
-        online_server_log = "\n[ONLINE SERVERLAR]\n```"
 
         await asyncio.sleep(3600) 
 

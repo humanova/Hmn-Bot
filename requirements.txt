@@ -1,7 +1,7 @@
 aiohttp==1.0.5
 beautifulsoup4==4.6.0
 discord.py==0.16.12
-urllib3==1.23
+urllib3==1.24.2
 websockets==3.4
 googletrans==2.4.0
 lxml==4.2.1

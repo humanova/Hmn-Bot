@@ -1,4 +1,3 @@
-
 # 2019 Emir Erbasan (humanova)
 # MIT License, see LICENSE for more details
 
@@ -10,6 +9,7 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen, Request
 import json
 import praw
+import botStrings
 
 redditPassword = os.environ['REDDIT_PASS']
 redditToken = os.environ['REDDIT_TOKEN']
@@ -35,18 +35,18 @@ def memeParse(subreddit,is_top):
                 if not post.stickied:
                     imgURL = post.url
                     memeAuthor = post.author.name
-                    memeTitle = post.title
+                    memeTitle = post.title 
                     permaLink = "https://reddit.com" + post.permalink
                     memeUpvote = post.ups
                     memeStickied = post.stickied
                     break
 
         else:
-
+            
             subURL += ".json?limit=10"
 
             while memeStickied == True:
-
+        
                 data = urlopen(Request(subURL, headers={'User-Agent': 'Mozilla'})).read()
                 page = json.loads(data.decode('utf-8'))
 
@@ -72,39 +72,9 @@ def memeParse(subreddit,is_top):
 
 def subredditAlgila(subreddit):
 
-    subs = {
-        "dankmemes"          : "https://www.reddit.com/r/dankmemes",
-        "memeeconomy"        : "https://www.reddit.com/r/MemeEconomy",
-        "deepfriedmemes"     : "https://www.reddit.com/r/DeepFriedMemes",
-        "me_irl"             : "https://www.reddit.com/r/me_irl",
-        "meirl"              : "https://www.reddit.com/r/meirl",
-        "memes"              : "https://www.reddit.com/r/memes",
-        "animemes"           : "https://www.reddit.com/r/Animemes",
-        "okbuddyretard"      : "https://www.reddit.com/r/okbuddyretard",
-        "anime_irl"          : "https://www.reddit.com/r/anime_irl",
-        "ihavesex"           : "https://www.reddit.com/r/ihavesex",
-        "surrealmemes"       : "https://www.reddit.com/r/surrealmemes",
-        "bikinibottomtwitter": "https://www.reddit.com/r/BikiniBottomTwitter",
-        "iamverysmart"       : "https://www.reddit.com/r/iamverysmart",
-        "bonehurtingjuice"   : "https://www.reddit.com/r/bonehurtingjuice",
-        "memes_of_the_dank"  : "https://www.reddit.com/r/memes_of_the_dank",
-        "offensivememes"     : "https://www.reddit.com/r/offensivememes",
-        "coaxedintoasnafu"   : "https://www.reddit.com/r/coaxedintoasnafu",
-        "notgayporn"         : "https://www.reddit.com/r/notgayporn",
-        "suddenlygay"        : "https://www.reddit.com/r/SuddenlyGay",
-        "turkeyjerky"        : "https://www.reddit.com/r/turkeyjerky",
-        "blackpeopletwitter" : "https://www.reddit.com/r/BlackPeopleTwitter",
-        "2meirl4meirl"       : "https://www.reddit.com/r/2meirl4meirl",
-        "dank_meme"          : "https://www.reddit.com/r/dank_meme",
-        "edgymemes"          : "https://www.reddit.com/r/edgymemes",
-        "wholesomememes"     : "https://www.reddit.com/r/wholesomememes",
-        "historymemes"       : "https://www.reddit.com/r/HistoryMemes",
-        "softwaregore"       : "https://www.reddit.com/r/softwaregore",
-        "ligma"              : "https://www.reddit.com/r/ligma"
-    }
-
-    try:
-        data_url = subs[subreddit]
-        return data_url
-    except:
-        return "hata"
+    for sub in botStrings.memeSubreddits:
+        if sub in subreddit:
+            data_url = "https://reddit.com/r/" + subreddit
+            return data_url
+    
+    return "hata"

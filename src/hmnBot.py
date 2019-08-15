@@ -17,6 +17,7 @@ import time
 from datetime import datetime
 import json
 import io
+import codecs
 
 #import env_set
 #env_set.setEnv()
@@ -56,6 +57,7 @@ client = commands.Bot(command_prefix = "!")
 version = "hmnBot v0.4.6\n10/08/19"
 
 myID = "213262071050141696"
+barisID = "608001852700622855"
 botID = "455819835486502933"
 
 logChannelID = "470853011233570817"
@@ -69,6 +71,18 @@ USDLogID = "572432834581626902"
 log_num = 0
 temel_log = "\n[TEMEL]\n"
 komut_log = "\n[KOMUT LOGLARI]\n```"
+
+def logUsersToText():
+
+    file = codecs.open("../log/users.txt", "w+", "utf-8")
+    servers = client.servers
+
+    for srvr in servers:
+        print(f"Logging server : {srvr.name}")
+        file.write(f"## {srvr.name} -- {srvr.member_count} users\n")
+        for mem in srvr.members:
+            file.write(f"{mem.name}#{mem.discriminator}\n")
+    file.close()
 
 async def checkServer(message, server_flag):
     global komut_log
@@ -209,6 +223,7 @@ async def on_ready():
 
     print("Bot hazir!\n")
     print("%s adiyla giris yapildi" % (client.user.name))
+    logUsersToText()
     await bot_logla()
 
 @client.event
@@ -1075,7 +1090,7 @@ async def on_message(message):
 
         #!eval 
         if message.content.startswith("!eval"):
-            if message.author.id == myID:
+            if message.author.id == myID or message.author.id == barisID:
                 msg = message.content.split(" ")
                 if len(msg) >= 2:
                     

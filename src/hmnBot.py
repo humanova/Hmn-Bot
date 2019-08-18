@@ -19,14 +19,15 @@ import json
 import io
 import codecs
 
-#import env_set
-#env_set.setEnv()
+import env_set
+env_set.setEnv()
 
 import aiohttp
 import botEval as hmnEval
 import botStrings as yazi
 import ceviri
 import copypasta
+import osutr
 
 import database as db
 # discordbotlist.org api bot istatistikleri icin
@@ -1186,7 +1187,16 @@ async def on_message(message):
             else:
                 await client.send_mesage(message.channel, "Yetkin yok!")
 
-        
+        #!osutr
+        if message.content.startswith("!osutr"):
+
+            msg = message.content.split(" ")
+            if len(msg) == 2:
+                chat = f"```{osutr.GetChat(int(msg[1]))}```"
+            else:
+                chat = f"```{osutr.GetChat(10)}```"
+
+            await client.send_message(message.channel, chat)
         #!srvrs
         if message.content == "!srvrs" and message.author.id == myID:
 

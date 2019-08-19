@@ -724,7 +724,7 @@ async def on_message(message):
                     for member in members:
                         if not member.game == None:
                             if oyun.upper() in str(member.game).upper() or oyun.upper() == str(member.game).upper():
-                                if '```' in member.name:
+                                if '```' in member.name or '```' in member.game:
                                     continue
                                 oyuncuListe += " + " + member.name + "#" + str(member.discriminator) + "  - " + str(member.game) + "\n"
                                 oyuncu_sayisi += 1
@@ -892,7 +892,7 @@ async def on_message(message):
                         await client.edit_message(ilk_msg,soz_son)
                 
                 else:
-                    await client.edit_message(ilk_msg,"`" + sarki +"` bulunamadı... :(")
+                    await client.edit_message("Aradığın şarkı bulunamadı... :(")
                 
                 #embed=discord.Embed(title=" ", description=sarki_adi + " - " + sarki_artist, color=0x75df00)
                 #embed.set_author(name="Hmn-Bot Lyrics", icon_url=client.user.avatar_url)

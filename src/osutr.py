@@ -14,6 +14,6 @@ def GetChat(lines):
     except Exception as e:
         print(f"error while getting chat log : {e}")
 
-    chat.replace("`", "")  
+    chat = chat.replace("`", "")  
 
     return chat

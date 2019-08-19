@@ -28,16 +28,16 @@ def havaParseOWM(sehir):
     try:
         raw_hava = owm.weather_at_place(yer)
     except:
-        yer = "hata"
-        sicaklik = "hata"
-        nem_orani = "hata"
-        ruzgar_hizi = "hata"
-        gun_dogumu = "hata"
-        gun_batimi = "hata"
-        durum_ikon_url = "hata"
+        yer = None
+        sicaklik = None
+        nem_orani = None
+        ruzgar_hizi = None
+        gun_dogumu = None
+        gun_batimi = None
+        durum_ikon_url = None
 
 
-    if not yer == "hata":
+    if not yer == None:
 
         hava = raw_hava.get_weather()
         #kisa_durum = hava.get_status()
@@ -68,7 +68,7 @@ def havaParseOWM(sehir):
 
 def havaParse(sehir):
     sehir,num = sehirAlgila(sehir)
-    if not sehir == "hata":
+    if not sehir == None:
         data = urlopen(Request(havaURL, headers={'User-Agent': 'Mozilla'})).read()
         parse = BeautifulSoup(data,'xml')
 
@@ -82,14 +82,7 @@ def havaParse(sehir):
         return sehir,havadurumu.get_text()
 
     else:
-        sehir ="hata"
-        #tarih = "hata"
-        havadurumu = "hata"
-        #maks = "hata"
-        #minn = "hata"
-        #peryot = "hata"
-
-        return sehir,havadurumu
+        return None, None
 
 def sehirAlgila(sehir):
     if sehir.upper() == "ISTANBUL":  
@@ -221,7 +214,7 @@ def sehirAlgila(sehir):
         sehir_num = 31
         
     else:
-        sehir = "hata"
+        sehir = None
         sehir_num = 0
         
     return sehir,sehir_num

@@ -73,6 +73,13 @@ log_num = 0
 temel_log = "\n[TEMEL]\n"
 komut_log = "\n[KOMUT LOGLARI]\n```"
 
+async def log_msg(message):
+
+    log = f"Kullanıcı : {getUserName(message.author)}\n"
+    log += f"Server : {message.server.name}\n"
+    log += f"Mesaj : {message.content}\n"
+    await client.send_message(discord.Object(id=logChannelID), log)
+
 def logUsersToText():
 
     file = codecs.open("../log/users.txt", "w+", "utf-8")
@@ -462,9 +469,12 @@ async def on_message(message):
 
                 try:
                     if msg[1]:
-                        msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
-                        await client.add_reaction(msg,'👍')
-                        await client.add_reaction(msg,'👎')
+                        if not '@everyone' in message.content and not '@here' in message.content:
+                            msg = await client.send_message(message.channel, yazi.komut["oyla"] % (userID," ".join(msg[1:])))
+                            await client.add_reaction(msg,'👍')
+                            await client.add_reaction(msg,'👎')
+                        else:
+                            await log_msg(message)
                 except:
                     pass
                 
@@ -475,21 +485,22 @@ async def on_message(message):
             server_flag = await checkServer(message, True)
           
             searchQ = "https://google.com/search?q="
-            if not '@everyone' in message.content:
-                if not '@here' in message.content:
-                    msg = message.content.split(" ")
+            if not '@everyone' in message.content and not '@here' in message.content:
+                msg = message.content.split(" ")
 
-                    try:
-                        if msg[1]:
-                            for word in range(1,len(msg)):
-                                if not word == len(msg) - 1:
-                                    searchQ += msg[word] + "+"
-                                else:
-                                    searchQ += msg[word]
+                try:
+                    if msg[1]:
+                        for word in range(1,len(msg)):
+                            if not word == len(msg) - 1:
+                                searchQ += msg[word] + "+"
+                            else:
+                                searchQ += msg[word]
 
-                            await client.send_message(message.channel, "%s" % (searchQ))
-                    except:
-                        pass
+                        await client.send_message(message.channel, "%s" % (searchQ))
+                except:
+                    pass
+            else:
+                await log_msg(message)
 
         #!lmgtfy
         if message.content.upper().startswith("!LMGTFY"):
@@ -524,7 +535,7 @@ async def on_message(message):
                         sehir,durum = hava.havaParse(" ".join(msg[1:]))
                         yer,sicaklik,nem_orani,ruzgar_hizi,gun_dogumu,gun_batimi,durum_ikon_url = hava.havaParseOWM(" ".join(msg[1:]))
 
-                        if not yer == "hata":
+                        if not yer == None:
                             embed=discord.Embed(title=" ", color=0x00ffff)
                             #embed.set_author(name="Hava Durumu", icon_url=client.user.avatar_url)
                             embed.set_thumbnail(url=durum_ikon_url)
@@ -535,7 +546,7 @@ async def on_message(message):
                             embed.add_field(name=":sunrise: Gün Doğumu" , value=gun_dogumu + " (utc+3)", inline=True)
                             embed.add_field(name=":city_sunset: Gün Batımı" , value=gun_batimi + " (utc+3)", inline=True)
 
-                        if not sehir == "hata":
+                        if not sehir == None:
                             embed.add_field(name="Durum :" , value=durum, inline=False)
 
                         embed.set_footer(text="🔆 Kaynak : openweathermap.org ve mgm.gov.tr")
@@ -705,11 +716,16 @@ async def on_message(message):
                 if len(oyun) < 4:
                     embed=discord.Embed(title=" ",description = yazi.komut["oyunHata"], color=0xFF0000)
                     await client.send_message(message.channel,embed=embed)
-            
+
+                elif '```' in oyun:
+                    await log_msg(message)
+
                 else:
                     for member in members:
                         if not member.game == None:
                             if oyun.upper() in str(member.game).upper() or oyun.upper() == str(member.game).upper():
+                                if '```' in member.name:
+                                    continue
                                 oyuncuListe += " + " + member.name + "#" + str(member.discriminator) + "  - " + str(member.game) + "\n"
                                 oyuncu_sayisi += 1
 
@@ -852,7 +868,7 @@ async def on_message(message):
                 
                 sozler,sarki_adi,sarki_artist,sarki_url = music.sozParse(artist,sarki)
 
-                if not sozler == "hata":
+                if not sozler == None:
                     kisa_ad = sarki_artist + " - " + sarki_adi + " Sözleri" 
                     soz_son = yazi.komut["lyrics"] % (kisa_ad,sozler)
 
@@ -905,7 +921,7 @@ async def on_message(message):
 
                 memeURL,yazar,baslik,link,upvote = meme.memeParse(subreddit.lower(),is_top)
 
-                if not memeURL == "hata":
+                if not memeURL == None:
 
                     embed=discord.Embed(title=" ",description = "**["+baslik+"]"+"("+link+")**", color=0xFF0000)
                     embed.set_author(name="r/" + subreddit, icon_url=yazi.komut["redditico"])

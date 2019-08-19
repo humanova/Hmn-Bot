@@ -20,16 +20,14 @@ def sozParse(artist,sarki):
         sarkiLink = song.url
         
         lyrics = song.save_lyrics(filename="lyrics_test.txt",format="txt",overwrite="no")
-        
-        return lyrics,sarkiAdi,sarkiArtist,sarkiLink
+        if not '```' in lyrics: 
+            return lyrics,sarkiAdi,sarkiArtist,sarkiLink
+        else:
+            return None, None, None, None
     
     else:
-        lyrics = "hata"
-        sarkiAdi = "hata"
-        sarkiArtist = "hata"
-        sarkiLink = "hata"
 
-        return lyrics,sarkiAdi,sarkiArtist,sarkiLink
+        return None, None, None, None
 
 
 

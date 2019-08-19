@@ -25,7 +25,7 @@ def memeParse(subreddit,is_top):
 
     subURL = subredditAlgila(subreddit)
 
-    if not subURL == "hata":
+    if not subURL == None:
         memeStickied = True
 
         if is_top:
@@ -62,12 +62,7 @@ def memeParse(subreddit,is_top):
         return imgURL,memeAuthor,memeTitle,permaLink,memeUpvote
 
     else:
-        imgURL = "hata"
-        memeAuthor = "hata"
-        memeTitle = "hata"
-        permaLink = "hata"
-        memeUpvote = "hata"
-        return imgURL,memeAuthor,memeTitle,permaLink,memeUpvote
+        return None,None,None,None,None
 
 
 def subredditAlgila(subreddit):

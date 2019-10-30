@@ -14,8 +14,10 @@ def RequestChatLog(url = API_URL):
         if data['success'] == True:
             return data['messages']
         else:
+            print("chat API returned false")
             return None
-    except:
+    except Exception as e:
+        print("error while requesting chat : " , e)
         return None
 
 def GetMessages():

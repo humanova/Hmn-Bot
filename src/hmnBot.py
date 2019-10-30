@@ -1215,8 +1215,8 @@ async def on_message(message):
 
             await client.send_message(message.channel, chat)
 
-        #!osutrlog
-        if message.content == "!oustrlog":
+        #!trlog
+        if message.content == "!trlog":
             log_file = chatCrawler.GetMessages()
             if not log_file == None:
                 await client.send_file(message.channel, fp=log_file, filename = log_file)

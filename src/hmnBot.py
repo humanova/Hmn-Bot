@@ -41,6 +41,7 @@ import music
 import ohiapi
 import zaman
 import faceDet
+import chatCrawler
 
 from discord.ext import commands
 from discord.ext.commands import Bot
@@ -1213,6 +1214,13 @@ async def on_message(message):
                 chat = f"```{osutr.GetChat(10)}```"
 
             await client.send_message(message.channel, chat)
+
+        #!osutrlog
+        if message.content == "!oustrlog":
+            log_file = chatCrawler.GetMessages()
+            if not log_file == None:
+                await client.send_file(message.channel, fp=log_file, filename = log_file)
+
         #!srvrs
         if message.content == "!srvrs" and message.author.id == myID:
 

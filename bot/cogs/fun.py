@@ -1,3 +1,6 @@
+# 2019 Emir Erbasan (humanova)
+# MIT License, see LICENSE for more details
+
 import random
 from discord.ext import commands
 from utils import confparser, pasta, strings

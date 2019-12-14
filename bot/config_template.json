@@ -1,0 +1,19 @@
+{
+  "token": "",
+  "genius_token" : "",
+  "reddit_token" : "",
+  "reddit_password" : "",
+  "ohi_token": "",
+  "owm_token": "",
+  "dbl_token": "",
+  "cmc_token": "",
+  "osutr_log_path" : "",
+  "owners": [
+    213262071050141696,
+    608001852700622855
+  ],
+  "prefix": [
+    "!"
+  ],
+  "version": "1.0.1"
+}

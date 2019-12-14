@@ -1,3 +1,5 @@
+# 2019 Emir Erbasan (humanova)
+# MIT License, see LICENSE for more details
 
 # moderation related commands
 # mostly from : github.com/Rapptz/RoboDanny

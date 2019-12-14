@@ -1,3 +1,6 @@
+# 2019 Emir Erbasan (humanova)
+# MIT License, see LICENSE for more details
+
 import bot
 from utils import confparser
 from discord.ext.commands import DefaultHelpCommand

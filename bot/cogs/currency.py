@@ -1,3 +1,6 @@
+# 2019 Emir Erbasan (humanova)
+# MIT License, see LICENSE for more details
+
 # data sources :
 #          !doviz : canlidoviz.com
 #          !kripto : coinmarketcap.com

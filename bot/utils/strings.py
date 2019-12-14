@@ -1,3 +1,7 @@
+# 2019 Emir Erbasan (humanova)
+# MIT License, see LICENSE for more details
+
+# strings/dicts related to bot commands
 
 currency_map = {
     "ALTIN": ['ALTIN', 'GOLD'],
@@ -92,5 +96,3 @@ meme_subreddits = [
     "softwaregore",
     "turkeyjerky"
 ]
-
-memeSubs = "\n".join(meme_subreddits[:])

@@ -1,3 +1,6 @@
+# 2019 Emir Erbasan (humanova)
+# MIT License, see LICENSE for more details
+
 import random
 import praw
 

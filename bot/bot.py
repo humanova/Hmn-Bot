@@ -1,3 +1,6 @@
+# 2019 Emir Erbasan (humanova)
+# MIT License, see LICENSE for more details
+
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
 import sys

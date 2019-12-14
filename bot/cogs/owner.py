@@ -9,6 +9,7 @@ class Owner(commands.Cog):
         self.config = confparser.get("config.json")
 
     @commands.command()
+    @commands.bot_has_permissions(manage_messages=True)
     async def say(self, ctx, message : str):
         dev_id = self.config.owners[0]
         if ctx.author.id == dev_id:

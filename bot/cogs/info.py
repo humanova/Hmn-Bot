@@ -36,8 +36,6 @@ class Info(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def server(self, ctx):
-        # get ctx.guild info
-
         tch_count = 0
         vch_count = 0
         for chan in ctx.guild.channels:
@@ -98,7 +96,7 @@ class Info(commands.Cog):
         embed = discord.Embed(colour=embed_color)
         embed.set_thumbnail(url=ctx.bot.user.avatar_url)
         embed.add_field(name="Son restart", value=default.timeago(datetime.now() - self.bot.boot_time), inline=False)
-        embed.add_field(name="Sunucu Sayısı", value=f"{len(ctx.bot.guilds)}", inline=False)
+        embed.add_field(name="Server Sayısı", value=f"{len(ctx.bot.guilds)}", inline=False)
         embed.add_field(name="Kullanıcı Sayısı", value=f"{user_count}", inline=False)
         embed.add_field(
             name=f"Geliştirici",

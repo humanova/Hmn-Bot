@@ -3,14 +3,14 @@ from utils import permissions
 from discord.ext.commands import AutoShardedBot
 from datetime import datetime
 
+init_extensions = ['cogs.utility', 'cogs.owner', 'cogs.info', 'cogs.admin', 'cogs.fun', 'cogs.currency']
+
 class Bot(AutoShardedBot):
     def __init__(self, *args, prefix=None, **kwargs):
         super().__init__(*args, **kwargs)
 
-        for file in os.listdir("cogs"):
-            if file.endswith(".py"):
-                fn = file[:-3]
-                self.load_extension(f"cogs.{fn}")
+        for ext in init_extensions:
+            self.load_extension(ext)
 
         self.boot_time = datetime.now()
 

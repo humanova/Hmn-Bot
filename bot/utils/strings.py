@@ -69,8 +69,6 @@ yardim = {
 
 
 komutYardim = {
-    "surum" :       "```asciidoc\n== !sürüm komutu ==\n\nAçıklama : Bot sürümünü gösterir\n\nÖrnek : !surum | !version```",
-    "version" :     "```asciidoc\n== !sürüm komutu ==\n\nAçıklama : Bot sürümünü gösterir\n\nÖrnek : !surum | !version```",
     "stats" :       "```asciidoc\n== !stats komutu ==\n\nAçıklama : Botun istatistiklerini gösterir\n\nÖrnek : !statu```",
     "destek" :      "```asciidoc\n== !destek komutu ==\n\nAçıklama : Hmn-Bot hakkında önerileriniz ya da sorunlarınız için destek sunucusunun davet linkini gönderir\n\nÖrnek : !destek```",
     "server" :      "```asciidoc\n== !server komutu ==\n\nAçıklama : Bulunulan serverın bilgilerini gösterir\n\nÖrnek : !server```",
@@ -159,3 +157,49 @@ n_word_list = [
     'N-WORD',
     'N_WORD'
 ]
+
+currency_map = {
+    "ALTIN": ['ALTIN', 'GOLD'],
+    "USD": ['USD', 'DOLAR', 'DOLLAR'],
+    "EUR": ['EUR', 'EURO', 'AVRO'],
+    "GBP": ['GBP', 'POUND', 'STERLIN'],
+    "RUB": ['RUB', 'RUBLE'],
+    "JPY": ['JPY', 'YEN'],
+    "CAD": ['CAD', 'KANADA'],
+    "AUD": ['AUD'],
+    "CNY": ['CNY', 'RENMINBI'],
+    "SEK": ['SWE'],
+    "CHF": ['CHW', 'SWI'],
+    "DKK": ['DKK', 'DAN'],
+    "SAR": ['SAR', 'RIYAL'],
+    "RON": ['RON', 'LEY'],
+    "NOK": ['NOK'],
+    "BGN": ['BGN'],
+    "IRR": ['IRR'],
+    "PKR": ['PKR'],
+    "KWD": ['KWD'],
+
+    # ozel
+    "osu": ['osu', 'SUPPORTER', 'SUP'],
+    "nitro": ['nitro', 'NITRO']
+}
+
+crypto_currency_map = {
+    "btc": {'currency': 'bitcoin',          'graph_id': '1',         'aliases': ['BTC', 'BITCOIN']},
+    "bch": {'currency': 'bitcoin-cash',     'graph_id': '1831',      'aliases': ['BCH', 'BTCCASH', 'BITCOINCASH']},
+    "eth": {'currency': 'ethereum',         'graph_id': '1027',      'aliases': ['ETH', 'ETHEREUM']},
+    "xrp": {'currency': 'ripple',           'graph_id': '52',        'aliases': ['XRP', 'RIPPLE']},
+    "eos": {'currency': 'eos',              'graph_id': '1765',      'aliases': ['EOS']},
+    "xmr": {'currency': 'monero',           'graph_id': '328',       'aliases': ['XMR', 'MONERO']},
+    "ltc": {'currency': 'litecoin',         'graph_id': '2',         'aliases': ['LTC', 'LITE', 'LITECOIN']},
+    "etc": {'currency': 'ethereum-classic', 'graph_id': '1321',      'aliases': ['ETC', 'ETHEREUM CLASSIC']},
+    "zec": {'currency': 'zcash',            'graph_id': '1437',      'aliases': ['ZEC', 'ZCASH']},
+    "bcn": {'currency': 'bytecoin-bcn',     'graph_id': '372',       'aliases': ['BCN', 'BYTECOIN']},
+    "xlm": {'currency': 'stellar',          'graph_id': '512',       'aliases': ['XLM', 'STELLAR']},
+    "ada": {'currency': 'cardano',          'graph_id': '2010',      'aliases': ['ADA', 'CARDANO']},
+    "miota": {'currency': 'iota',           'graph_id': '1720',      'aliases': ['MIOTA', 'IOTA']},
+    "trx": {'currency': 'tron',             'graph_id': '1958',      'aliases': ['TRX', 'TRON']},
+    "neo": {'currency': 'neo',              'graph_id': '1376',      'aliases': ['NEO']},
+    "nty": {'currency': 'nexty',            'graph_id': '2714',      'aliases': ['NTY', 'NEXTY']},
+    "ppc": {'currency': 'peercoin',         'graph_id': '5',         'aliases': ['PPC', 'PEERCOIN']},
+}

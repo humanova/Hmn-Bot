@@ -10,6 +10,8 @@ from datetime import datetime
 
 init_extensions = ['cogs.utility', 'cogs.owner', 'cogs.info', 'cogs.admin', 'cogs.fun', 'cogs.meme', 'cogs.currency']
 
+
+
 class Bot(AutoShardedBot):
     def __init__(self, *args, prefix=None, **kwargs):
         super().__init__(*args, **kwargs)

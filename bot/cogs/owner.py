@@ -2,8 +2,9 @@
 # MIT License, see LICENSE for more details
 
 import os
+import discord
 from discord.ext import commands
-
+import codecs
 from utils import confparser, default, permissions, eval
 
 class Owner(commands.Cog):
@@ -86,6 +87,21 @@ class Owner(commands.Cog):
         for guild in self.bot.guilds:
             server_list += f"{guild.member_count} :: {guild.name}\n"
         await ctx.send(f"```{server_list}```")
+
+    @commands.command()
+    @commands.check(permissions.is_owner)
+    async def dump_users(self, ctx):
+        file = codecs.open(self.config.users_log_path, "w+", "utf-8")
+
+        for g in self.bot.guilds:
+            print(f"Logging server : {g.name}")
+            file.write(f"==== {g.name} -- {g.member_count} users\n")
+            for mem in g.members:
+                file.write(f"{str(mem)}\n")
+        file.close()
+
+        await ctx.send(file=discord.File(fp=self.config.users_log_path, filename="users_dump.txt"))
+
 
 def setup(bot):
     bot.add_cog(Owner(bot))

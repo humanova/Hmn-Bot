@@ -13,6 +13,7 @@ class Admin(commands.Cog):
     @commands.has_permissions(manage_messages=True)
     @commands.bot_has_permissions(read_message_history=True)
     async def temizle(self, ctx, msg_count:int):
+        """ Belirtilen miktarda mesajı siler """
         if not msg_count < 1 and not msg_count > 99:
 
             msgs = []
@@ -35,6 +36,7 @@ class Admin(commands.Cog):
     @commands.has_permissions(administrator=True)
     @commands.bot_has_permissions(manage_roles=True)
     async def rolver(self, ctx, mem:discord.Member, role:discord.Role):
+        """ Etiketlenen kullanıcıya etiketlenen rolü verir """
         try:
             await mem.add_roles(role)
 

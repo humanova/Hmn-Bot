@@ -2,6 +2,7 @@
 #          !doviz : canlidoviz.com
 #          !kripto : coinmarketcap.com
 
+import locale
 import discord
 from discord.ext import commands
 from bs4 import BeautifulSoup
@@ -16,9 +17,11 @@ crypto_graph_base_url = "https://s2.coinmarketcap.com/generated/sparklines/web/7
 
 
 class Currency(commands.Cog):
+
     def __init__(self, bot):
         self.bot = bot
         self.config = confparser.get("config.json")
+        locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
 
     def parse_currency(self, currency, count=1, is_detailed=False):
         currency_code = self.detect_currency(currency)
@@ -75,10 +78,9 @@ class Currency(commands.Cog):
                     k_delta = parse.find("span", "cmc--change-negative cmc-details-panel-price__price-change")
 
                 crypto_price_parse = parse.find("span", "cmc-details-panel-price__price").text
-                crypto_price_parse = crypto_price_parse[1:].replace('.', '')
-                crypto_price = float(crypto_price_parse.replace(',', '.'))
+                crypto_price = locale.atof(crypto_price_parse.strip("$"))
 
-                currency_price = float(crypto_price)
+                currency_price = round(crypto_price, 2)
                 currency_delta = k_delta.text
 
                 return {"currency_name": currency_code.upper(),
@@ -157,7 +159,6 @@ class Currency(commands.Cog):
                             "currency_buy": currency_buy, "currency_sell": currency_sell,
                             "currency_change": currency_change, "currency_change_percentage": currency_change_percentage,
                             "currency_time": currency_time}
-
                 else:
                     continue
         return None
@@ -216,6 +217,7 @@ class Currency(commands.Cog):
 
     @commands.command()
     async def doviz(self, ctx, curr:str, count:int=1):
+        """ Belirtilen kur bilgisini gönderir """
         curr_data = self.parse_currency(curr.upper(), count, is_detailed=False)
         if curr_data is not None:
 
@@ -241,12 +243,14 @@ class Currency(commands.Cog):
 
     @commands.command()
     async def xdoviz(self, ctx, curr: str):
+        """ Belirtilen kur bilgisini gönderir (detaylı) """
         curr_data = self.parse_currency(curr.upper(), is_detailed=True)
         if curr_data is not None:
             await ctx.send(f"```json\n{json.dumps(curr_data, indent = 4)}```")
 
-    @commands.command()
+    @commands.command(aliases=['crypto'])
     async def kripto(self, ctx, currency_code: str, count:int=1):
+        """ Belirtilen kripto kur bilgisini gönderir """
         curr_data = self.parse_crypto(currency_code.upper())
         if curr_data is not None:
 

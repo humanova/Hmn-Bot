@@ -15,7 +15,7 @@ class Info(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def avatar(self, ctx, *, user:discord.Member = None):
-        # get user avatar
+        """ Etiketlenen kullanıcının avatarını gönderir """
         if user is None:
             user = ctx.author
         await ctx.send(f"{user.avatar_url_as(size=1024)}")
@@ -23,19 +23,20 @@ class Info(commands.Cog):
     @commands.command(aliases=['roller'])
     @commands.guild_only()
     async def roles(self, ctx):
-        # get server roles
+        """ Suncucu rollerini listeler """
         roles = ""
 
         for role in ctx.guild.roles:
             roles += f"{role.name}\n"
 
         embed = discord.Embed(title=" ", color=0x001a40)
-        embed.add_field(name = "Roller", value=f"```{roles}```")
-        await ctx.send(embed = embed)
+        embed.add_field(name= "Roller", value=f"```{roles}```")
+        await ctx.send(embed= embed)
 
     @commands.command()
     @commands.guild_only()
     async def server(self, ctx):
+        """ Suncucu bilgilerini gönderir """
         tch_count = 0
         vch_count = 0
         for chan in ctx.guild.channels:
@@ -67,7 +68,7 @@ class Info(commands.Cog):
 
     @commands.command(aliases=['developer, geliştirici'])
     async def dev(self, ctx):
-
+        """ Geliştirici bilgilerini gönderir """
         embed = discord.Embed(title=" ", color=0x75df00)
         embed.set_author(name=self.bot.user.name, icon_url=self.bot.user.avatar_url)
         embed.add_field(name="Geliştirici", value=f"<@{self.config.owners[0]}>", inline=False)
@@ -77,14 +78,14 @@ class Info(commands.Cog):
 
     @commands.command()
     async def destek(self, ctx):
-
+        """ Destek sunucusu daveti gönderir """
         embed = discord.Embed(title=" ", description="**[Davet](https://discord.gg/XBebmFF)**", color=0x75df00)
         embed.set_author(name="Hmn-Bot Destek", icon_url=self.bot.user.avatar_url)
         await ctx.send(embed=embed)
 
     @commands.command(aliases=['stats', 'bilgi'])
     async def info(self, ctx):
-
+        """ Bot bilgilerini gönderir """
         #ram_usage = self.process.memory_full_info().rss / 1024 ** 2
         embed_color = discord.Embed.Empty
         if hasattr(ctx, 'guild') and ctx.guild is not None:

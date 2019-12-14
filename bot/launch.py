@@ -1,6 +1,6 @@
 import bot
 from utils import confparser
-
+from discord.ext.commands import DefaultHelpCommand
 config = confparser.get("config.json")
 
 print("Logging in...")

@@ -1,9 +1,11 @@
-import os
-from utils import permissions
+from discord.ext import commands
 from discord.ext.commands import AutoShardedBot
+import sys
+import traceback
+from utils import permissions
 from datetime import datetime
 
-init_extensions = ['cogs.utility', 'cogs.owner', 'cogs.info', 'cogs.admin', 'cogs.fun', 'cogs.currency']
+init_extensions = ['cogs.utility', 'cogs.owner', 'cogs.info', 'cogs.admin', 'cogs.fun', 'cogs.meme', 'cogs.currency']
 
 class Bot(AutoShardedBot):
     def __init__(self, *args, prefix=None, **kwargs):
@@ -22,3 +24,16 @@ class Bot(AutoShardedBot):
             return
 
         await self.process_commands(msg)
+
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.NoPrivateMessage):
+            await ctx.author.send('Bu komutu sadece bir sunucuda kullanabilirsiniz.')
+        elif isinstance(error, commands.DisabledCommand):
+            await ctx.author.send('Bu komut devredışı.')
+        elif isinstance(error, commands.CommandInvokeError):
+            print(error)
+            print(f'In {ctx.command.qualified_name}:', file=sys.stderr)
+            traceback.print_tb(error.original.__traceback__)
+            print(f'{error.original.__class__.__name__}: {error.original}', file=sys.stderr)
+        else:
+            print(f'{error}', file=sys.stderr)

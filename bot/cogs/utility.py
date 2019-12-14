@@ -49,7 +49,7 @@ class Utility(commands.Cog):
         for chunk in [lyrics[i:i + 1985] for i in range(0, len(lyrics), 1985)]:
             await ctx.send(f"```asciidoc\n{chunk}```")
 
-    async def get_osutr_chat_log(self, line_count):
+    def get_osutr_chat_log(self, line_count):
         chat = str
         with codecs.open(self.config.osutr_log_path, "r", "utf-8") as f:
             data = f.readlines()

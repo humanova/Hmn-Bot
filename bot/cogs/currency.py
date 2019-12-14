@@ -252,9 +252,9 @@ class Currency(commands.Cog):
             await ctx.send(f"```json\n{json.dumps(curr_data, indent = 4)}```")
 
     @commands.command(aliases=['crypto'])
-    async def kripto(self, ctx, currency_code: str, count:int=1):
+    async def kripto(self, ctx, currency_code: str, count:int = 1):
         """ Belirtilen kripto kur bilgisini gönderir """
-        curr_data = self.parse_crypto(currency_code.upper())
+        curr_data = self.parse_crypto(currency_code.upper(), count=count)
         if curr_data is not None:
 
             usd_data = self.parse_currency(currency='USD')

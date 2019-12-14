@@ -82,17 +82,11 @@ meme_subreddits = [
     "me_irl",
     "meirl",
     "memes",
-    "memes_of_the_dank",
-    "anime_irl",
     "animemes",
-    "notgayporn",
     "suddenlygay",
     "ihavesex",
-    "dank_meme",
-    "edgymemes",
     "wholesomememes",
     "historymemes",
-    "ligma",
     "softwaregore",
     "turkeyjerky"
 ]

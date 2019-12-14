@@ -49,7 +49,32 @@ class Meme(commands.Cog):
 
     @commands.command()
     async def meme(self, ctx, subreddit: str):
-        """ Belirtilen subredditten bir meme gönderir """
+        """ Belirtilen subredditten bir meme gönderir 
+        
+            Gecerli subredditler:
+                - dankmemes,
+                - memeeconomy,
+                - deepfriedmemes,
+                - surrealmemes,
+                - offensivememes,
+                - 2meirl4meirl,
+                - blackpeopletwitter,
+                - okbuddyretard,
+                - coaxedintoasnafu,
+                - bikinibottomtwitter,
+                - bonehurtingjuice,
+                - iamverysmart,
+                - me_irl,
+                - meirl,
+                - memes,
+                - animemes,
+                - suddenlygay,
+                - ihavesex,
+                - wholesomememes,
+                - historymemes,
+                - softwaregore,
+                - turkeyjerky
+        """
         meme_data = self.parse_meme(subreddit.lower())
         if meme_data is not None:
             embed = discord.Embed(title=" ", description=f"**[{meme_data['title']}]({meme_data['permalink']})**", color=0xFF0000)

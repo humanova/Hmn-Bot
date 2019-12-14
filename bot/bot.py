@@ -2,7 +2,7 @@
 # MIT License, see LICENSE for more details
 
 from discord.ext import commands
-from discord.ext.commands import AutoShardedBot
+from discord.ext.commands import AutoShardedBot, DefaultHelpCommand
 import sys
 import traceback
 from utils import permissions

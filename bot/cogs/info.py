@@ -110,6 +110,11 @@ class Info(commands.Cog):
 
         await ctx.send(content=f"**{ctx.bot.user}** | **{self.config.version}**", embed=embed)
 
+    @commands.command(aliases=['yardim'], hidden=True)
+    async def help(self, ctx):
+        help_cmd = self.bot.get_command('yardım')
+        ctx.command = help_cmd
+        await self.bot.invoke(ctx)
 
 def setup(bot):
     bot.add_cog(Info(bot))

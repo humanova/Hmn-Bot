@@ -80,7 +80,7 @@ class Admin(commands.Cog):
         try:
             await member.kick(reason=responsible(ctx.author, reason))
             await ctx.send(f"{str(member)} sunucudan **atıldı**.")
-        except
+        except:
             pass
 
     @commands.command()
@@ -95,7 +95,7 @@ class Admin(commands.Cog):
         try:
             await ctx.guild.ban(discord.Object(id=member), reason=responsible(ctx.author, reason))
             await ctx.send(f"{str(member)} sunucudan **yasaklandı**.")
-        except
+        except:
             pass
 
     @commands.command()
@@ -106,7 +106,7 @@ class Admin(commands.Cog):
         try:
             await ctx.guild.unban(discord.Object(id=member), reason=responsible(ctx.author, reason))
             await ctx.send(f"{str(member)} kullanıcısının yasağı kaldırıldı.")
-        except
+        except:
             pass
 
     @commands.command()
@@ -125,7 +125,7 @@ class Admin(commands.Cog):
         try:
             await member.add_roles(muted_role, reason=responsible(ctx.author, reason))
             await ctx.send(f"{str(member)} sunucudan **yasaklandı**.")
-        except
+        except:
             pass
 
     @commands.command()
@@ -144,7 +144,7 @@ class Admin(commands.Cog):
         try:
             await member.remove_roles(muted_role, reason=responsible(ctx.author, reason))
             await ctx.send(f"{str(member)} kullanıcısının susturulması kaldırıldı.")
-        except
+        except:
             pass
 
 

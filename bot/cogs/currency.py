@@ -30,10 +30,10 @@ class Currency(commands.Cog):
         currency_code = self.detect_currency(currency)
         if currency_code is not None and float(count) > 0 and count is not None:
 
-            if currency_code == "altin":
+            if currency_code == "ALTIN":
                 currency_data = self.get_gold()
 
-            elif currency_code == "osu":
+            elif currency_code == "OSU":
                 months = count
                 count = float(months) * 4.0
                 currency_name = "AYLIK SUPPORTER"
@@ -44,7 +44,7 @@ class Currency(commands.Cog):
                                  "discount": self.calculate_supporter_discount(months, data['currency_buy']),
                                  "currency_time": data['currency_time']}
 
-            elif currency_code == "nitro":
+            elif currency_code == "NITRO":
                 count = float(count) * 5.0
                 currency_name = "AYLIK NITRO"
                 data = self.get_currency("USD", count)
@@ -167,7 +167,7 @@ class Currency(commands.Cog):
         return None
 
     def get_gold(self):
-        gold_data = dict
+        gold_data = dict()
         gold_data['currency_name'] = "ALTIN"
         r = requests.get(gold_api_url, timeout=2, headers={"User-Agent": "curl/7.61.0"})
 

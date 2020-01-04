@@ -4,7 +4,7 @@
 import subprocess
 
 def evaluate_command(cmd):
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     print(f"evaluating {cmd}...")
 
     output = str

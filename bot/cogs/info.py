@@ -89,7 +89,7 @@ class Info(commands.Cog):
     @commands.command(aliases=['stats', 'bilgi'])
     async def info(self, ctx):
         """ Bot bilgilerini gönderir """
-        #ram_usage = self.process.memory_full_info().rss / 1024 ** 2
+        ram_usage = self.process.memory_full_info().rss / 1024 ** 2
         embed_color = discord.Embed.Empty
         if hasattr(ctx, 'guild') and ctx.guild is not None:
             embed_color = ctx.me.top_role.colour
@@ -106,7 +106,7 @@ class Info(commands.Cog):
             name=f"Geliştirici",
             value=f"{str(self.bot.get_user(self.config.owners[0]))}",
             inline=True)
-        #embed.add_field(name="Bellek kullanımı", value=f"{ram_usage:.2f} MB", inline=True)
+        embed.add_field(name="Bellek kullanımı", value=f"{ram_usage:.2f} MB", inline=True)
 
         await ctx.send(content=f"**{ctx.bot.user}** | **{self.config.version}**", embed=embed)
 

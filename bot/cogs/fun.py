@@ -29,7 +29,7 @@ class Fun(commands.Cog):
         await ctx.send(f"{ctx.author.name} **{random.choice(coinsides)}** fırlattı!")
 
     @commands.command(aliases=['l33t'])
-    async def leet(self, ctx, message:str):
+    async def leet(self, ctx, * ,message:str):
         """ 1337 """
         msg = message.replace('e', '3')
         msg = msg.replace('a', '4')

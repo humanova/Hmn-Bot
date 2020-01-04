@@ -103,7 +103,7 @@ class Utility(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def oyun(self, ctx, message:str):
+    async def oyun(self, ctx, *, message:str):
         """ Belirtilen oyunu oynayanları listeler """
         if not '```' in message:
             if not len(message) < 4:

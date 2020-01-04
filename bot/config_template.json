@@ -9,6 +9,7 @@
   "cmc_token": "",
   "osutr_log_path" : "",
   "users_log_path" : "",
+  "owm_token" :"",
   "owners": [
     213262071050141696,
     608001852700622855

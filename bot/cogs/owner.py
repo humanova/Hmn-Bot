@@ -16,7 +16,7 @@ class Owner(commands.Cog):
     @commands.command()
     @commands.bot_has_permissions(manage_messages=True)
     @commands.check(permissions.is_owner)
-    async def say(self, ctx, * ,message : str):
+    async def say(self, ctx, *, message : str):
         try:
             await ctx.delete_message(ctx.message)
             await ctx.send(message)

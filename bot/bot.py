@@ -72,7 +72,7 @@ class Bot(AutoShardedBot):
 
     async def on_ready(self):
         print(f"Ready : {self.user.name} -- {self.user.id}")
-        await client.change_presence(status=discord.Status.idle, activity=discord.Game("!help"))
+        await self.change_presence(status=discord.Status.idle, activity=discord.Game("!help"))
 
 
     async def on_message(self, msg):

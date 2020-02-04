@@ -3,6 +3,7 @@
 
 import sys
 import traceback
+import discord
 from discord.ext import commands
 from discord.ext.commands import AutoShardedBot, DefaultHelpCommand
 from utils import permissions
@@ -72,7 +73,7 @@ class Bot(AutoShardedBot):
 
     async def on_ready(self):
         print(f"Ready : {self.user.name} -- {self.user.id}")
-        await self.change_presence(status=discord.Status.idle, activity=discord.Game("!help"))
+        await self.change_presence(status=discord.Status.online, activity=discord.Game("!help"))
 
 
     async def on_message(self, msg):

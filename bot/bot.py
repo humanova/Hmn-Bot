@@ -72,6 +72,8 @@ class Bot(AutoShardedBot):
 
     async def on_ready(self):
         print(f"Ready : {self.user.name} -- {self.user.id}")
+        await client.change_presence(status=discord.Status.idle, activity=discord.Game("!help"))
+
 
     async def on_message(self, msg):
         if not self.is_ready() or msg.author.bot or not permissions.can_send(msg):

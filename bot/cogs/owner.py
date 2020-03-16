@@ -94,7 +94,7 @@ class Owner(commands.Cog):
         file = codecs.open(self.config.users_log_path, "w+", "utf-8")
 
         for g in self.bot.guilds:
-            print(f"Logging server : {g.name}")
+            #print(f"Logging server : {g.name}")
             file.write(f"==== {g.name} -- {g.member_count} users\n")
             for mem in g.members:
                 file.write(f"{str(mem)}\n")

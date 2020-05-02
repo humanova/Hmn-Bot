@@ -7,7 +7,7 @@ from discord.ext import tasks, commands
 from io import BytesIO
 import time
 
-API_URL = "http://bruh.uno/dchess/api"
+API_URL = "https://bruh.uno/dchess/api"
 
 chess_dict_tr = {
     "mate": "Mat",

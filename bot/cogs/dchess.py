@@ -136,7 +136,7 @@ class DChess(commands.Cog):
                             winner = game_data["match"]["winner"]
                             winner_player = f"<@{game[f'{winner}_id']}>" if game[f'{winner}_id'] else chess_dict_tr[winner]
                             embed.add_field(name="Kazanan", value=winner_player, inline=True)
-                            embed.add_field(name="URL", value=game["match_url"], inline=False)
+                        embed.add_field(name="URL", value=game["match_url"], inline=False)
                         embed.add_field(name="Hamleler", value=moves, inline=True)
                         embed.set_image(url=preview_url)
 

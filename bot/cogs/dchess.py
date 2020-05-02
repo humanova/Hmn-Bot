@@ -142,6 +142,7 @@ class DChess(commands.Cog):
 
                         await game["msg"].edit(embed=embed)
                         self.games.remove(game)
+                    game["move_count"] = move_count
 
     @commands.command()
     @commands.guild_only()

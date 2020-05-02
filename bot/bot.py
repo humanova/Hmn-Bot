@@ -16,7 +16,8 @@ init_extensions = ['cogs.utility',
                    'cogs.fun',
                    'cogs.meme',
                    'cogs.currency',
-                   'cogs.weather']
+                   'cogs.weather',
+                   'cogs.dchess']
 
 help_cmd_attrs = {'name': 'yardım',
                  'help': 'Bu mesajı gösterir.'}

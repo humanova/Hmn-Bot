@@ -14,7 +14,8 @@ chess_dict_tr = {
     "outoftime": "Süre bitti",
     "draw": "Berabere",
     "black": "Siyah",
-    "white": "Beyaz"
+    "white": "Beyaz",
+    "resign": "Çekilme"
 }
 
 
@@ -61,6 +62,15 @@ class DChess(commands.Cog):
         except Exception as e:
             print(e)
 
+    async def send_update_match_end_request(self, match_id: str):
+        content = {"match_id": match_id}
+        try:
+            r = requests.post(f"{API_URL}/update_match_end", timeout=4.0, json=content)
+            response = r.json()
+            return response
+        except Exception as e:
+            print(e)
+
     async def send_get_match_request(self, match_id: str):
         content = { "match_id": match_id }
         try:
@@ -100,8 +110,8 @@ class DChess(commands.Cog):
                 if game_data["success"] == False:
                     if time.time() - game["timestamp"] > 180:
                         try:
-                            game["msg"].channel.send(f"Oyun iptal edildi. <@{game['host'].id}>")
-                            game["msg"].delete()
+                            await game["msg"].channel.send(f"Oyun iptal edildi. <@{game['host'].id}>")
+                            await game["msg"].delete()
                             self.games.remove(game)
                         except Exception as e:
                             print(e)
@@ -112,7 +122,7 @@ class DChess(commands.Cog):
                     move_count = len(moves.split(" "))
 
                     game["moves"] = moves
-                    preview_url = f"{API_URL}/get_match_preview/{game['match_id']}/{len(moves)}"
+                    preview_url = f"{API_URL}/get_match_preview/{game['match_id']}/{move_count}"
                     white_player = f"<@{game['white_id']}> ({game['white_data']['player']['elo']})" if game['white_id'] else "Bilinmiyor"
                     black_player = f"<@{game['black_id']}> ({game['black_data']['player']['elo']})" if game['black_id'] else "Bilinmiyor"
 
@@ -129,7 +139,9 @@ class DChess(commands.Cog):
 
                             await game["msg"].edit(embed=embed)
 
-                    elif status == "mate" or status == "outoftime" or status == "draw":
+                    elif status == "mate" or status == "outoftime" or status == "draw" or status == "resign":
+                        m_data = await self.send_update_match_end_request(match_id=game["match_id"])
+
                         status_tr = chess_dict_tr[status]
                         embed.add_field(name="Durum", value=status_tr, inline=False)
                         if not status == "draw":
@@ -150,7 +162,6 @@ class DChess(commands.Cog):
     async def chess(self, ctx, member: discord.Member):
 
         match = await self.send_create_match_request(host=ctx.author, guest=member, guild=ctx.guild)
-        #print(match)
         #if match["success"]:
         #    print("successfully created match")
         match_id = match["db_match"]["id"]

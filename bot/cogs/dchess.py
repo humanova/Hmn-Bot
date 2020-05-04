@@ -168,8 +168,10 @@ class DChess(commands.Cog):
                         status = game_data["match"]["status"]
                         moves = game_data["match"]["moves"]
                         move_count = len(moves.split(" "))
-
+                        match_type = game["match_type"]
+                        match_clock = game["match_clock"]
                         game["moves"] = moves
+
                         preview_url = f"{API_URL}/get_match_preview/{game['match_id']}/{move_count}"
                         white_player = f"<@{game['white_id']}> ({int(game['white_data']['player']['elo'])})" if game['white_id'] else "Bilinmiyor"
                         black_player = f"<@{game['black_id']}> ({int(game['black_data']['player']['elo'])})" if game['black_id'] else "Bilinmiyor"
@@ -178,6 +180,7 @@ class DChess(commands.Cog):
                                               color=0x00ffff)
                         embed.add_field(name="⚪Beyaz", value=white_player, inline=True)
                         embed.add_field(name="⚫Siyah", value=black_player, inline=True)
+                        embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
                         if status == "started":
                             if move_count > game["move_count"]:
                                 embed.add_field(name="Durum", value="Devam ediyor", inline=False)
@@ -247,6 +250,8 @@ class DChess(commands.Cog):
         self.games.append({"msg": msg,
                            "match_id": match_id,
                            "match_url": match_url,
+                           "match_type": match_type,
+                           "match_clock": match_clock,
                            "host": ctx.author,
                            "guest": member,
                            "white_data": None,

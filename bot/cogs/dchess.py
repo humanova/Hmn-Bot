@@ -180,7 +180,8 @@ class DChess(commands.Cog):
                                               color=0x00ffff)
                         embed.add_field(name="⚪Beyaz", value=white_player, inline=True)
                         embed.add_field(name="⚫Siyah", value=black_player, inline=True)
-                        embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
+                        if match_type:
+                            embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
                         if status == "started":
                             if move_count > game["move_count"]:
                                 embed.add_field(name="Durum", value="Devam ediyor", inline=False)

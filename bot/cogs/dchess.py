@@ -216,12 +216,16 @@ class DChess(commands.Cog):
         #    print("successfully created match")
         match_id = match["db_match"]["id"]
         match_url = f"https://lichess.org/{match_id}"
-        match_type = match['match']['challenge']['speed']
-        match_clock = match['match']['challenge']['timeControl']['show']
+        match_type = None
+        match_clock = None
+
         # todo : fix copy-pasting embeds
         dm_embed = discord.Embed(title=":chess_pawn: Oyun Daveti", color=0x00ffff)
         dm_embed.add_field(name="Davet eden", value=f"<@{ctx.author.id}>", inline=True)
-        dm_embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
+        if clock_setting:
+            match_type = match['match']['challenge']['speed']
+            match_clock = match['match']['challenge']['timeControl']['show']
+            dm_embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
         dm_embed.add_field(name="Guild", value=f"{ctx.guild.name}", inline=False)
         dm_embed.add_field(name="URL", value=f"{match_url}", inline=False)
 
@@ -230,7 +234,8 @@ class DChess(commands.Cog):
 
         embed = discord.Embed(title=":chess_pawn: Oyun Daveti", color=0x00ffff)
         embed.add_field(name="Davet eden", value=f"<@{ctx.author.id}>", inline=True)
-        embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
+        if clock_setting:
+            embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
         embed.add_field(name="Guild", value=f"{ctx.guild.name}", inline=False)
         embed.add_field(name="URL", value=f"Özel mesaj olarak gönderildi.", inline=False)
         embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")

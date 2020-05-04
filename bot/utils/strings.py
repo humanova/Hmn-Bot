@@ -97,6 +97,7 @@ komut = {
     "oyunHata": "Girdiğiniz oyun ismi çok kısa. Bu nedenle arama yapamıyorum. :(",
     "oyunHata2": "Sunucuda kimse %s oynamıyor.",
     "redditico": "http://puu.sh/C2Lxd/78e8e9a31b.png",
+    "chessico" : "https://pngimage.net/wp-content/uploads/2018/05/chess-knight-png-2.png",
     "112_pasta_url": "https://paste.ee/p/8JKSU",
     "kripto-cizgi": "-------------------------------"
 }

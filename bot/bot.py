@@ -74,6 +74,7 @@ class Bot(AutoShardedBot):
 
     async def on_ready(self):
         print(f"Ready : {self.user.name} -- {self.user.id}")
+        print(f"Shards : {self.shard_count}")
         await self.change_presence(status=discord.Status.online, activity=discord.Game("!help"))
 
 

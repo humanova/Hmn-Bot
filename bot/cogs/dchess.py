@@ -134,31 +134,30 @@ class DChess(commands.Cog):
 
     async def send_game_invite_embed(self, ctx, member: discord.Member, match_data, is_dm:bool=False, show_clock:bool=False):
         match = match_data
-        if match['success']:
-            match_id = match["db_match"]["id"]
-            match_url = f"https://lichess.org/{match_id}"
-            match_type = None
-            match_clock = None
+        match_id = match["db_match"]["id"]
+        match_url = f"https://lichess.org/{match_id}"
+        match_type = None
+        match_clock = None
 
-            embed = discord.Embed(title=":chess_pawn: Oyun Daveti", color=0x00ffff)
-            embed.add_field(name="Davet eden", value=f"<@{ctx.author.id}>", inline=True)
+        embed = discord.Embed(title=":chess_pawn: Oyun Daveti", color=0x00ffff)
+        embed.add_field(name="Davet eden", value=f"<@{ctx.author.id}>", inline=True)
+        embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")
+
+        if show_clock:
+            match_type = match['match']['challenge']['speed']
+            match_clock = match['match']['challenge']['timeControl']['show']
+            embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
+        embed.add_field(name="Guild", value=f"{ctx.guild.name}", inline=False)
+
+        if is_dm:
+            embed.add_field(name="URL", value=f"{match_url}", inline=False)
+            await member.send(embed=embed)
+            await ctx.author.send(embed=embed)
+        else:
+            embed.add_field(name="URL", value=f"Özel mesaj olarak gönderildi.", inline=False)
             embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")
-
-            if show_clock:
-                match_type = match['match']['challenge']['speed']
-                match_clock = match['match']['challenge']['timeControl']['show']
-                embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
-            embed.add_field(name="Guild", value=f"{ctx.guild.name}", inline=False)
-
-            if is_dm:
-                embed.add_field(name="URL", value=f"{match_url}", inline=False)
-                await member.send(embed=embed)
-                await ctx.author.send(embed=embed)
-            else:
-                embed.add_field(name="URL", value=f"Özel mesaj olarak gönderildi.", inline=False)
-                embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")
-                msg = await ctx.send(embed=embed)
-                return msg
+            msg = await ctx.send(embed=embed)
+            return msg
 
     async def get_player_stat_embed(self, player:discord.Member, guild:discord.Guild):
         ''''''
@@ -274,37 +273,40 @@ class DChess(commands.Cog):
 
         match = await self.send_create_match_request(host=ctx.author, guest=member, guild=ctx.guild,
                                                      clock=self.parse_clock_setting(clock_setting))
-        await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=True)
-        msg = await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=False)
-        await msg.add_reaction('⚪')
-        await msg.add_reaction('⚫')
+        try:
+            if match['success']:
+                await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=True)
+                msg = await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=False)
+                await msg.add_reaction('⚪')
+                await msg.add_reaction('⚫')
 
+                match_id = match["db_match"]["id"]
+                match_url = f"https://lichess.org/{match_id}"
+                match_type = None
+                match_clock = None
+                timetamp = time.time()
+                if clock_setting:
+                    match_type = match['match']['challenge']['speed']
+                    match_clock = match['match']['challenge']['timeControl']['show']
 
-        match_id = match["db_match"]["id"]
-        match_url = f"https://lichess.org/{match_id}"
-        match_type = None
-        match_clock = None
-        timetamp = time.time()
-        if clock_setting:
-            match_type = match['match']['challenge']['speed']
-            match_clock = match['match']['challenge']['timeControl']['show']
-
-        self.games.append({"msg": msg,
-                           "match_id": match_id,
-                           "match_url": match_url,
-                           "match_type": match_type,
-                           "match_clock": match_clock,
-                           "guild_id": ctx.guild.id,
-                           "host": ctx.author,
-                           "guest": member,
-                           "white_data": None,
-                           "black_data": None,
-                           "timestamp": timetamp,
-                           "last_move_timestamp": timetamp,
-                           "move_count": 1, # lichess starts counting from 1 lol (1,1,2)
-                           "moves": None,
-                           "white_id": None,
-                           "black_id": None,})
+                self.games.append({"msg": msg,
+                                   "match_id": match_id,
+                                   "match_url": match_url,
+                                   "match_type": match_type,
+                                   "match_clock": match_clock,
+                                   "guild_id": ctx.guild.id,
+                                   "host": ctx.author,
+                                   "guest": member,
+                                   "white_data": None,
+                                   "black_data": None,
+                                   "timestamp": timetamp,
+                                   "last_move_timestamp": timetamp,
+                                   "move_count": 1, # lichess starts counting from 1 lol (1,1,2)
+                                   "moves": None,
+                                   "white_id": None,
+                                   "black_id": None,})
+        except Exception as e:
+            print(f"error while creating match : {e}")
 
     @commands.command()
     @commands.guild_only()

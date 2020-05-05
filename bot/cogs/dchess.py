@@ -214,8 +214,6 @@ class DChess(commands.Cog):
                         embed.add_field(name="⚫Siyah", value=black_player, inline=True)
                         if match_type:
                             embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
-                        print(move_count)
-                        print(game["move_count"])
                         if status == "started":
                             if move_count > game["move_count"]:
                                 game['last_move_timestamp'] = time.time()

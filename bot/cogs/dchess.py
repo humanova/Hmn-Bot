@@ -9,7 +9,8 @@ import time
 from operator import itemgetter
 from tabulate import tabulate
 
-API_URL = "https://bruh.uno/dchess/api"
+#API_URL = "https://bruh.uno/dchess/api"
+API_URL = "http://localhost:1338/dchess/api"
 
 chess_dict_tr = {
     "mate": "Mat",
@@ -44,7 +45,7 @@ class DChess(commands.Cog):
             s = clock.split("+")
             minutes = int(s[0])
             increment = round(int(s[1]))
-            if minutes == 0: minutes = 5
+            if minutes == 0: return None
             return {"minutes" : minutes, "increment": increment}
         except:
             return None
@@ -124,12 +125,48 @@ class DChess(commands.Cog):
         except Exception as e:
             print(e)
 
+    async def cancel_game(self, game:dict):
+        try:
+            self.games.remove(game)
+            await game["msg"].channel.send(f"Oyun iptal edildi. <@{game['host'].id}>")
+            await game["msg"].delete()
+        except Exception as e:
+            print(f"error while canceling game : {e}")
+
+    async def send_game_invite_embed(self, ctx, member: discord.Member, match_data, is_dm:bool=False, show_clock:bool=False):
+        match = match_data
+        if match['success']:
+            match_id = match["db_match"]["id"]
+            match_url = f"https://lichess.org/{match_id}"
+            match_type = None
+            match_clock = None
+
+            embed = discord.Embed(title=":chess_pawn: Oyun Daveti", color=0x00ffff)
+            embed.add_field(name="Davet eden", value=f"<@{ctx.author.id}>", inline=True)
+            embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")
+
+            if show_clock:
+                match_type = match['match']['challenge']['speed']
+                match_clock = match['match']['challenge']['timeControl']['show']
+                embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
+            embed.add_field(name="Guild", value=f"{ctx.guild.name}", inline=False)
+
+            if is_dm:
+                embed.add_field(name="URL", value=f"{match_url}", inline=False)
+                await member.send(embed=embed)
+                await ctx.author.send(embed=embed)
+            else:
+                embed.add_field(name="URL", value=f"Özel mesaj olarak gönderildi.", inline=False)
+                embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")
+                msg = await ctx.send(embed=embed)
+                return msg
+
     async def get_player_stat_embed(self, player:discord.Member, guild:discord.Guild):
         pl = await self.send_get_player_request(player.id, guild.id)
         if pl['success']:
             embed = discord.Embed(title="İstatistikler", color=0x00ffff)
             embed.add_field(name="Oyuncu", value=f"<@{player.id}>", inline=True)
-            embed.add_field(name="Guild Elo", value=f"{pl['guild_player']['elo']}", inline=True)
+            embed.add_field(name="Guild Elo", value=f"{int(pl['guild_player']['elo'])}", inline=True)
             embed.add_field(name="Maç", value=f"{pl['player']['matches']}", inline=False)
             embed.add_field(name="Kazanma", value=f"{pl['player']['wins']}", inline=True)
             embed.add_field(name="Berabere", value=f"{pl['player']['draws']}", inline=True)
@@ -151,20 +188,16 @@ class DChess(commands.Cog):
                 try:
                     game_data = await self.send_get_match_request(game["match_id"])
                     if not game["white_data"] and game['white_id']:
-                        game["white_data"] = await self.send_get_player_request(player_id=game["white_id"])
+                        game["white_data"] = await self.send_get_player_request(player_id=game["white_id"],
+                                                                                guild_id=game["guild_id"])
                     if not game["black_data"] and game['black_id']:
-                        game["black_data"] = await self.send_get_player_request(player_id=game["black_id"])
-
+                        game["black_data"] = await self.send_get_player_request(player_id=game["black_id"],
+                                                                                guild_id=game["guild_id"])
                     if game_data["success"] == False:
                         if time.time() - game["timestamp"] > 180:
-                            try:
-                                await game["msg"].channel.send(f"Oyun iptal edildi. <@{game['host'].id}>")
-                                await game["msg"].delete()
-                                self.games.remove(game)
-                            except Exception as e:
-                                print(e)
+                            await self.cancel_game(game)
 
-                    if game_data["success"] == True:
+                    if game_data["success"]:
                         status = game_data["match"]["status"]
                         moves = game_data["match"]["moves"]
                         move_count = len(moves.split(" "))
@@ -173,8 +206,8 @@ class DChess(commands.Cog):
                         game["moves"] = moves
 
                         preview_url = f"{API_URL}/get_match_preview/{game['match_id']}/{move_count}"
-                        white_player = f"<@{game['white_id']}> ({int(game['white_data']['player']['elo'])})" if game['white_id'] else "Bilinmiyor"
-                        black_player = f"<@{game['black_id']}> ({int(game['black_data']['player']['elo'])})" if game['black_id'] else "Bilinmiyor"
+                        white_player = f"<@{game['white_id']}> ({int(game['white_data']['guild_player']['elo'])})" if game['white_id'] else "Bilinmiyor"
+                        black_player = f"<@{game['black_id']}> ({int(game['black_data']['guild_player']['elo'])})" if game['black_id'] else "Bilinmiyor"
 
                         embed = discord.Embed(title=f":chess_pawn: {game['host'].name} vs {game['guest'].name}",
                                               color=0x00ffff)
@@ -182,14 +215,21 @@ class DChess(commands.Cog):
                         embed.add_field(name="⚫Siyah", value=black_player, inline=True)
                         if match_type:
                             embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
+                        print(move_count)
+                        print(game["move_count"])
                         if status == "started":
                             if move_count > game["move_count"]:
+                                game['last_move_timestamp'] = time.time()
                                 embed.add_field(name="Durum", value="Devam ediyor", inline=False)
                                 embed.add_field(name="URL", value=game["match_url"], inline=True)
                                 embed.add_field(name="Hamleler", value=moves, inline=False)
                                 embed.set_image(url=preview_url)
-
                                 await game["msg"].edit(embed=embed)
+
+                            elif move_count < 10 and time.time() - game["last_move_timestamp"] > 300:
+                                await self.cancel_game(game)
+                            elif move_count < 50 and time.time() - game["last_move_timestamp"] > 2000:
+                                await self.cancel_game(game)
 
                         elif status == "mate" or status == "outoftime" or status == "draw" or status == "resign":
                             m_data = await self.send_update_match_end_request(match_id=game["match_id"])
@@ -214,58 +254,67 @@ class DChess(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def chess(self, ctx, member: discord.Member, clock_setting:str=None):
+        ''' Oyun oluşturur ve etiketlediğiniz kullanıcıya davet gönderir
+            Parametre olarak süre ayarını geçebilirsiniz
+            Kullanım:
+                    - !chess @kullanıcı
+                    - !chess @kullanıcı 2+1
+        '''
+        if ctx.author == member:
+            embed = discord.Embed(title=" ", description="Kendine oyun daveti gönderemezsin.", color=0xFF0000)
+            embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
+            await ctx.send(embed=embed)
+            return
+        elif ctx.author in [g['host'] for g in self.games]:
+            embed = discord.Embed(title=" ", description="Aynı anda birden fazla oyun oluşturamazsın.", color=0xFF0000)
+            embed.add_field(name="Yardım", value="Önceki oyunu iptal etmek için : `!ccancel`")
+            embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
+            await ctx.send(embed=embed)
+            return
+
         match = await self.send_create_match_request(host=ctx.author, guest=member, guild=ctx.guild,
                                                      clock=self.parse_clock_setting(clock_setting))
-        #if match["success"]:
-        #    print("successfully created match")
+        await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=True)
+        msg = await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=False)
+        await msg.add_reaction('⚪')
+        await msg.add_reaction('⚫')
+
+
         match_id = match["db_match"]["id"]
         match_url = f"https://lichess.org/{match_id}"
         match_type = None
         match_clock = None
-
-        # todo : fix copy-pasting embeds
-        dm_embed = discord.Embed(title=":chess_pawn: Oyun Daveti", color=0x00ffff)
-        dm_embed.add_field(name="Davet eden", value=f"<@{ctx.author.id}>", inline=True)
+        timetamp = time.time()
         if clock_setting:
             match_type = match['match']['challenge']['speed']
             match_clock = match['match']['challenge']['timeControl']['show']
-            dm_embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
-        dm_embed.add_field(name="Guild", value=f"{ctx.guild.name}", inline=False)
-        dm_embed.add_field(name="URL", value=f"{match_url}", inline=False)
-
-        await member.send(embed=dm_embed)
-        await ctx.author.send(embed=dm_embed)
-
-        embed = discord.Embed(title=":chess_pawn: Oyun Daveti", color=0x00ffff)
-        embed.add_field(name="Davet eden", value=f"<@{ctx.author.id}>", inline=True)
-        if clock_setting:
-            embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
-        embed.add_field(name="Guild", value=f"{ctx.guild.name}", inline=False)
-        embed.add_field(name="URL", value=f"Özel mesaj olarak gönderildi.", inline=False)
-        embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")
-
-        msg = await ctx.send(embed=embed)
-        await msg.add_reaction('⚪')
-        await msg.add_reaction('⚫')
 
         self.games.append({"msg": msg,
                            "match_id": match_id,
                            "match_url": match_url,
                            "match_type": match_type,
                            "match_clock": match_clock,
+                           "guild_id": ctx.guild.id,
                            "host": ctx.author,
                            "guest": member,
                            "white_data": None,
                            "black_data": None,
-                           "timestamp": time.time(),
-                           "move_count": 0,
+                           "timestamp": timetamp,
+                           "last_move_timestamp": timetamp,
+                           "move_count": 1, # lichess starts counting from 1 lol (1,1,2)
                            "moves": None,
                            "white_id": None,
-                           "black_id": None})
+                           "black_id": None,})
 
     @commands.command()
     @commands.guild_only()
     async def cstats(self, ctx, arg=None):
+        """ Oyuncu ve guild istatistiklerini gönderir
+            Kullanım:
+                - !cstats
+                - !cstats @oyuncu
+                - !cstats guild
+        """
         if not arg:
             embed = await self.get_player_stat_embed(ctx.author, ctx.guild)
             await ctx.send(embed=embed)
@@ -281,15 +330,27 @@ class DChess(commands.Cog):
                     players = sorted(players, key=itemgetter('elo'), reverse=True)
 
                     top_players = []
-                    for pl in players[:10]:
+                    for pl in players[:20]:
                         pl_nick = str(ctx.guild.get_member(int(pl['player_id'])))
-                        top_players.append([pl_nick, pl['elo']])
+                        if '```' in pl_nick: continue # gencoya gelsin :)
+                        top_players.append([pl_nick, int(pl['elo'])])
                     table_str = tabulate(top_players, headers=["Player", "Guild elo"])
                     await ctx.send(f'```{table_str}```')
                 else:
-                    embed = discord.Embed(title=" ", description="Guild kaydı bulunamadı", color=0xFF0000)
+                    embed = discord.Embed(title=" ", description="Guild kaydı bulunamadı.", color=0xFF0000)
                     embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
                     return embed
+
+    @commands.command()
+    @commands.guild_only()
+    async def ccancel(self, ctx):
+        """ Oluşturduğunuz oyunu iptal eder
+            Not: Maça başlandıysa, en fazla 5 hamle oynanmış olmalıdır
+        """
+        for g in self.games:
+            if g['host'] == ctx.author and g['move_count'] < 6:
+                await self.cancel_game(g)
+
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):

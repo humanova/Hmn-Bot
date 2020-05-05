@@ -9,8 +9,7 @@ import time
 from operator import itemgetter
 from tabulate import tabulate
 
-#API_URL = "https://bruh.uno/dchess/api"
-API_URL = "http://localhost:1338/dchess/api"
+API_URL = "https://bruh.uno/dchess/api"
 
 chess_dict_tr = {
     "mate": "Mat",
@@ -162,6 +161,7 @@ class DChess(commands.Cog):
                 return msg
 
     async def get_player_stat_embed(self, player:discord.Member, guild:discord.Guild):
+        ''''''
         pl = await self.send_get_player_request(player.id, guild.id)
         if pl['success']:
             embed = discord.Embed(title="İstatistikler", color=0x00ffff)

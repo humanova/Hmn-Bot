@@ -19,6 +19,7 @@ chess_dict_tr = {
     "white": "Beyaz",
     "resign": "Çekilme"
 }
+end_status = ['mate', 'outoftime', 'draw', 'resign', 'stalemate']
 
 
 class DChess(commands.Cog):
@@ -248,7 +249,7 @@ class DChess(commands.Cog):
                             elif move_count < 50 and time.time() - game["last_move_timestamp"] > 2000:
                                 await self.cancel_game(game)
 
-                        elif status == "mate" or status == "outoftime" or status == "draw" or status == "resign":
+                        elif status in end_status:
                             m_data = await self.send_update_match_end_request(match_id=game["match_id"])
 
                             status_tr = chess_dict_tr[status]

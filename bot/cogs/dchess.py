@@ -124,11 +124,25 @@ class DChess(commands.Cog):
         except Exception as e:
             print(e)
 
+    async def send_error_embed(self, ctx, message, fields=None):
+        if fields is None: fields = []
+        try:
+            embed = discord.Embed(title=" ", description=message, color=0xFF0000)
+            embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
+            for f in fields:
+                embed.add_field(name=f['name'], value=f['value'])
+            await ctx.send(embed=embed)
+        except discord.Forbidden:
+            pass
+
     async def cancel_game(self, game:dict):
         try:
             self.games.remove(game)
-            await game["msg"].channel.send(f"Oyun iptal edildi. <@{game['host'].id}>")
+            await self.send_error_embed(ctx=game["msg"].channel,
+                                        message=f"Oyun iptal edildi. (<@{game['host'].id}> v <@{game['guest'].id}>)")
             await game["msg"].delete()
+        except (discord.Forbidden, discord.NotFound):
+            pass
         except Exception as e:
             print(f"error while canceling game : {e}")
 
@@ -151,8 +165,14 @@ class DChess(commands.Cog):
 
         if is_dm:
             embed.add_field(name="URL", value=f"{match_url}", inline=False)
-            await member.send(embed=embed)
-            await ctx.author.send(embed=embed)
+            try:
+                await member.send(embed=embed)
+                await ctx.author.send(embed=embed)
+                return True
+            except discord.Forbidden:
+                await self.send_error_embed(ctx=ctx, message="Özel mesaj gönderilirken hata oluştu.",
+                                            fields=[{'name': 'Yardım', 'value': 'Discord gizlilik ayarlarınızı kontrol edin.'}])
+                return False
         else:
             embed.add_field(name="URL", value=f"Özel mesaj olarak gönderildi.", inline=False)
             embed.set_footer(text="Oyun başladıktan sonra renginizi reaction bırakarak belirtin!")
@@ -160,7 +180,6 @@ class DChess(commands.Cog):
             return msg
 
     async def get_player_stat_embed(self, player:discord.Member, guild:discord.Guild):
-        ''''''
         pl = await self.send_get_player_request(player.id, guild.id)
         if pl['success']:
             embed = discord.Embed(title="İstatistikler", color=0x00ffff)
@@ -175,9 +194,7 @@ class DChess(commands.Cog):
                                 inline=False)
             return embed
         else:
-            embed = discord.Embed(title=" ", description="Oyuncu bulunamadı", color=0xFF0000)
-            embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
-            return embed
+            return None
 
     @tasks.loop(seconds=1)
     async def chess_task_loop(self):
@@ -199,9 +216,9 @@ class DChess(commands.Cog):
                     if game_data["success"]:
                         status = game_data["match"]["status"]
                         moves = game_data["match"]["moves"]
-                        move_count = len(moves.split(" "))
                         match_type = game["match_type"]
                         match_clock = game["match_clock"]
+                        move_count = len(moves.split(" "))
                         game["moves"] = moves
 
                         preview_url = f"{API_URL}/get_match_preview/{game['match_id']}/{move_count}"
@@ -221,7 +238,10 @@ class DChess(commands.Cog):
                                 embed.add_field(name="URL", value=game["match_url"], inline=True)
                                 embed.add_field(name="Hamleler", value=moves, inline=False)
                                 embed.set_image(url=preview_url)
-                                await game["msg"].edit(embed=embed)
+                                try:
+                                    await game["msg"].edit(embed=embed)
+                                except (discord.NotFound, discord.Forbidden):
+                                    await self.cancel_game(game)
 
                             elif move_count < 10 and time.time() - game["last_move_timestamp"] > 300:
                                 await self.cancel_game(game)
@@ -240,8 +260,11 @@ class DChess(commands.Cog):
                             embed.add_field(name="URL", value=game["match_url"], inline=False)
                             embed.add_field(name="Hamleler", value=moves, inline=True)
                             embed.set_image(url=preview_url)
+                            try:
+                                await game["msg"].edit(embed=embed)
+                            except (discord.NotFound, discord.Forbidden):
+                                await self.cancel_game(game)
 
-                            await game["msg"].edit(embed=embed)
                             self.games.remove(game)
                         game["move_count"] = move_count
                 except Exception as e:
@@ -258,22 +281,20 @@ class DChess(commands.Cog):
                     - !chess @kullanıcı 2+1
         '''
         if ctx.author == member:
-            embed = discord.Embed(title=" ", description="Kendine oyun daveti gönderemezsin.", color=0xFF0000)
-            embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
-            await ctx.send(embed=embed)
+            await self.send_error_embed(ctx, message="Kendine oyun daveti gönderemezsin.")
             return
         elif ctx.author in [g['host'] for g in self.games]:
-            embed = discord.Embed(title=" ", description="Aynı anda birden fazla oyun oluşturamazsın.", color=0xFF0000)
-            embed.add_field(name="Yardım", value="Önceki oyunu iptal etmek için : `!ccancel`")
-            embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
-            await ctx.send(embed=embed)
+            await self.send_error_embed(ctx, message="Aynı anda birden fazla oyun oluşturamazsın.",
+                                        fields=[{'name': 'Yardım', 'value': "Önceki oyunu iptal etmek için : `!ccancel`"}])
             return
 
         match = await self.send_create_match_request(host=ctx.author, guest=member, guild=ctx.guild,
                                                      clock=self.parse_clock_setting(clock_setting))
         try:
             if match['success']:
-                await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=True)
+                dm_success = await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=True)
+                if not dm_success:
+                    return
                 msg = await self.send_game_invite_embed(ctx, member=member, match_data=match, is_dm=False)
                 await msg.add_reaction('⚪')
                 await msg.add_reaction('⚫')
@@ -283,9 +304,8 @@ class DChess(commands.Cog):
                 match_type = None
                 match_clock = None
                 timetamp = time.time()
-                if clock_setting:
-                    match_type = match['match']['challenge']['speed']
-                    match_clock = match['match']['challenge']['timeControl']['show']
+                match_type = match['match']['challenge']['speed']
+                match_clock = match['match']['challenge']['timeControl']['show']
 
                 self.games.append({"msg": msg,
                                    "match_id": match_id,
@@ -317,12 +337,18 @@ class DChess(commands.Cog):
         """
         if not arg:
             embed = await self.get_player_stat_embed(ctx.author, ctx.guild)
-            await ctx.send(embed=embed)
+            if embed:
+                await ctx.send(embed=embed)
+            else:
+                await self.send_error_embed(ctx, message="Oyuncu bulunamadı.")
         elif arg:
             if ctx.message.mentions:
                 for m in ctx.message.mentions:
                     embed = await self.get_player_stat_embed(m, ctx.guild)
-                    await ctx.send(embed=embed)
+                    if embed:
+                        await ctx.send(embed=embed)
+                    else:
+                        await self.send_error_embed(ctx, message="Oyuncu bulunamadı.")
             elif arg == "guild":
                 g = await self.send_get_guild_request(ctx.guild.id)
                 if g['success'] and len(g['guild']) > 0:
@@ -334,23 +360,34 @@ class DChess(commands.Cog):
                         pl_nick = str(ctx.guild.get_member(int(pl['player_id'])))
                         if '```' in pl_nick: continue # gencoya gelsin :)
                         top_players.append([pl_nick, int(pl['elo'])])
+
                     table_str = tabulate(top_players, headers=["Player", "Guild elo"])
                     await ctx.send(f'```{table_str}```')
                 else:
-                    embed = discord.Embed(title=" ", description="Guild kaydı bulunamadı.", color=0xFF0000)
-                    embed.set_author(name="Satranç", icon_url=strings.komut["chessico"])
-                    return embed
+                    await self.send_error_embed(ctx, message="Guild kaydı bulunamadı.")
 
     @commands.command()
     @commands.guild_only()
     async def ccancel(self, ctx):
         """ Oluşturduğunuz oyunu iptal eder
-            Not: Maça başlandıysa, en fazla 5 hamle oynanmış olmalıdır
+            Not: Maça başlandıysa, en fazla 6 hamle oynanmış olmalıdır
         """
         for g in self.games:
-            if g['host'] == ctx.author and g['move_count'] < 6:
-                await self.cancel_game(g)
+            if g['host'] == ctx.author:
+                if g['move_count'] <= 6:
+                    await self.cancel_game(g)
+                    return
+                else:
+                    await self.send_error_embed(ctx,
+                                                message="Oyunu iptal edebilmeniz için en fazla 6 hamle yapılmış olmalıdır.")
+                    return
+        await self.send_error_embed(ctx, message="Devam eden bir maçınız yok.")
 
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        game = [g for g in self.games if message.id == g['msg'].id]
+        if game:
+            await self.cancel_game(game[0])
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):

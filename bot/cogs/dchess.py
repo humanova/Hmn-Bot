@@ -233,7 +233,8 @@ class DChess(commands.Cog):
                         if match_type:
                             embed.add_field(name="Tür", value=f"{match_type} ({match_clock})", inline=True)
                         if status == "started":
-                            if move_count > game["move_count"]:
+                            # update embed msg every 5 moves
+                            if move_count > game["move_count"] and move_count % 5 == 0:
                                 game['last_move_timestamp'] = time.time()
                                 embed.add_field(name="Durum", value="Devam ediyor", inline=False)
                                 embed.add_field(name="URL", value=game["match_url"], inline=True)

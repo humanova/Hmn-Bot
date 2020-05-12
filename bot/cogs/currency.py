@@ -129,9 +129,9 @@ class Currency(commands.Cog):
             data = r.json()
             for i in data:
                 if i['code'] == currency:
-                    currency_buy = float(round(i['data']['lastBuyPrice'], 5))
-                    currency_change = float(round(i['data']['dailyChange'], 5))
-                    currency_change_percentage = float(round(i['data']['dailyChangePercentage'], 5))
+                    currency_buy = round(float(i['data']['lastBuyPrice']), 5)
+                    currency_change = round(float(i['data']['dailyChange']), 5)
+                    currency_change_percentage = round(float(i['data']['dailyChangePercentage']), 5)
                     currency_time = i['data']['lastUpdateDate']
 
                     return {"currency_name": currency,

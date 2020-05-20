@@ -255,7 +255,7 @@ class DChess(commands.Cog):
 
                             status_tr = chess_dict_tr[status]
                             embed.add_field(name="Durum", value=status_tr, inline=False)
-                            if not status == "draw":
+                            if not status == "draw" and not status == "stalemate":
                                 winner = game_data["match"]["winner"]
                                 winner_player = f"<@{game[f'{winner}_id']}>" if game[f'{winner}_id'] else chess_dict_tr[winner]
                                 embed.add_field(name="Kazanan", value=winner_player, inline=True)

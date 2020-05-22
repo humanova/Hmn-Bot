@@ -45,7 +45,9 @@ class MRender(commands.Cog):
                 dl_file_path += ".mp4"
 
             out_args = ["-loglevel", "warning",
-                       "-vf", f'drawtext=fontfile={font_file}:text={upper_text}:fontcolor=white:fontsize={font_size}:shadowcolor=black:shadowx=5:shadowy=5:box=0:x=(w-text_w)/2:y=(h-text_h)/8,drawtext=fontfile={font_file}:text={lower_text}:fontcolor=white:fontsize={font_size}:shadowcolor=black:shadowx=5:shadowy=5:box=0:x=(w-text_w)/2:y=(h-text_h)/8*7']
+                        "-g", "300",
+                        "-preset", "veryfast",
+                        "-vf", f'drawtext=fontfile={font_file}:text={upper_text}:fontcolor=white:fontsize={font_size}:shadowcolor=black:shadowx=5:shadowy=5:box=0:x=(w-text_w)/2:y=(h-text_h)/8,drawtext=fontfile={font_file}:text={lower_text}:fontcolor=white:fontsize={font_size}:shadowcolor=black:shadowx=5:shadowy=5:box=0:x=(w-text_w)/2:y=(h-text_h)/8*7']
 
             ff = ffmpy.FFmpeg(
                 inputs = {dl_file_path: None},
@@ -55,6 +57,8 @@ class MRender(commands.Cog):
                 factor = int(args[args.index('s')+1])
                 out_file_path_s = f"{out_file_path[:-4]}_s.mp4"
                 out_args = ["-loglevel", "warning",
+                            "-g", "300",
+                            "-preset", "veryfast",
                             "-filter_complex", f"[0:v]setpts={1 / factor}*PTS[v];[0:a]atempo={factor}[a]",
                             "-map", "[v]",
                             "-map", "[a]"]

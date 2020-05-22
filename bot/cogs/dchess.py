@@ -15,6 +15,7 @@ chess_dict_tr = {
     "mate": "Mat",
     "outoftime": "Süre bitti",
     "draw": "Berabere",
+    "stalemate" : "Pat",
     "black": "Siyah",
     "white": "Beyaz",
     "resign": "Çekilme"

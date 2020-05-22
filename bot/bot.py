@@ -17,6 +17,7 @@ init_extensions = ['cogs.utility',
                    'cogs.meme',
                    'cogs.currency',
                    'cogs.weather',
+                   'cogs.mrender'
                    #'cogs.dchess'
                    ]
 

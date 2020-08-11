@@ -11,7 +11,7 @@ from discord.ext import commands
 from urllib.parse import urlparse
 from pytube import YouTube
 import ffmpy
-from discord_argparse import ArgumentConverter, RequiredArgument, OptionalArgument
+from discord_argparse import ArgumentConverter, OptionalArgument
 
 font_file = f"../mrender/fonts/impact.ttf"
 param_converter = ArgumentConverter(

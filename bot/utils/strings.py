@@ -23,6 +23,7 @@ currency_map = {
     "IRR": ['IRR'],
     "PKR": ['PKR'],
     "KWD": ['KWD'],
+    "CSK": ['CSK'],
 
     # ozel
     "OSU": ['OSU', 'SUPPORTER', 'SUP'],

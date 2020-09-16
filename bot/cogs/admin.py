@@ -126,7 +126,7 @@ class Admin(commands.Cog):
 
         try:
             await member.add_roles(muted_role, reason=responsible(ctx.author, reason))
-            await ctx.send(f"{str(member)} sunucudan **yasaklandı**.")
+            await ctx.send(f"{str(member)} **susturuldu**.")
         except:
             pass
 

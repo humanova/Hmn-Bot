@@ -106,19 +106,16 @@ class Utility(commands.Cog):
     async def oyun(self, ctx, *, message:str):
         """ Belirtilen oyunu oynayanları listeler """
         if not '```' in message:
-            if not len(message) < 4:
+            if not len(message) < 4 or message == "*":
                 game_name = message
                 player_list = f"```asciidoc\n== Kim '{game_name}' oynuyor ==\n\n"
                 player_count = 0
 
-                print(ctx.guild.members)
                 for member in ctx.guild.members:
-                    print(f"{member} : {member.activities}")
                     if not len(member.activities) == 0:
                         member_activities = ""
-                        for act in member.activities:
-                            if isinstance(act, discord.Game):
-                                member_activities += f"{act.name.upper()}"
+                        member_activities += ", ".join([act.name.upper() for act in member.activities
+                                                        if act.type == discord.ActivityType.playing])
                         if '```' in member.name or '```' in member_activities:
                             continue
                         if game_name == "*" or game_name.upper() in member_activities:

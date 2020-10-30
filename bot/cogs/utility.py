@@ -103,7 +103,7 @@ class Utility(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def oyun(self, ctx, message:str):
+    async def oyun(self, ctx, *, message:str):
         """ Belirtilen oyunu oynayanları listeler """
         if not '```' in message:
             if not len(message) < 4:
@@ -111,17 +111,19 @@ class Utility(commands.Cog):
                 player_list = f"```asciidoc\n== Kim '{game_name}' oynuyor ==\n\n"
                 player_count = 0
 
+                print(ctx.guild.members)
                 for member in ctx.guild.members:
+                    print(f"{member} : {member.activities}")
                     if not len(member.activities) == 0:
                         member_activities = ""
                         for act in member.activities:
-                            member_activities += f"{act.name.upper()}"
-                        if game_name.upper() in member_activities:
-                            if '```' in member.name or '```' in member_activities:
-                                continue
+                            if isinstance(act, discord.Game):
+                                member_activities += f"{act.name.upper()}"
+                        if '```' in member.name or '```' in member_activities:
+                            continue
+                        if game_name == "*" or game_name.upper() in member_activities:
                             player_list += f" + {str(member)} - {str(member_activities)}\n"
                             player_count += 1
-                player_list += "```"
 
                 embed = discord.Embed(title=" ", color=0x001a40)
                 embed.set_author(name="Kim Oynuyor", icon_url=self.bot.user.avatar_url)
@@ -130,7 +132,7 @@ class Utility(commands.Cog):
                     embed.add_field(name="Oyun", value=game_name, inline=False)
                     embed.add_field(name="Oyuncu Sayısı : ", value=player_count, inline=False)
                     await ctx.send(embed=embed)
-                    await ctx.send(player_list)
+                    await ctx.send(player_list+"```")
                 else:
                     embed = discord.Embed(title=" ", description=strings.komut["oyunHata2"] % ("'" + game_name + "'"),
                                           color=0xFF0000)

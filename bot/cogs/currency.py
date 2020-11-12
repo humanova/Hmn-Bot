@@ -16,7 +16,7 @@ from utils import confparser, pasta, strings
 
 currency_api_url = "https://api.canlidoviz.com/items/latest-data?marketId=0&type=CURRENCY"
 gold_api_url = "https://api.canlidoviz.com/items/latest-data?marketId=0&type=GOLD"
-crypto_graph_base_url = "https://s2.coinmarketcap.com/generated/sparklines/web/7d/usd/"
+crypto_graph_base_url = "https://s3.coinmarketcap.com/generated/sparklines/web/7d/usd/"
 
 
 class Currency(commands.Cog):
@@ -29,7 +29,6 @@ class Currency(commands.Cog):
     def parse_currency(self, currency, count=1, is_detailed=False):
         currency_code = self.detect_currency(currency)
         if currency_code is not None and float(count) > 0 and count is not None:
-
             if currency_code == "ALTIN":
                 currency_data = self.get_gold()
 
@@ -52,37 +51,27 @@ class Currency(commands.Cog):
                                  "currency_buy": data['currency_buy'],
                                  "currency_change": data['currency_change'],
                                  "currency_time": data['currency_time']}
-
             else:
-                if is_detailed:
-                    currency_data = self.get_currency_detailed(currency_code)
-                else:
-                    currency_data = self.get_currency(currency_code, count)
-
+                currency_data = self.get_currency_detailed(currency_code) if is_detailed else \
+                    self.get_currency(currency_code, count)
             return currency_data
-
         else:
             return None
 
     def parse_crypto(self, currency, count=1):
         if currency is not None and count is not None:
             currency_code, graph_url = self.detect_crypto(currency)
-
             if currency_code is not None and float(count) > 0:
-
                 currency_url = 'https://coinmarketcap.com/currencies/' + currency_code
-
                 data = urlopen(Request(currency_url, headers={'User-Agent': 'Mozilla'})).read()
                 parse = BeautifulSoup(data, 'html.parser')
 
                 k_delta = parse.find("span", "cmc--change-positive cmc-details-panel-price__price-change")
-
                 if k_delta is None:
                     k_delta = parse.find("span", "cmc--change-negative cmc-details-panel-price__price-change")
 
                 crypto_price_parse = parse.find("span", "cmc-details-panel-price__price").text
                 crypto_price = locale.atof(crypto_price_parse.strip("$"))
-
                 currency_price = round(crypto_price, 2)
                 currency_delta = k_delta.text
 
@@ -90,7 +79,6 @@ class Currency(commands.Cog):
                         "currency_price": currency_price * count,
                         "currency_change_percentage": currency_delta[2:-3],
                         "currency_graph": graph_url}
-
         else:
             return None
 
@@ -131,7 +119,7 @@ class Currency(commands.Cog):
                 if i['code'] == currency:
                     currency_buy = round(float(i['data']['lastBuyPrice']), 5)
                     currency_change = round(float(i['data']['dailyChange']), 5)
-                    currency_change_percentage = round(float(i['data']['dailyChangePercentage']), 5)
+                    currency_change_percentage = round(float(i['data']['dailyChangePercentage'])*100, 5)
                     currency_time = i['data']['lastUpdateDate']
 
                     return {"currency_name": currency,
@@ -174,17 +162,19 @@ class Currency(commands.Cog):
         if r.status_code == 200:
             data = r.json()
             gold_data['currency_time'] = data[0]['data']['lastUpdateDate']
+            for c in data:
+                if c['code'] in strings.gold_whitelist:
+                    if c['code'] == "XAU/USD": c['name'] += " (USD)"
+                    price = round(float(c['data']['lastBuyPrice']), 5)
+                    change_percent = round(float(c['data']['dailyChangePercentage']*100), 5)
+                    gold_data[c['name']] = f"{price} " \
+                                           f"[%{change_percent} {self.get_change_percent_emoji(change_percent)}]"
 
-            for i in range(len(data)):
-                if i < 5 or (i > 10 and i < 13):
-                    gold_data[data[i]['name']] = float(round(data[i]['data']['lastBuyPrice'], 5))
-
-            if not len(gold_data) == 0:
-                return gold_data
-            else:
-                return None
-
+            return gold_data
         return None
+
+    def get_change_percent_emoji(self, change):
+        return "↓" if change < 0 else "↑"
 
     def calculate_supporter_discount(self, months, price):
         months = float(months)
@@ -223,14 +213,16 @@ class Currency(commands.Cog):
         """ Belirtilen kur bilgisini gönderir """
         curr_data = self.parse_currency(curr.upper(), count, is_detailed=False)
         if curr_data is not None:
-
             embed = discord.Embed(title=" ", color=self.get_embed_color(curr_data['currency_name']))
             embed.set_author(name="Döviz Kurları", icon_url=ctx.bot.user.avatar_url)
             embed.set_footer(text=f"💰 Kaynak : canlidoviz.com | {curr_data['currency_time']}")
 
             if not curr_data['currency_name'] == "ALTIN":
+                ch_percent = curr_data['currency_change_percentage']
+                ch_value = curr_data['currency_change']
                 embed.add_field(name=f"{count} {curr_data['currency_name']}/TL", value=curr_data['currency_buy'], inline=True)
-                embed.add_field(name="Günlük Değişim", value=curr_data['currency_change'],
+                embed.add_field(name="Günlük Değişim", value=f"{ch_value} " \
+                                                             f"[%{ch_percent} {self.get_change_percent_emoji(ch_percent)}]",
                                 inline=True)
 
             if curr_data['currency_name'] == "AYLIK SUPPORTER":
@@ -256,7 +248,6 @@ class Currency(commands.Cog):
         """ Belirtilen kripto kur bilgisini gönderir """
         curr_data = self.parse_crypto(currency_code.upper(), count=count)
         if curr_data is not None:
-
             usd_data = self.parse_currency(currency='USD')
 
             curr_name = curr_data['currency_name']

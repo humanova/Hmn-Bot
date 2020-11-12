@@ -30,6 +30,14 @@ currency_map = {
     "NITRO": ['NITRO']
 }
 
+gold_whitelist = [
+    'GA',       # gram
+    'XAU/USD',  # ons
+    'C',        # ceyrek
+    'T',        # yarim
+    'CMR'       # cumhuriyet
+]
+
 crypto_currency_map = {
     "btc": {'currency': 'bitcoin', 'graph_id': '1', 'aliases': ['BTC', 'BITCOIN']},
     "bch": {'currency': 'bitcoin-cash', 'graph_id': '1831', 'aliases': ['BCH', 'BTCCASH', 'BITCOINCASH']},

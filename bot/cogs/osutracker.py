@@ -37,8 +37,12 @@ class OsuTracker(commands.Cog):
     @commands.check(permissions.is_owner)
     async def osutrack(self, ctx, mem: discord.Member, osu_username, nick):
         if osu_username not in [u['name'] for u in self.tracked_users]:
-            self.tracked_users.append({"name": osu_username, "nick": nick, "discord": mem})
-            await ctx.send(f"tracking started : {str(mem)}")
+            try:
+                osu_id = self.api.get_user(osu_username).user_id
+                self.tracked_users.append({"name": osu_username, "nick": nick, "discord": mem})
+                await ctx.send(f"tracking started : {str(mem)}, osu id : {osu_id}")
+            except:
+                await ctx.send(f"couldn't start tracking")
         else:
             await ctx.send(f"already tracking : {str(mem)}")
 

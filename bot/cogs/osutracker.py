@@ -38,7 +38,7 @@ class OsuTracker(commands.Cog):
     async def osutrack(self, ctx, mem: discord.Member, osu_username, nick):
         if osu_username not in [u['name'] for u in self.tracked_users]:
             try:
-                osu_id = self.api.get_user(osu_username).user_id
+                osu_id = self.api.get_user(osu_username)[0].user_id
                 self.tracked_users.append({"name": osu_username, "nick": nick, "discord": mem})
                 await ctx.send(f"tracking started : {str(mem)}, osu id : {osu_id}")
             except:

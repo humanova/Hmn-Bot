@@ -19,6 +19,7 @@ init_extensions = ['cogs.utility',
                    'cogs.weather',
                    'cogs.mrender',
                    'cogs.tracker',
+                   'cogs.osutracker'
                    #'cogs.dchess'
                    ]
 

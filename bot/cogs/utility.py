@@ -16,17 +16,12 @@ class Utility(commands.Cog):
         self.genius_api = genius.Genius(self.config.genius_token)
 
     def get_searchq(self, message, is_google = True):
-        msg = message.split(" ")
+        msg = message.split(" ")[1:]
         search_q = "https://google.com/search?q="
         if not is_google:
             search_q = "http://lmgtfy.com/?q="
 
-        for word in range(1, len(msg)):
-            if not word == len(msg) - 1:
-                search_q += msg[word] + "+"
-            else:
-                search_q += msg[word]
-
+        search_q += "+".join(msg)
         return search_q
 
     def get_lyrics(self, song_name):
@@ -35,11 +30,12 @@ class Utility(commands.Cog):
         if song is not None:
             lyrics = song.save_lyrics(filename="lyrics.txt", format="txt", overwrite="no")
 
-            # backtick(`) injection check
-            if '```' not in lyrics and not '```' in song.title and not '```' in song.artist and not '```' in song.url:
-                return {"lyrics": lyrics, "title": song.title, "artist": song.artist, "url": song.url}
-            else:
-                return None
+            lyrics = lyrics.replace("`", "")
+            title = song.title.replace("`", "")
+            artist = song.artist.replace("`", "")
+            url = song.url.replace("`", "")
+
+            return {"lyrics": lyrics, "title": title, "artist": artist, "url": url}
         else:
             return None
 
@@ -105,38 +101,38 @@ class Utility(commands.Cog):
     @commands.guild_only()
     async def oyun(self, ctx, *, message:str):
         """ Belirtilen oyunu oynayanları listeler """
-        if not '```' in message:
-            if not len(message) < 4 or message == "*":
-                game_name = message
-                player_list = f"```asciidoc\n== Kim '{game_name}' oynuyor ==\n\n"
-                player_count = 0
+        message = message.replace('`')
+        if not len(message) < 4 or message == "*":
+            game_name = message
+            player_list = f"```asciidoc\n== Kim '{game_name}' oynuyor ==\n\n"
+            player_count = 0
 
-                for member in ctx.guild.members:
-                    if not len(member.activities) == 0:
-                        member_activities = ""
-                        member_activities += ", ".join([act.name.upper() for act in member.activities
-                                                        if act.type == discord.ActivityType.playing])
-                        if '```' in member.name or '```' in member_activities:
-                            continue
-                        if game_name == "*" or game_name.upper() in member_activities:
-                            player_list += f" + {str(member)} - {str(member_activities)}\n"
-                            player_count += 1
+            for member in ctx.guild.members:
+                if not len(member.activities) == 0:
+                    member_activities = ""
+                    member_activities += ", ".join([act.name.upper() for act in member.activities
+                                                    if act.type == discord.ActivityType.playing])
+                    if '```' in member.name or '```' in member_activities:
+                        continue
+                    if game_name == "*" or game_name.upper() in member_activities:
+                        player_list += f" + {str(member)} - {str(member_activities)}\n"
+                        player_count += 1
 
-                embed = discord.Embed(title=" ", color=0x001a40)
-                embed.set_author(name="Kim Oynuyor", icon_url=self.bot.user.avatar_url)
+            embed = discord.Embed(title=" ", color=0x001a40)
+            embed.set_author(name="Kim Oynuyor", icon_url=self.bot.user.avatar_url)
 
-                if player_count > 0:
-                    embed.add_field(name="Oyun", value=game_name, inline=False)
-                    embed.add_field(name="Oyuncu Sayısı : ", value=player_count, inline=False)
-                    await ctx.send(embed=embed)
-                    await ctx.send(player_list+"```")
-                else:
-                    embed = discord.Embed(title=" ", description=strings.komut["oyunHata2"] % ("'" + game_name + "'"),
-                                          color=0xFF0000)
-                    await ctx.send(embed=embed)
-            else:
-                embed = discord.Embed(title=" ", description=strings.komut["oyunHata"], color=0xFF0000)
+            if player_count > 0:
+                embed.add_field(name="Oyun", value=game_name, inline=False)
+                embed.add_field(name="Oyuncu Sayısı : ", value=player_count, inline=False)
                 await ctx.send(embed=embed)
+                await ctx.send(player_list+"```")
+            else:
+                embed = discord.Embed(title=" ", description=strings.komut["oyunHata2"] % ("'" + game_name + "'"),
+                                      color=0xFF0000)
+                await ctx.send(embed=embed)
+        else:
+            embed = discord.Embed(title=" ", description=strings.komut["oyunHata"], color=0xFF0000)
+            await ctx.send(embed=embed)
 
     @commands.command(aliases=['lyrics', 'söz'])
     async def soz(self, ctx, *, message:str):
@@ -156,7 +152,7 @@ class Utility(commands.Cog):
     async def lmgtfy(self, ctx):
         """ lmgtfy arama bağlantısı gönderir """
         if len(ctx.message.mentions) == 0 and not ctx.message.mention_everyone:
-            await ctx.send(f"{self.get_searchq(ctx.message.content, True)}")
+            await ctx.send(f"{self.get_searchq(ctx.message.content, False)}")
 
     @commands.command(aliases=['oyla'])
     @commands.guild_only()

@@ -27,7 +27,6 @@ currency_map = {
 
     # ozel
     "OSU": ['OSU', 'SUPPORTER', 'SUP'],
-    "NITRO": ['NITRO']
 }
 
 gold_whitelist = [

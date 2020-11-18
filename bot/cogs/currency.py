@@ -43,14 +43,6 @@ class Currency(commands.Cog):
                                  "discount": self.calculate_supporter_discount(months, data['currency_buy']),
                                  "currency_time": data['currency_time']}
 
-            elif currency_code == "NITRO":
-                count = float(count) * 5.0
-                currency_name = "AYLIK NITRO"
-                data = self.get_currency("USD", count)
-                currency_data = {"currency_name": currency_name,
-                                 "currency_buy": data['currency_buy'],
-                                 "currency_change": data['currency_change'],
-                                 "currency_time": data['currency_time']}
             else:
                 currency_data = self.get_currency_detailed(currency_code) if is_detailed else \
                     self.get_currency(currency_code, count)
@@ -201,8 +193,6 @@ class Currency(commands.Cog):
     def get_embed_color(self, currency):
         if currency == "AYLIK SUPPORTER":
             return 0xef6ca6
-        elif currency == "AYLIK NITRO":
-            return 0x80a7ff
         elif currency == "ALTIN":
             return 0xefed3a
         else:

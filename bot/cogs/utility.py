@@ -101,7 +101,7 @@ class Utility(commands.Cog):
     @commands.guild_only()
     async def oyun(self, ctx, *, message:str):
         """ Belirtilen oyunu oynayanları listeler """
-        message = message.replace('`')
+        message = message.replace('`', "")
         if not len(message) < 4 or message == "*":
             game_name = message
             player_list = f"```asciidoc\n== Kim '{game_name}' oynuyor ==\n\n"

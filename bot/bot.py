@@ -70,13 +70,15 @@ class HelpFormat(DefaultHelpCommand):
 class Bot(AutoShardedBot):
     def __init__(self, *args, prefix=None, **kwargs):
         super().__init__(*args, help_command=HelpFormat(), **kwargs)
+        self.loop.create_task(ready())
 
         for ext in init_extensions:
             self.load_extension(ext)
 
         self.boot_time = datetime.now()
 
-    async def on_ready(self):
+    async def ready(self):
+        await self.wait_until_ready()
         print(f"Ready : {self.user.name} -- {self.user.id}")
         print(f"Shards : {self.shard_count}")
         await self.change_presence(status=discord.Status.online, activity=discord.Game("!help"))

@@ -6,7 +6,8 @@ from discord.ext import commands, tasks
 from utils import confparser, strings, default, permissions
 from osuapi import OsuApi, ReqConnector
 import datetime
-
+import json
+import os
 
 class OsuTracker(commands.Cog):
     def __init__(self, bot):
@@ -16,22 +17,43 @@ class OsuTracker(commands.Cog):
         self.api = OsuApi(key=self.config.osu_token, connector=ReqConnector())
         self.last_check_datetime = datetime.datetime.utcnow()
         self.tracking_channel = None
-        self.is_started = False
-        self.tracked_users = []
+        self.tracked_users = self.get_tracked_users()
+
+        self.tracker_task_loop.start()
 
     def cog_unload(self):
         self.tracker_task_loop.cancel()
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(seconds=30)
     async def tracker_task_loop(self):
         for user in self.tracked_users:
-            scores = self.api.get_user_best(user['name'], limit=30)
+            scores = self.api.get_user_best(user['name'], limit=20)
             for s in [s for s in scores if s.date > self.last_check_datetime]:
                 bmap = self.api.get_beatmaps(beatmap_id=s.beatmap_id)[0]
                 msg = f"{user['nick']} abım {bmap.title} - {bmap.version} mapınde {int(round(s.pp))} pp play yapmıs\n" \
                       f"helal abım <@{user['discord'].id}>\n".lower().replace('i', 'ı')
                 await self.tracking_channel.send(msg)
         self.last_check_datetime = datetime.datetime.utcnow()
+
+    def get_tracked_users(self):
+        with open("tracked_users.json", "r") as f:
+            data = json.load(f) if not json.load(f) == {} else None
+        users = []
+        if data:
+            for u in data['users']:
+                users.append({"name": u['name'], "discord": self.bot.get_user(id=u['discord_id']), "nick": u['nick']})
+        return users
+
+    def add_to_tracked_users_file(self, osu_username, discord_id, nick):
+        with open("tracked_users.json", "w") as f:
+            data = json.load(f)
+            if data == {}:
+                data = {"users": [{"name": osu_username, "discord_id": discord_id, "nick": nick}]}
+            else:
+                data['users'].append({"name": osu_username, "discord_id": discord_id, "nick": nick})
+                data.update()
+            print(data)
+            json.dump(data, f)
 
     @commands.command()
     @commands.check(permissions.is_owner)
@@ -40,6 +62,7 @@ class OsuTracker(commands.Cog):
             try:
                 osu_id = self.api.get_user(osu_username)[0].user_id
                 self.tracked_users.append({"name": osu_username, "nick": nick, "discord": mem})
+                self.add_to_tracked_users_file(osu_username, discord_id=mem.id, nick=nick)
                 await ctx.send(f"tracking started : {str(mem)}, osu id : {osu_id}")
             except:
                 await ctx.send(f"couldn't start tracking")
@@ -48,14 +71,9 @@ class OsuTracker(commands.Cog):
 
     @commands.command()
     @commands.check(permissions.is_owner)
-    async def startosutracker(self, ctx):
-        if not self.is_started:
-            self.tracking_channel = ctx
-            self.tracker_task_loop.start()
-            self.is_started = True
-            await ctx.send(f"ok")
-        else:
-            await ctx.send(f"tracker already started")
+    async def setch(self, ctx):
+        self.tracking_channel = ctx
+        await ctx.send(f"ok")
 
 def setup(bot):
     bot.add_cog(OsuTracker(bot))

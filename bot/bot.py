@@ -70,7 +70,7 @@ class HelpFormat(DefaultHelpCommand):
 class Bot(AutoShardedBot):
     def __init__(self, *args, prefix=None, **kwargs):
         super().__init__(*args, help_command=HelpFormat(), **kwargs)
-        self.loop.create_task(ready())
+        self.loop.create_task(self.ready())
 
         for ext in init_extensions:
             self.load_extension(ext)

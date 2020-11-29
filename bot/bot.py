@@ -18,8 +18,8 @@ init_extensions = ['cogs.utility',
                    'cogs.currency',
                    'cogs.weather',
                    'cogs.mrender',
-                   'cogs.tracker',
-                   'cogs.osutracker'
+                   #'cogs.tracker',
+                   #'cogs.osutracker'
                    #'cogs.dchess'
                    ]
 

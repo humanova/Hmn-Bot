@@ -8,7 +8,7 @@
 import locale
 import discord
 from discord.ext import commands
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString
 from urllib.request import urlopen, Request
 import requests
 import json
@@ -58,18 +58,19 @@ class Currency(commands.Cog):
                 data = urlopen(Request(currency_url, headers={'User-Agent': 'Mozilla'})).read()
                 parse = BeautifulSoup(data, 'html.parser')
 
-                k_delta = parse.find("span", "cmc--change-positive cmc-details-panel-price__price-change")
-                if k_delta is None:
-                    k_delta = parse.find("span", "cmc--change-negative cmc-details-panel-price__price-change")
+                k_delta = parse.find("span", "qe1dn9-0 RYkpI")
+                delta_text = "".join([e for e in k_delta if isinstance(e, NavigableString)]).strip()
+                if k_delta.find("span", "iron-Caret-down"):
+                    delta_text = "-" + delta_text
 
-                crypto_price_parse = parse.find("span", "cmc-details-panel-price__price").text
+                crypto_price_parse = parse.find("div", "priceValue___11gHJ").text
                 crypto_price = locale.atof(crypto_price_parse.strip("$"))
                 currency_price = round(crypto_price, 2)
-                currency_delta = k_delta.text
+                currency_delta = delta_text
 
                 return {"currency_name": currency_code.upper(),
                         "currency_price": currency_price * count,
-                        "currency_change_percentage": currency_delta[2:-3],
+                        "currency_change_percentage": currency_delta,
                         "currency_graph": graph_url}
         else:
             return None
@@ -253,9 +254,9 @@ class Currency(commands.Cog):
             embed.add_field(name=f"{count} {curr_name} / TRY", value=price_tl, inline=True)
 
             if not str(curr_change).startswith("-"):
-                embed.add_field(name="Günlük Değişim", value=":arrow_up_small: " + str(curr_change) + "%", inline=True)
+                embed.add_field(name="Günlük Değişim", value=":arrow_up_small: " + str(curr_change), inline=True)
             else:
-                embed.add_field(name="Günlük Değişim", value=":arrow_down_small: " + str(curr_change) + "%",
+                embed.add_field(name="Günlük Değişim", value=":arrow_down_small: " + str(curr_change),
                                 inline=True)
 
             embed.add_field(name="Son 7 günlük grafik", value=strings.komut["kripto-cizgi"], inline=True)

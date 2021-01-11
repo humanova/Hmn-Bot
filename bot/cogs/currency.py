@@ -60,13 +60,13 @@ class Currency(commands.Cog):
 
                 k_delta = parse.find("span", "qe1dn9-0 RYkpI")
                 delta_text = "".join([e for e in k_delta if isinstance(e, NavigableString)]).strip()
-                if k_delta.find("span", "iron-Caret-down"):
+                if k_delta.find("span", {"class": "icon-Caret-down"}):
                     delta_text = "-" + delta_text
 
                 crypto_price_parse = parse.find("div", "priceValue___11gHJ").text
                 crypto_price = locale.atof(crypto_price_parse.strip("$"))
                 currency_price = round(crypto_price, 2)
-                currency_delta = delta_text
+                currency_delta = delta_text.strip()
 
                 return {"currency_name": currency_code.upper(),
                         "currency_price": currency_price * count,
@@ -259,8 +259,8 @@ class Currency(commands.Cog):
                 embed.add_field(name="Günlük Değişim", value=":arrow_down_small: " + str(curr_change),
                                 inline=True)
 
-            embed.add_field(name="Son 7 günlük grafik", value=strings.komut["kripto-cizgi"], inline=True)
-            embed.set_image(url=curr_graph)
+            #embed.add_field(name="Son 7 günlük grafik", value=strings.komut["kripto-cizgi"], inline=True)
+            #embed.set_image(url=curr_graph)
             embed.set_footer(text="💎 Kaynak : coinmarketcap.com")
 
             await ctx.send(embed=embed)

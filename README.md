@@ -4,7 +4,7 @@ A hobby -turkish- Discord bot.
 This project is NOT in activate development.
 
 - basic moderation commands
-- fiat and crypto currency exchange rate commands (coinmarketcap and a TRY based service)
+- fiat and crypto currency exchange rate commands (using coinmarketcap and a TRY based service)
 - meme command (using reddit api)
 - a command to render given text on a given video (using ffmpeg and youtube-dl based modules)
 - weather command (using openweathermap)

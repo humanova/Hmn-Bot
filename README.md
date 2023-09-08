@@ -1,6 +1,6 @@
 # Hmn-Bot
 
-A hobby -turkish- Discord bot.
+A hobby -Turkish- Discord bot.
 This project is NOT in activate development.
 
 - basic moderation commands
@@ -15,8 +15,6 @@ Links
 [Bot Website](https://humanova.github.io/hmnbot)
 
 [Bot invite](https://discordapp.com/oauth2/authorize?client_id=455819835486502933&permissions=8&scope=bot)
-
-[Discordbots.org](https://discordbots.org/bot/455819835486502933)
 
 [Developement server](https://discord.gg/bXPzFRg)
 

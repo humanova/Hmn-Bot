@@ -1,7 +1,7 @@
 # Hmn-Bot
 
 A Turkish Discord bot.
-This project is NOT in activate development.
+This project is NOT in active development.
 
 - basic moderation commands
 - fiat and crypto currency exchange rate commands (using **coinmarketcap** and a TRY based service)
